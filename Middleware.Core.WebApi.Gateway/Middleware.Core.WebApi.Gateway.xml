@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Middleware.Core.WebApi.Gateway</name>
+    </assembly>
+    <members>
+        <member name="T:Middleware.Core.WebApi.Gateway.Program">
+            <summary>
+                Program
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Gateway.Program.Main(System.String[])">
+            <summary>
+                Main
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Gateway.Program.CreateWebHostBuilder(System.String[])">
+            <summary>
+                Host builder
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Middleware.Core.WebApi.Gateway.Startup">
+            <summary>
+                Start Up
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Gateway.Startup.#ctor(Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+                Constructor
+            </summary>
+            <param name="env"></param>
+        </member>
+        <member name="P:Middleware.Core.WebApi.Gateway.Startup.Configuration">
+            <summary>
+                Configuration
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Gateway.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+                This method gets called by the runtime. Use this method to add services to the container
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Gateway.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+                This method gets called by the runtime. Use this method to configure the HTTP request pipeline
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>
