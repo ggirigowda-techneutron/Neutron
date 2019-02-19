@@ -5,8 +5,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44350
+          "Host": "neutronmiddlewarecorewebapi.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/core/v1.0/swagger.json",
@@ -19,8 +19,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44350
+          "Host": "neutronmiddlewarecorewebapi.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/core/v2.0/swagger.json",
@@ -33,8 +33,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44350
+          "Host": "neutronmiddlewarecorewebapi.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/core/{url}",
