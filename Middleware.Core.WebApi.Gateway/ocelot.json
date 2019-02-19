@@ -47,8 +47,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44363
+          "Host": "neutronmiddlewarecorewebapiauth.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/auth",

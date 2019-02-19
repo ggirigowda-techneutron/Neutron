@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <Description>Middleware.Core.WebApi.Gateway</Description>
+    <UserSecretsId>0b1f124a-8b38-4159-aaea-8f4e633d4582</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
