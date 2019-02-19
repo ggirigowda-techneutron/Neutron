@@ -30,7 +30,7 @@ namespace Middleware.Core.WebApi.Auth
         public IConfiguration Configuration { get; }
 
         /// <summary>
-        ///     This method gets called by the runtime. Use this method to add services to the container.
+        ///     Configuration services. This method gets called by the runtime. Use this method to add services to the container.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> service.</param>
         public void ConfigureServices(IServiceCollection services)
