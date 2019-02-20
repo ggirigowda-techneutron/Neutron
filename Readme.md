@@ -11,7 +11,7 @@
 ├── Database
    ├── Database.Neutron - Database project  
        ├── Schema - DDL for schema creation
-	   ├── Data - DML for data loading
+       ├── Data - DML for data loading
 ├── Middleware
    ├── Middleware.Core.WebApi - Sample core web API with API versioning and swagger 
    ├── Middleware.Core.WebApi.Auth - Sample core web API auth with JWT 
