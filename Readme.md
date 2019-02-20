@@ -10,7 +10,7 @@
     ├── Classlibrary.Crosscutting - Cross cutting utilities
     ├── Classlibrary.Dao - Data access objects with Dapper
     ├── ClassLibrary.Dao.Test - Xunit test for data access objects
-	├── Classlibrary.Domain - Domain objects
+    ├── ClassLibrary.Domain - Domain objects
     ├── ClassLibrary.Domain.Test - Xunit test for domain objects
 ├── Database
    ├── Database.Neutron - Database project  
