@@ -10,8 +10,8 @@
 
 #endregion
 
-using System;
-using Microsoft.Extensions.Configuration;
+using System.Linq;
+using Classlibrary.Dao.Utility;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -28,22 +28,19 @@ namespace Classlibrary.Dao.Test
         /// <param name="output">The output.</param>
         public UtilityTest(ITestOutputHelper output) : base(output)
         {
-            // Set the connection string
-            var config = new ConfigurationBuilder()
-                .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
-            ConnectionString = config["Data:DefaultConnection:ConnectionString"];
         }
 
         /// <summary>
         ///     Can get references.
         /// </summary>
         [Fact]
-        public void CanGetReferences()
+        public async void CanGetReferences()
         {
-            var x = 1;
-            Assert.True(x == 1, "No auditlogs found");
+            var items = await ReferenceDaoExtension.AllAsync(ConnectionString);
+            Assert.True(items.Any(), "Failed to get references");
+            if (items.Any())
+                foreach (var item in items)
+                    Output.WriteLine(item.Name);
         }
     }
 }

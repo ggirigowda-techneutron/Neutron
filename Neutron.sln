@@ -19,9 +19,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{E4
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database.Neutron", "Database.Neutron\Database.Neutron.sqlproj", "{6E906958-C5FB-457E-8B1C-A275F3C47B13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classlibrary.Dao", "Classlibrary.Dao\Classlibrary.Dao.csproj", "{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classlibrary.Dao", "Classlibrary.Dao\Classlibrary.Dao.csproj", "{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classlibrary.Dao.Test", "Classlibrary.Dao.Test\Classlibrary.Dao.Test.csproj", "{F858473C-A28E-4D9D-B7BE-007D3231CCB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classlibrary.Dao.Test", "Classlibrary.Dao.Test\Classlibrary.Dao.Test.csproj", "{F858473C-A28E-4D9D-B7BE-007D3231CCB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B439658E-F13B-4E60-8EF1-71AA52AE7480}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -10,9 +10,11 @@
 
 #endregion
 
+using System;
+using Microsoft.Extensions.Configuration;
 using Xunit.Abstractions;
 
-namespace Classlibrary.Dao
+namespace Classlibrary.Dao.Test
 {
     /// <summary>
     ///     Represents the <see cref="TestBase" /> abstract class.
@@ -36,6 +38,12 @@ namespace Classlibrary.Dao
         protected TestBase(ITestOutputHelper output)
         {
             Output = output;
+            // Set the connection string
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            ConnectionString = config["Data:DefaultConnection:ConnectionString"];
         }
     }
 }
