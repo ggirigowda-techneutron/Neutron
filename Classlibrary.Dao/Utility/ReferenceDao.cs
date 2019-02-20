@@ -1,9 +1,9 @@
-#region Copyright Neutron © 2019
+#region Copyright TechNeutron © 2019
 
 //
 // NAME:			ReferenceDao.cs
 // AUTHOR:			Girish Girigowda
-// COMPANY:			Neutron
+// COMPANY:			TechNeutron
 // DATE:			2/20/2019
 // PURPOSE:			DAO
 //
@@ -25,23 +25,28 @@ using Dapper;
 namespace Classlibrary.Dao.Utility
 {
     /// <summary>
-    ///     <see cref="ReferenceDao" />
+    ///     Represents the <see cref="ReferenceDao" /> class.
     /// </summary> 
     [Serializable]
     public sealed class ReferenceDao
     {
-   
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="ReferenceDao" /> class.
         /// </summary>
         public ReferenceDao()
         {
         }
 
-        
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="ReferenceDao" /> class.
         /// </summary>
+        /// <param name="id">The Id.</param>
+        /// <param name="name">The Name.</param>
+        /// <param name="countryCode">The CountryCode.</param>
+        /// <param name="createdOn">The CreatedOn.</param>
+        /// <param name="changedOn">The ChangedOn.</param>
         public ReferenceDao(Guid id, string name, string countryCode, DateTime createdOn, DateTime changedOn)
         {
             Id = id;
@@ -50,155 +55,162 @@ namespace Classlibrary.Dao.Utility
             CreatedOn = createdOn;
             ChangedOn = changedOn;
         }
-        
-    
-        
+
+
+
         /// <summary>
-        ///     Ci
+        ///     The Ci.
         /// </summary>
         public int Ci { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Id
+        ///     The Id.
         /// </summary>
         public Guid Id { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Name
+        ///     The Name.
         /// </summary>
         public string Name { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Description
+        ///     The Description.
         /// </summary>
         public string Description { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     CountryCode
+        ///     The CountryCode.
         /// </summary>
         public string CountryCode { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Archived
+        ///     The Archived.
         /// </summary>
         public DateTime? Archived { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     CreatedOn
+        ///     The CreatedOn.
         /// </summary>
         public DateTime CreatedOn { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     ChangedOn
+        ///     The ChangedOn.
         /// </summary>
         public DateTime ChangedOn { get; set; }
-        
+
     }
-   
-                
-      
+
+
+
     /// <summary>
-    ///     <see cref="ReferenceDaoExtension" />
+    ///     Instance of <see cref="ReferenceDaoExtension" />.
     /// </summary> 
     public static class ReferenceDaoExtension
     {
         /// <summary>
-        ///     Get Async
+        ///     Get Async.
         /// </summary>
+		/// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<ReferenceDao> GetAsync(Guid key, string connectionString)
         {
             // Sql
             string sql = @"SELECT * FROM [Utility].[Reference] WHERE Id=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryFirstAsync<ReferenceDao>(sql, para);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-        
+
         /// <summary>
-        ///     All Async
+        ///     All Async.
         /// </summary>
+        /// <param name="connectionString" />
         public static async Task<IEnumerable<ReferenceDao>> AllAsync(string connectionString)
         {
             // Sql
             var sql = "SELECT * FROM [Utility].[Reference]";
 
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryAsync<ReferenceDao>(sql);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-       
+
         /// <summary>
-        ///     Delete Async
+        ///     Delete Async.
         /// </summary>
+        /// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<bool> DeleteAsync(Guid key, string connectionString)
         {
             // Sql
-            string sql=@"DELETE FROM [Utility].[Reference] WHERE Id=@key";
+            string sql = @"DELETE FROM [Utility].[Reference] WHERE Id=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     await con.ExecuteAsync(sql, para);
                     return true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return false;
                 }
-            }               
-        }    
+            }
+        }
 
         /// <summary>
-        ///     Insert Async
+        ///     Insert Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<ReferenceDao> InsertAsync(this ReferenceDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Utility].[Reference] 
 				 ([Id], [Name], [Description], [CountryCode], [Archived], [CreatedOn], [ChangedOn]) 
@@ -206,33 +218,33 @@ namespace Classlibrary.Dao.Utility
 				 VALUES(@Id, @Name, @Description, @CountryCode, @Archived, @CreatedOn, @ChangedOn)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@Name", entity.Name);
-			para.Add("@Description", entity.Description);
-			para.Add("@CountryCode", entity.CountryCode);
-			para.Add("@Archived", entity.Archived);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@Name", entity.Name);
+            para.Add("@Description", entity.Description);
+            para.Add("@CountryCode", entity.CountryCode);
+            para.Add("@Archived", entity.Archived);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.QuerySingleAsync<Guid>(sql, para, tn);
                         tn.Commit();
                         entity.Id = item;
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -241,12 +253,14 @@ namespace Classlibrary.Dao.Utility
                 }
             }
         }
-     
+
         /// <summary>
-        ///     Insert TransactionScope Async
+        ///     Insert TransactionScope Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<ReferenceDao> InsertTransactionScopeAsync(this ReferenceDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Utility].[Reference] 
 				 ([Id], [Name], [Description], [CountryCode], [Archived], [CreatedOn], [ChangedOn]) 
@@ -254,28 +268,28 @@ namespace Classlibrary.Dao.Utility
 				 VALUES(@Id, @Name, @Description, @CountryCode, @Archived, @CreatedOn, @ChangedOn)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@Name", entity.Name);
-			para.Add("@Description", entity.Description);
-			para.Add("@CountryCode", entity.CountryCode);
-			para.Add("@Archived", entity.Archived);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@Name", entity.Name);
+            para.Add("@Description", entity.Description);
+            para.Add("@CountryCode", entity.CountryCode);
+            para.Add("@Archived", entity.Archived);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.QuerySingleAsync<Guid>(sql, para);
                     entity.Id = item;
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
@@ -285,42 +299,44 @@ namespace Classlibrary.Dao.Utility
         }
 
         /// <summary>
-        ///     Update Async
+        ///     Update Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<ReferenceDao> UpdateAsync(this ReferenceDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Utility].[Reference] 
+            string sql = @"UPDATE [Utility].[Reference] 
 				 SET Name=@Name,Description=@Description,CountryCode=@CountryCode,Archived=@Archived,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn 
 				 WHERE Id=@Id;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@Name", entity.Name);
-			para.Add("@Description", entity.Description);
-			para.Add("@CountryCode", entity.CountryCode);
-			para.Add("@Archived", entity.Archived);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-            
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@Name", entity.Name);
+            para.Add("@Description", entity.Description);
+            para.Add("@CountryCode", entity.CountryCode);
+            para.Add("@Archived", entity.Archived);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.ExecuteAsync(sql, para, tn);
                         tn.Commit();
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -331,46 +347,48 @@ namespace Classlibrary.Dao.Utility
         }
 
         /// <summary>
-        ///     Update TransactionScope Async
+        ///     Update TransactionScope Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<ReferenceDao> UpdateTransactionScopeAsync(this ReferenceDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Utility].[Reference] 
+            string sql = @"UPDATE [Utility].[Reference] 
 				 SET Name=@Name,Description=@Description,CountryCode=@CountryCode,Archived=@Archived,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn 
 				 WHERE Id=@Id;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@Name", entity.Name);
-			para.Add("@Description", entity.Description);
-			para.Add("@CountryCode", entity.CountryCode);
-			para.Add("@Archived", entity.Archived);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-                
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@Name", entity.Name);
+            para.Add("@Description", entity.Description);
+            para.Add("@CountryCode", entity.CountryCode);
+            para.Add("@Archived", entity.Archived);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.ExecuteAsync(sql, para);
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
             }
-        }    
-    
-     }
+        }
+
+    }
 
 }
 

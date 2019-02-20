@@ -1,9 +1,9 @@
-#region Copyright Neutron © 2019
+#region Copyright TechNeutron © 2019
 
 //
 // NAME:			UserDao.cs
 // AUTHOR:			Girish Girigowda
-// COMPANY:			Neutron
+// COMPANY:			TechNeutron
 // DATE:			2/20/2019
 // PURPOSE:			DAO
 //
@@ -25,23 +25,35 @@ using Dapper;
 namespace Classlibrary.Dao.Administration
 {
     /// <summary>
-    ///     <see cref="UserDao" />
+    ///     Represents the <see cref="UserDao" /> class.
     /// </summary> 
     [Serializable]
     public sealed class UserDao
     {
-   
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="UserDao" /> class.
         /// </summary>
         public UserDao()
         {
         }
 
-        
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="UserDao" /> class.
         /// </summary>
+        /// <param name="id">The Id.</param>
+        /// <param name="userName">The UserName.</param>
+        /// <param name="email">The Email.</param>
+        /// <param name="emailConfirmed">The EmailConfirmed.</param>
+        /// <param name="passwordHash">The PasswordHash.</param>
+        /// <param name="securityStamp">The SecurityStamp.</param>
+        /// <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
+        /// <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
+        /// <param name="lockoutEnabled">The LockoutEnabled.</param>
+        /// <param name="accessFailedCount">The AccessFailedCount.</param>
+        /// <param name="createdOn">The CreatedOn.</param>
+        /// <param name="changedOn">The ChangedOn.</param>
         public UserDao(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn)
         {
             Id = id;
@@ -57,233 +69,240 @@ namespace Classlibrary.Dao.Administration
             CreatedOn = createdOn;
             ChangedOn = changedOn;
         }
-        
-    
-        
+
+
+
         /// <summary>
-        ///     Ci
+        ///     The Ci.
         /// </summary>
         public int Ci { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Id
+        ///     The Id.
         /// </summary>
         public Guid Id { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     UserName
+        ///     The UserName.
         /// </summary>
         public string UserName { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Email
+        ///     The Email.
         /// </summary>
         public string Email { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     EmailConfirmed
+        ///     The EmailConfirmed.
         /// </summary>
         public bool EmailConfirmed { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     PasswordHash
+        ///     The PasswordHash.
         /// </summary>
         public string PasswordHash { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     SecurityStamp
+        ///     The SecurityStamp.
         /// </summary>
         public string SecurityStamp { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     PhoneNumber
+        ///     The PhoneNumber.
         /// </summary>
         public string PhoneNumber { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     PhoneNumberConfirmed
+        ///     The PhoneNumberConfirmed.
         /// </summary>
         public bool PhoneNumberConfirmed { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     MobileNumber
+        ///     The MobileNumber.
         /// </summary>
         public string MobileNumber { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     TwoFactorEnabled
+        ///     The TwoFactorEnabled.
         /// </summary>
         public bool TwoFactorEnabled { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     LockoutEndDateUtc
+        ///     The LockoutEndDateUtc.
         /// </summary>
         public DateTime? LockoutEndDateUtc { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     LockoutEnabled
+        ///     The LockoutEnabled.
         /// </summary>
         public bool LockoutEnabled { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     AccessFailedCount
+        ///     The AccessFailedCount.
         /// </summary>
         public int AccessFailedCount { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     CreatedOn
+        ///     The CreatedOn.
         /// </summary>
         public DateTime CreatedOn { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     ChangedOn
+        ///     The ChangedOn.
         /// </summary>
         public DateTime ChangedOn { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     DeletedOn
+        ///     The DeletedOn.
         /// </summary>
         public DateTime? DeletedOn { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     DeactivatedDate
+        ///     The DeactivatedDate.
         /// </summary>
         public DateTime? DeactivatedDate { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Udf1
+        ///     The Udf1.
         /// </summary>
         public string Udf1 { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Udf2
+        ///     The Udf2.
         /// </summary>
         public string Udf2 { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Udf3
+        ///     The Udf3.
         /// </summary>
         public string Udf3 { get; set; }
-        
+
     }
-   
-                
-      
+
+
+
     /// <summary>
-    ///     <see cref="UserDaoExtension" />
+    ///     Instance of <see cref="UserDaoExtension" />.
     /// </summary> 
     public static class UserDaoExtension
     {
         /// <summary>
-        ///     Get Async
+        ///     Get Async.
         /// </summary>
+		/// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<UserDao> GetAsync(Guid key, string connectionString)
         {
             // Sql
             string sql = @"SELECT * FROM [Administration].[Users] WHERE Id=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryFirstAsync<UserDao>(sql, para);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-        
+
         /// <summary>
-        ///     All Async
+        ///     All Async.
         /// </summary>
+        /// <param name="connectionString" />
         public static async Task<IEnumerable<UserDao>> AllAsync(string connectionString)
         {
             // Sql
             var sql = "SELECT * FROM [Administration].[User]";
 
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryAsync<UserDao>(sql);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-       
+
         /// <summary>
-        ///     Delete Async
+        ///     Delete Async.
         /// </summary>
+        /// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<bool> DeleteAsync(Guid key, string connectionString)
         {
             // Sql
-            string sql=@"DELETE FROM [Administration].[Users] WHERE Id=@key";
+            string sql = @"DELETE FROM [Administration].[Users] WHERE Id=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     await con.ExecuteAsync(sql, para);
                     return true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return false;
                 }
-            }               
-        }    
+            }
+        }
 
         /// <summary>
-        ///     Insert Async
+        ///     Insert Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserDao> InsertAsync(this UserDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Administration].[Users] 
 				 ([Id], [UserName], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [MobileNumber], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [CreatedOn], [ChangedOn], [DeletedOn], [DeactivatedDate], [Udf1], [Udf2], [Udf3]) 
@@ -291,46 +310,46 @@ namespace Classlibrary.Dao.Administration
 				 VALUES(@Id, @UserName, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @MobileNumber, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @CreatedOn, @ChangedOn, @DeletedOn, @DeactivatedDate, @Udf1, @Udf2, @Udf3)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@UserName", entity.UserName);
-			para.Add("@Email", entity.Email);
-			para.Add("@EmailConfirmed", entity.EmailConfirmed);
-			para.Add("@PasswordHash", entity.PasswordHash);
-			para.Add("@SecurityStamp", entity.SecurityStamp);
-			para.Add("@PhoneNumber", entity.PhoneNumber);
-			para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
-			para.Add("@MobileNumber", entity.MobileNumber);
-			para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
-			para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
-			para.Add("@LockoutEnabled", entity.LockoutEnabled);
-			para.Add("@AccessFailedCount", entity.AccessFailedCount);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-			para.Add("@DeletedOn", entity.DeletedOn);
-			para.Add("@DeactivatedDate", entity.DeactivatedDate);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@UserName", entity.UserName);
+            para.Add("@Email", entity.Email);
+            para.Add("@EmailConfirmed", entity.EmailConfirmed);
+            para.Add("@PasswordHash", entity.PasswordHash);
+            para.Add("@SecurityStamp", entity.SecurityStamp);
+            para.Add("@PhoneNumber", entity.PhoneNumber);
+            para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
+            para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
+            para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
+            para.Add("@LockoutEnabled", entity.LockoutEnabled);
+            para.Add("@AccessFailedCount", entity.AccessFailedCount);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+            para.Add("@DeletedOn", entity.DeletedOn);
+            para.Add("@DeactivatedDate", entity.DeactivatedDate);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.QuerySingleAsync<Guid>(sql, para, tn);
                         tn.Commit();
                         entity.Id = item;
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -339,12 +358,14 @@ namespace Classlibrary.Dao.Administration
                 }
             }
         }
-     
+
         /// <summary>
-        ///     Insert TransactionScope Async
+        ///     Insert TransactionScope Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserDao> InsertTransactionScopeAsync(this UserDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Administration].[Users] 
 				 ([Id], [UserName], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [MobileNumber], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [CreatedOn], [ChangedOn], [DeletedOn], [DeactivatedDate], [Udf1], [Udf2], [Udf3]) 
@@ -352,41 +373,41 @@ namespace Classlibrary.Dao.Administration
 				 VALUES(@Id, @UserName, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @MobileNumber, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @CreatedOn, @ChangedOn, @DeletedOn, @DeactivatedDate, @Udf1, @Udf2, @Udf3)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@UserName", entity.UserName);
-			para.Add("@Email", entity.Email);
-			para.Add("@EmailConfirmed", entity.EmailConfirmed);
-			para.Add("@PasswordHash", entity.PasswordHash);
-			para.Add("@SecurityStamp", entity.SecurityStamp);
-			para.Add("@PhoneNumber", entity.PhoneNumber);
-			para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
-			para.Add("@MobileNumber", entity.MobileNumber);
-			para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
-			para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
-			para.Add("@LockoutEnabled", entity.LockoutEnabled);
-			para.Add("@AccessFailedCount", entity.AccessFailedCount);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-			para.Add("@DeletedOn", entity.DeletedOn);
-			para.Add("@DeactivatedDate", entity.DeactivatedDate);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@UserName", entity.UserName);
+            para.Add("@Email", entity.Email);
+            para.Add("@EmailConfirmed", entity.EmailConfirmed);
+            para.Add("@PasswordHash", entity.PasswordHash);
+            para.Add("@SecurityStamp", entity.SecurityStamp);
+            para.Add("@PhoneNumber", entity.PhoneNumber);
+            para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
+            para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
+            para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
+            para.Add("@LockoutEnabled", entity.LockoutEnabled);
+            para.Add("@AccessFailedCount", entity.AccessFailedCount);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+            para.Add("@DeletedOn", entity.DeletedOn);
+            para.Add("@DeactivatedDate", entity.DeactivatedDate);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.QuerySingleAsync<Guid>(sql, para);
                     entity.Id = item;
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
@@ -396,55 +417,57 @@ namespace Classlibrary.Dao.Administration
         }
 
         /// <summary>
-        ///     Update Async
+        ///     Update Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserDao> UpdateAsync(this UserDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Administration].[Users] 
+            string sql = @"UPDATE [Administration].[Users] 
 				 SET UserName=@UserName,Email=@Email,EmailConfirmed=@EmailConfirmed,PasswordHash=@PasswordHash,SecurityStamp=@SecurityStamp,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,MobileNumber=@MobileNumber,TwoFactorEnabled=@TwoFactorEnabled,LockoutEndDateUtc=@LockoutEndDateUtc,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn,DeletedOn=@DeletedOn,DeactivatedDate=@DeactivatedDate,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
 				 WHERE Id=@Id;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@UserName", entity.UserName);
-			para.Add("@Email", entity.Email);
-			para.Add("@EmailConfirmed", entity.EmailConfirmed);
-			para.Add("@PasswordHash", entity.PasswordHash);
-			para.Add("@SecurityStamp", entity.SecurityStamp);
-			para.Add("@PhoneNumber", entity.PhoneNumber);
-			para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
-			para.Add("@MobileNumber", entity.MobileNumber);
-			para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
-			para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
-			para.Add("@LockoutEnabled", entity.LockoutEnabled);
-			para.Add("@AccessFailedCount", entity.AccessFailedCount);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-			para.Add("@DeletedOn", entity.DeletedOn);
-			para.Add("@DeactivatedDate", entity.DeactivatedDate);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-            
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@UserName", entity.UserName);
+            para.Add("@Email", entity.Email);
+            para.Add("@EmailConfirmed", entity.EmailConfirmed);
+            para.Add("@PasswordHash", entity.PasswordHash);
+            para.Add("@SecurityStamp", entity.SecurityStamp);
+            para.Add("@PhoneNumber", entity.PhoneNumber);
+            para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
+            para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
+            para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
+            para.Add("@LockoutEnabled", entity.LockoutEnabled);
+            para.Add("@AccessFailedCount", entity.AccessFailedCount);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+            para.Add("@DeletedOn", entity.DeletedOn);
+            para.Add("@DeactivatedDate", entity.DeactivatedDate);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.ExecuteAsync(sql, para, tn);
                         tn.Commit();
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -455,59 +478,61 @@ namespace Classlibrary.Dao.Administration
         }
 
         /// <summary>
-        ///     Update TransactionScope Async
+        ///     Update TransactionScope Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserDao> UpdateTransactionScopeAsync(this UserDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Administration].[Users] 
+            string sql = @"UPDATE [Administration].[Users] 
 				 SET UserName=@UserName,Email=@Email,EmailConfirmed=@EmailConfirmed,PasswordHash=@PasswordHash,SecurityStamp=@SecurityStamp,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,MobileNumber=@MobileNumber,TwoFactorEnabled=@TwoFactorEnabled,LockoutEndDateUtc=@LockoutEndDateUtc,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn,DeletedOn=@DeletedOn,DeactivatedDate=@DeactivatedDate,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
 				 WHERE Id=@Id;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@Id", entity.Id);
-			para.Add("@UserName", entity.UserName);
-			para.Add("@Email", entity.Email);
-			para.Add("@EmailConfirmed", entity.EmailConfirmed);
-			para.Add("@PasswordHash", entity.PasswordHash);
-			para.Add("@SecurityStamp", entity.SecurityStamp);
-			para.Add("@PhoneNumber", entity.PhoneNumber);
-			para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
-			para.Add("@MobileNumber", entity.MobileNumber);
-			para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
-			para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
-			para.Add("@LockoutEnabled", entity.LockoutEnabled);
-			para.Add("@AccessFailedCount", entity.AccessFailedCount);
-			para.Add("@CreatedOn", entity.CreatedOn);
-			para.Add("@ChangedOn", entity.ChangedOn);
-			para.Add("@DeletedOn", entity.DeletedOn);
-			para.Add("@DeactivatedDate", entity.DeactivatedDate);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-                
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@Id", entity.Id);
+            para.Add("@UserName", entity.UserName);
+            para.Add("@Email", entity.Email);
+            para.Add("@EmailConfirmed", entity.EmailConfirmed);
+            para.Add("@PasswordHash", entity.PasswordHash);
+            para.Add("@SecurityStamp", entity.SecurityStamp);
+            para.Add("@PhoneNumber", entity.PhoneNumber);
+            para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
+            para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
+            para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
+            para.Add("@LockoutEnabled", entity.LockoutEnabled);
+            para.Add("@AccessFailedCount", entity.AccessFailedCount);
+            para.Add("@CreatedOn", entity.CreatedOn);
+            para.Add("@ChangedOn", entity.ChangedOn);
+            para.Add("@DeletedOn", entity.DeletedOn);
+            para.Add("@DeactivatedDate", entity.DeactivatedDate);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.ExecuteAsync(sql, para);
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
             }
-        }    
-    
-     }
+        }
+
+    }
 
 }
 

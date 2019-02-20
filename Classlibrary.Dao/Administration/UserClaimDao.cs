@@ -1,9 +1,9 @@
-#region Copyright Neutron © 2019
+#region Copyright TechNeutron © 2019
 
 //
 // NAME:			UserClaimDao.cs
 // AUTHOR:			Girish Girigowda
-// COMPANY:			Neutron
+// COMPANY:			TechNeutron
 // DATE:			2/20/2019
 // PURPOSE:			DAO
 //
@@ -25,154 +25,164 @@ using Dapper;
 namespace Classlibrary.Dao.Administration
 {
     /// <summary>
-    ///     <see cref="UserClaimDao" />
+    ///     Represents the <see cref="UserClaimDao" /> class.
     /// </summary> 
     [Serializable]
     public sealed class UserClaimDao
     {
-   
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="UserClaimDao" /> class.
         /// </summary>
         public UserClaimDao()
         {
         }
 
-        
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="UserClaimDao" /> class.
         /// </summary>
+        /// <param name="userId">The UserId.</param>
+        /// <param name="claimType">The ClaimType.</param>
+        /// <param name="claimValue">The ClaimValue.</param>
         public UserClaimDao(Guid userId, string claimType, string claimValue)
         {
             UserId = userId;
             ClaimType = claimType;
             ClaimValue = claimValue;
         }
-        
-    
-        
+
+
+
         /// <summary>
-        ///     Ci
+        ///     The Ci.
         /// </summary>
         public int Ci { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     UserId
+        ///     The UserId.
         /// </summary>
         public Guid UserId { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     ClaimType
+        ///     The ClaimType.
         /// </summary>
         public string ClaimType { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     ClaimValue
+        ///     The ClaimValue.
         /// </summary>
         public string ClaimValue { get; set; }
-        
+
     }
-   
-                
-      
+
+
+
     /// <summary>
-    ///     <see cref="UserClaimDaoExtension" />
+    ///     Instance of <see cref="UserClaimDaoExtension" />.
     /// </summary> 
     public static class UserClaimDaoExtension
     {
         /// <summary>
-        ///     Get Async
+        ///     Get Async.
         /// </summary>
+		/// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<UserClaimDao> GetAsync(Guid key, string connectionString)
         {
             // Sql
             string sql = @"SELECT * FROM [Administration].[UserClaim] WHERE UserId=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryFirstAsync<UserClaimDao>(sql, para);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-        
+
         /// <summary>
-        ///     All Async
+        ///     All Async.
         /// </summary>
+        /// <param name="connectionString" />
         public static async Task<IEnumerable<UserClaimDao>> AllAsync(string connectionString)
         {
             // Sql
             var sql = "SELECT * FROM [Administration].[UserClaim]";
 
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryAsync<UserClaimDao>(sql);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-       
+
         /// <summary>
-        ///     Delete Async
+        ///     Delete Async.
         /// </summary>
+        /// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<bool> DeleteAsync(Guid key, string connectionString)
         {
             // Sql
-            string sql=@"DELETE FROM [Administration].[UserClaim] WHERE UserId=@key";
+            string sql = @"DELETE FROM [Administration].[UserClaim] WHERE UserId=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     await con.ExecuteAsync(sql, para);
                     return true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return false;
                 }
-            }               
-        }    
+            }
+        }
 
         /// <summary>
-        ///     Insert Async
+        ///     Insert Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserClaimDao> InsertAsync(this UserClaimDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Administration].[UserClaim] 
 				 ([UserId], [ClaimType], [ClaimValue]) 
@@ -180,29 +190,29 @@ namespace Classlibrary.Dao.Administration
 				 VALUES(@UserId, @ClaimType, @ClaimValue)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@ClaimType", entity.ClaimType);
-			para.Add("@ClaimValue", entity.ClaimValue);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@ClaimType", entity.ClaimType);
+            para.Add("@ClaimValue", entity.ClaimValue);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.QuerySingleAsync<Guid>(sql, para, tn);
                         tn.Commit();
                         entity.UserId = item;
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -211,12 +221,14 @@ namespace Classlibrary.Dao.Administration
                 }
             }
         }
-     
+
         /// <summary>
-        ///     Insert TransactionScope Async
+        ///     Insert TransactionScope Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserClaimDao> InsertTransactionScopeAsync(this UserClaimDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Administration].[UserClaim] 
 				 ([UserId], [ClaimType], [ClaimValue]) 
@@ -224,24 +236,24 @@ namespace Classlibrary.Dao.Administration
 				 VALUES(@UserId, @ClaimType, @ClaimValue)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@ClaimType", entity.ClaimType);
-			para.Add("@ClaimValue", entity.ClaimValue);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@ClaimType", entity.ClaimType);
+            para.Add("@ClaimValue", entity.ClaimValue);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.QuerySingleAsync<Guid>(sql, para);
                     entity.UserId = item;
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
@@ -251,38 +263,40 @@ namespace Classlibrary.Dao.Administration
         }
 
         /// <summary>
-        ///     Update Async
+        ///     Update Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserClaimDao> UpdateAsync(this UserClaimDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Administration].[UserClaim] 
+            string sql = @"UPDATE [Administration].[UserClaim] 
 				 SET  
 				 WHERE UserId=@UserId;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@ClaimType", entity.ClaimType);
-			para.Add("@ClaimValue", entity.ClaimValue);
-            
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@ClaimType", entity.ClaimType);
+            para.Add("@ClaimValue", entity.ClaimValue);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.ExecuteAsync(sql, para, tn);
                         tn.Commit();
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -293,42 +307,44 @@ namespace Classlibrary.Dao.Administration
         }
 
         /// <summary>
-        ///     Update TransactionScope Async
+        ///     Update TransactionScope Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserClaimDao> UpdateTransactionScopeAsync(this UserClaimDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Administration].[UserClaim] 
+            string sql = @"UPDATE [Administration].[UserClaim] 
 				 SET  
 				 WHERE UserId=@UserId;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@ClaimType", entity.ClaimType);
-			para.Add("@ClaimValue", entity.ClaimValue);
-                
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@ClaimType", entity.ClaimType);
+            para.Add("@ClaimValue", entity.ClaimValue);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.ExecuteAsync(sql, para);
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
             }
-        }    
-    
-     }
+        }
+
+    }
 
 }
 

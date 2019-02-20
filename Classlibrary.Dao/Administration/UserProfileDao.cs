@@ -1,9 +1,9 @@
-#region Copyright Neutron © 2019
+#region Copyright TechNeutron © 2019
 
 //
 // NAME:			UserProfileDao.cs
 // AUTHOR:			Girish Girigowda
-// COMPANY:			Neutron
+// COMPANY:			TechNeutron
 // DATE:			2/20/2019
 // PURPOSE:			DAO
 //
@@ -25,23 +25,29 @@ using Dapper;
 namespace Classlibrary.Dao.Administration
 {
     /// <summary>
-    ///     <see cref="UserProfileDao" />
+    ///     Represents the <see cref="UserProfileDao" /> class.
     /// </summary> 
     [Serializable]
     public sealed class UserProfileDao
     {
-   
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="UserProfileDao" /> class.
         /// </summary>
         public UserProfileDao()
         {
         }
 
-        
+
         /// <summary>
-        ///     Constructor
+        ///     Creates an instance of <see cref="UserProfileDao" /> class.
         /// </summary>
+        /// <param name="userId">The UserId.</param>
+        /// <param name="firstName">The FirstName.</param>
+        /// <param name="lastName">The LastName.</param>
+        /// <param name="userTypeId">The UserTypeId.</param>
+        /// <param name="genderId">The GenderId.</param>
+        /// <param name="countryId">The CountryId.</param>
         public UserProfileDao(Guid userId, string firstName, string lastName, Guid userTypeId, Guid genderId, Guid countryId)
         {
             UserId = userId;
@@ -51,215 +57,222 @@ namespace Classlibrary.Dao.Administration
             GenderId = genderId;
             CountryId = countryId;
         }
-        
-    
-        
+
+
+
         /// <summary>
-        ///     Ci
+        ///     The Ci.
         /// </summary>
         public int Ci { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     UserId
+        ///     The UserId.
         /// </summary>
         public Guid UserId { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     FirstName
+        ///     The FirstName.
         /// </summary>
         public string FirstName { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     LastName
+        ///     The LastName.
         /// </summary>
         public string LastName { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     UserTypeId
+        ///     The UserTypeId.
         /// </summary>
         public Guid UserTypeId { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Title
+        ///     The Title.
         /// </summary>
         public string Title { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Suffix
+        ///     The Suffix.
         /// </summary>
         public string Suffix { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Prefix
+        ///     The Prefix.
         /// </summary>
         public string Prefix { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     PrefferedName
+        ///     The PrefferedName.
         /// </summary>
         public string PrefferedName { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Dob
+        ///     The Dob.
         /// </summary>
         public DateTime? Dob { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     GenderId
+        ///     The GenderId.
         /// </summary>
         public Guid GenderId { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     CountryId
+        ///     The CountryId.
         /// </summary>
         public Guid CountryId { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Organization
+        ///     The Organization.
         /// </summary>
         public string Organization { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Department
+        ///     The Department.
         /// </summary>
         public string Department { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     PictureUrl
+        ///     The PictureUrl.
         /// </summary>
         public string PictureUrl { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Udf1
+        ///     The Udf1.
         /// </summary>
         public string Udf1 { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Udf2
+        ///     The Udf2.
         /// </summary>
         public string Udf2 { get; set; }
-        
-        
+
+
         /// <summary>
-        ///     Udf3
+        ///     The Udf3.
         /// </summary>
         public string Udf3 { get; set; }
-        
+
     }
-   
-                
-      
+
+
+
     /// <summary>
-    ///     <see cref="UserProfileDaoExtension" />
+    ///     Instance of <see cref="UserProfileDaoExtension" />.
     /// </summary> 
     public static class UserProfileDaoExtension
     {
         /// <summary>
-        ///     Get Async
+        ///     Get Async.
         /// </summary>
+		/// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<UserProfileDao> GetAsync(Guid key, string connectionString)
         {
             // Sql
             string sql = @"SELECT * FROM [Administration].[UserProfile] WHERE UserId=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryFirstAsync<UserProfileDao>(sql, para);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-        
+
         /// <summary>
-        ///     All Async
+        ///     All Async.
         /// </summary>
+        /// <param name="connectionString" />
         public static async Task<IEnumerable<UserProfileDao>> AllAsync(string connectionString)
         {
             // Sql
             var sql = "SELECT * FROM [Administration].[UserProfile]";
 
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     return await con.QueryAsync<UserProfileDao>(sql);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
-            }               
+            }
         }
-       
+
         /// <summary>
-        ///     Delete Async
+        ///     Delete Async.
         /// </summary>
+        /// <param name="key" />
+        /// <param name="connectionString" />
         public static async Task<bool> DeleteAsync(Guid key, string connectionString)
         {
             // Sql
-            string sql=@"DELETE FROM [Administration].[UserProfile] WHERE UserId=@key";
+            string sql = @"DELETE FROM [Administration].[UserProfile] WHERE UserId=@key";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
+            DynamicParameters para = new DynamicParameters();
             para.Add("@key", key);
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
-                try 
+                try
                 {
                     await con.OpenAsync();
                     await con.ExecuteAsync(sql, para);
                     return true;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return false;
                 }
-            }               
-        }    
+            }
+        }
 
         /// <summary>
-        ///     Insert Async
+        ///     Insert Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserProfileDao> InsertAsync(this UserProfileDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Administration].[UserProfile] 
 				 ([UserId], [FirstName], [LastName], [UserTypeId], [Title], [Suffix], [Prefix], [PrefferedName], [Dob], [GenderId], [CountryId], [Organization], [Department], [PictureUrl], [Udf1], [Udf2], [Udf3]) 
@@ -267,43 +280,43 @@ namespace Classlibrary.Dao.Administration
 				 VALUES(@UserId, @FirstName, @LastName, @UserTypeId, @Title, @Suffix, @Prefix, @PrefferedName, @Dob, @GenderId, @CountryId, @Organization, @Department, @PictureUrl, @Udf1, @Udf2, @Udf3)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@FirstName", entity.FirstName);
-			para.Add("@LastName", entity.LastName);
-			para.Add("@UserTypeId", entity.UserTypeId);
-			para.Add("@Title", entity.Title);
-			para.Add("@Suffix", entity.Suffix);
-			para.Add("@Prefix", entity.Prefix);
-			para.Add("@PrefferedName", entity.PrefferedName);
-			para.Add("@Dob", entity.Dob);
-			para.Add("@GenderId", entity.GenderId);
-			para.Add("@CountryId", entity.CountryId);
-			para.Add("@Organization", entity.Organization);
-			para.Add("@Department", entity.Department);
-			para.Add("@PictureUrl", entity.PictureUrl);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@FirstName", entity.FirstName);
+            para.Add("@LastName", entity.LastName);
+            para.Add("@UserTypeId", entity.UserTypeId);
+            para.Add("@Title", entity.Title);
+            para.Add("@Suffix", entity.Suffix);
+            para.Add("@Prefix", entity.Prefix);
+            para.Add("@PrefferedName", entity.PrefferedName);
+            para.Add("@Dob", entity.Dob);
+            para.Add("@GenderId", entity.GenderId);
+            para.Add("@CountryId", entity.CountryId);
+            para.Add("@Organization", entity.Organization);
+            para.Add("@Department", entity.Department);
+            para.Add("@PictureUrl", entity.PictureUrl);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.QuerySingleAsync<Guid>(sql, para, tn);
                         tn.Commit();
                         entity.UserId = item;
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -312,12 +325,14 @@ namespace Classlibrary.Dao.Administration
                 }
             }
         }
-     
+
         /// <summary>
-        ///     Insert TransactionScope Async
+        ///     Insert TransactionScope Async.
         /// </summary>
+        /// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserProfileDao> InsertTransactionScopeAsync(this UserProfileDao entity, string connectionString)
-        {   
+        {
             // Sql
             string sql = @"INSERT INTO [Administration].[UserProfile] 
 				 ([UserId], [FirstName], [LastName], [UserTypeId], [Title], [Suffix], [Prefix], [PrefferedName], [Dob], [GenderId], [CountryId], [Organization], [Department], [PictureUrl], [Udf1], [Udf2], [Udf3]) 
@@ -325,38 +340,38 @@ namespace Classlibrary.Dao.Administration
 				 VALUES(@UserId, @FirstName, @LastName, @UserTypeId, @Title, @Suffix, @Prefix, @PrefferedName, @Dob, @GenderId, @CountryId, @Organization, @Department, @PictureUrl, @Udf1, @Udf2, @Udf3)";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@FirstName", entity.FirstName);
-			para.Add("@LastName", entity.LastName);
-			para.Add("@UserTypeId", entity.UserTypeId);
-			para.Add("@Title", entity.Title);
-			para.Add("@Suffix", entity.Suffix);
-			para.Add("@Prefix", entity.Prefix);
-			para.Add("@PrefferedName", entity.PrefferedName);
-			para.Add("@Dob", entity.Dob);
-			para.Add("@GenderId", entity.GenderId);
-			para.Add("@CountryId", entity.CountryId);
-			para.Add("@Organization", entity.Organization);
-			para.Add("@Department", entity.Department);
-			para.Add("@PictureUrl", entity.PictureUrl);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-        
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@FirstName", entity.FirstName);
+            para.Add("@LastName", entity.LastName);
+            para.Add("@UserTypeId", entity.UserTypeId);
+            para.Add("@Title", entity.Title);
+            para.Add("@Suffix", entity.Suffix);
+            para.Add("@Prefix", entity.Prefix);
+            para.Add("@PrefferedName", entity.PrefferedName);
+            para.Add("@Dob", entity.Dob);
+            para.Add("@GenderId", entity.GenderId);
+            para.Add("@CountryId", entity.CountryId);
+            para.Add("@Organization", entity.Organization);
+            para.Add("@Department", entity.Department);
+            para.Add("@PictureUrl", entity.PictureUrl);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.QuerySingleAsync<Guid>(sql, para);
                     entity.UserId = item;
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
@@ -366,52 +381,54 @@ namespace Classlibrary.Dao.Administration
         }
 
         /// <summary>
-        ///     Update Async
+        ///     Update Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserProfileDao> UpdateAsync(this UserProfileDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Administration].[UserProfile] 
+            string sql = @"UPDATE [Administration].[UserProfile] 
 				 SET FirstName=@FirstName,LastName=@LastName,UserTypeId=@UserTypeId,Title=@Title,Suffix=@Suffix,Prefix=@Prefix,PrefferedName=@PrefferedName,Dob=@Dob,GenderId=@GenderId,CountryId=@CountryId,Organization=@Organization,Department=@Department,PictureUrl=@PictureUrl,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
 				 WHERE UserId=@UserId;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@FirstName", entity.FirstName);
-			para.Add("@LastName", entity.LastName);
-			para.Add("@UserTypeId", entity.UserTypeId);
-			para.Add("@Title", entity.Title);
-			para.Add("@Suffix", entity.Suffix);
-			para.Add("@Prefix", entity.Prefix);
-			para.Add("@PrefferedName", entity.PrefferedName);
-			para.Add("@Dob", entity.Dob);
-			para.Add("@GenderId", entity.GenderId);
-			para.Add("@CountryId", entity.CountryId);
-			para.Add("@Organization", entity.Organization);
-			para.Add("@Department", entity.Department);
-			para.Add("@PictureUrl", entity.PictureUrl);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-            
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@FirstName", entity.FirstName);
+            para.Add("@LastName", entity.LastName);
+            para.Add("@UserTypeId", entity.UserTypeId);
+            para.Add("@Title", entity.Title);
+            para.Add("@Suffix", entity.Suffix);
+            para.Add("@Prefix", entity.Prefix);
+            para.Add("@PrefferedName", entity.PrefferedName);
+            para.Add("@Dob", entity.Dob);
+            para.Add("@GenderId", entity.GenderId);
+            para.Add("@CountryId", entity.CountryId);
+            para.Add("@Organization", entity.Organization);
+            para.Add("@Department", entity.Department);
+            para.Add("@PictureUrl", entity.PictureUrl);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
                 // Transaction
-                using(IDbTransaction tn = con.BeginTransaction())
+                using (IDbTransaction tn = con.BeginTransaction())
                 {
-                    try 
+                    try
                     {
                         var item = await con.ExecuteAsync(sql, para, tn);
                         tn.Commit();
                         return entity;
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         tn.Rollback();
-                        if(con.State != ConnectionState.Closed)
+                        if (con.State != ConnectionState.Closed)
                         {
                             con.Close();
                         }
@@ -422,56 +439,58 @@ namespace Classlibrary.Dao.Administration
         }
 
         /// <summary>
-        ///     Update TransactionScope Async
+        ///     Update TransactionScope Async.
         /// </summary>
+		/// <param name="entity" />
+        /// <param name="connectionString" />
         public static async Task<UserProfileDao> UpdateTransactionScopeAsync(this UserProfileDao entity, string connectionString)
-        {   
+        {
             // Sql
-            string sql=@"UPDATE [Administration].[UserProfile] 
+            string sql = @"UPDATE [Administration].[UserProfile] 
 				 SET FirstName=@FirstName,LastName=@LastName,UserTypeId=@UserTypeId,Title=@Title,Suffix=@Suffix,Prefix=@Prefix,PrefferedName=@PrefferedName,Dob=@Dob,GenderId=@GenderId,CountryId=@CountryId,Organization=@Organization,Department=@Department,PictureUrl=@PictureUrl,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
 				 WHERE UserId=@UserId;";
 
             // Parameters
-            DynamicParameters para =new DynamicParameters();
-			para.Add("@UserId", entity.UserId);
-			para.Add("@FirstName", entity.FirstName);
-			para.Add("@LastName", entity.LastName);
-			para.Add("@UserTypeId", entity.UserTypeId);
-			para.Add("@Title", entity.Title);
-			para.Add("@Suffix", entity.Suffix);
-			para.Add("@Prefix", entity.Prefix);
-			para.Add("@PrefferedName", entity.PrefferedName);
-			para.Add("@Dob", entity.Dob);
-			para.Add("@GenderId", entity.GenderId);
-			para.Add("@CountryId", entity.CountryId);
-			para.Add("@Organization", entity.Organization);
-			para.Add("@Department", entity.Department);
-			para.Add("@PictureUrl", entity.PictureUrl);
-			para.Add("@Udf1", entity.Udf1);
-			para.Add("@Udf2", entity.Udf2);
-			para.Add("@Udf3", entity.Udf3);
-                
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@UserId", entity.UserId);
+            para.Add("@FirstName", entity.FirstName);
+            para.Add("@LastName", entity.LastName);
+            para.Add("@UserTypeId", entity.UserTypeId);
+            para.Add("@Title", entity.Title);
+            para.Add("@Suffix", entity.Suffix);
+            para.Add("@Prefix", entity.Prefix);
+            para.Add("@PrefferedName", entity.PrefferedName);
+            para.Add("@Dob", entity.Dob);
+            para.Add("@GenderId", entity.GenderId);
+            para.Add("@CountryId", entity.CountryId);
+            para.Add("@Organization", entity.Organization);
+            para.Add("@Department", entity.Department);
+            para.Add("@PictureUrl", entity.PictureUrl);
+            para.Add("@Udf1", entity.Udf1);
+            para.Add("@Udf2", entity.Udf2);
+            para.Add("@Udf3", entity.Udf3);
+
             // Db Operation
-            using(var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(connectionString))
             {
                 await con.OpenAsync();
-                try 
+                try
                 {
                     var item = await con.ExecuteAsync(sql, para);
                     return entity;
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    if(con.State != ConnectionState.Closed)
+                    if (con.State != ConnectionState.Closed)
                     {
                         con.Close();
                     }
                     return null;
                 }
             }
-        }    
-    
-     }
+        }
+
+    }
 
 }
 
