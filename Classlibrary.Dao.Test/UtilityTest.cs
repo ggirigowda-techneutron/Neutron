@@ -10,7 +10,11 @@
 
 #endregion
 
+using System;
 using System.Linq;
+using Classlibrary.Crosscutting.Security;
+using Classlibrary.Crosscutting.Testing;
+using Classlibrary.Dao.Administration;
 using Classlibrary.Dao.Utility;
 using Xunit;
 using Xunit.Abstractions;
@@ -23,11 +27,17 @@ namespace Classlibrary.Dao.Test
     public class UtilityTest : TestBase
     {
         /// <summary>
+        ///     The password storage.
+        /// </summary>
+        private readonly PasswordStorage<UserDao> _passwordStorage;
+
+        /// <summary>
         ///     Creates an instance of <see cref="UtilityTest" /> class.
         /// </summary>
         /// <param name="output">The output.</param>
         public UtilityTest(ITestOutputHelper output) : base(output)
         {
+            _passwordStorage = new PasswordStorage<UserDao>();
         }
 
         /// <summary>
@@ -41,6 +51,26 @@ namespace Classlibrary.Dao.Test
             if (items.Any())
                 foreach (var item in items)
                     Output.WriteLine(item.Name);
+        }
+
+        /// <summary>
+        ///     Can create user.
+        /// </summary>
+        [Fact]
+        public async void CanCreateUser()
+        {
+            var random = DateTime.Now.ToString("MMddyyhhmmssfff");
+            var item = new UserDao(Guid.NewGuid()
+                    , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault()?.Item1}-{random}"
+                    , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault().Item1}-{random}@testing.com"
+                    , true
+                    , _passwordStorage.HashPassword(new UserDao(), "testdb99!!")
+                    , Guid.NewGuid().ToString()
+                    , true, false, false, 0
+                    , DateTime.UtcNow,
+                    DateTime.UtcNow);
+            var result = await item.InsertAsync(ConnectionString);
+            Assert.True(result != null && result.Id != Guid.Empty, "Failed to create user");
         }
     }
 }
