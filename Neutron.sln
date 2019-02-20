@@ -7,11 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Middleware", "Middleware", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware.WebApi", "Middleware.WebApi\Middleware.WebApi.csproj", "{7982656B-7190-4300-A5D0-0198CDC601D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware.Core.WebApi", "Middleware.Core.WebApi\Middleware.Core.WebApi.csproj", "{0D728911-8A96-42E3-BC4A-42322CDCEF89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Middleware.Core.WebApi", "Middleware.Core.WebApi\Middleware.Core.WebApi.csproj", "{0D728911-8A96-42E3-BC4A-42322CDCEF89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware.Core.WebApi.Gateway", "Middleware.Core.WebApi.Gateway\Middleware.Core.WebApi.Gateway.csproj", "{60C85202-43F0-45EC-A905-E8F5CBE49907}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Middleware.Core.WebApi.Gateway", "Middleware.Core.WebApi.Gateway\Middleware.Core.WebApi.Gateway.csproj", "{60C85202-43F0-45EC-A905-E8F5CBE49907}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Middleware.Core.WebApi.Auth", "Middleware.Core.WebApi.Auth\Middleware.Core.WebApi.Auth.csproj", "{8343DCAF-D864-41CB-8920-04D7E2448798}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Middleware.Core.WebApi.Auth", "Middleware.Core.WebApi.Auth\Middleware.Core.WebApi.Auth.csproj", "{8343DCAF-D864-41CB-8920-04D7E2448798}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Classlibrary", "Classlibrary", "{C0719322-096A-4C4E-BEB6-17177051A32A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{E468E4E3-4871-40EB-A167-6CF2E51E87C2}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database.Neutron", "Database.Neutron\Database.Neutron.sqlproj", "{6E906958-C5FB-457E-8B1C-A275F3C47B13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classlibrary.Dao", "Classlibrary.Dao\Classlibrary.Dao.csproj", "{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classlibrary.Dao.Test", "Classlibrary.Dao.Test\Classlibrary.Dao.Test.csproj", "{F858473C-A28E-4D9D-B7BE-007D3231CCB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +45,20 @@ Global
 		{8343DCAF-D864-41CB-8920-04D7E2448798}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8343DCAF-D864-41CB-8920-04D7E2448798}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8343DCAF-D864-41CB-8920-04D7E2448798}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E906958-C5FB-457E-8B1C-A275F3C47B13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E906958-C5FB-457E-8B1C-A275F3C47B13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E906958-C5FB-457E-8B1C-A275F3C47B13}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{6E906958-C5FB-457E-8B1C-A275F3C47B13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E906958-C5FB-457E-8B1C-A275F3C47B13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E906958-C5FB-457E-8B1C-A275F3C47B13}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F858473C-A28E-4D9D-B7BE-007D3231CCB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F858473C-A28E-4D9D-B7BE-007D3231CCB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F858473C-A28E-4D9D-B7BE-007D3231CCB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F858473C-A28E-4D9D-B7BE-007D3231CCB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +68,9 @@ Global
 		{0D728911-8A96-42E3-BC4A-42322CDCEF89} = {7335EC5F-B57E-4765-9ED6-7B8610BA2FF0}
 		{60C85202-43F0-45EC-A905-E8F5CBE49907} = {7335EC5F-B57E-4765-9ED6-7B8610BA2FF0}
 		{8343DCAF-D864-41CB-8920-04D7E2448798} = {7335EC5F-B57E-4765-9ED6-7B8610BA2FF0}
+		{6E906958-C5FB-457E-8B1C-A275F3C47B13} = {E468E4E3-4871-40EB-A167-6CF2E51E87C2}
+		{D4E3F0A6-41B6-4B1E-800D-927D1D27ECE7} = {C0719322-096A-4C4E-BEB6-17177051A32A}
+		{F858473C-A28E-4D9D-B7BE-007D3231CCB1} = {C0719322-096A-4C4E-BEB6-17177051A32A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E38A8C08-877B-4F5D-8FC1-47DDF9E95AE9}
