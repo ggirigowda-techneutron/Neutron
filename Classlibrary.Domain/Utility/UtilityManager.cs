@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Classlibrary.Dao.Linq2Db.Utility;
+using Classlibrary.Dao.Linq2Db;
 using LinqToDB;
 
 namespace Classlibrary.Domain.Utility
@@ -52,9 +52,9 @@ namespace Classlibrary.Domain.Utility
                 throw new ArgumentException("Invalid id", nameof(id));
             using (var db = new PRACTISEV1DB())
             {
-                var reference = await db.References.Where(x => x.Id == id).FirstOrDefaultAsync();
+                var reference = await db.Utility.References.Where(x => x.Id == id).FirstOrDefaultAsync();
                 var referenceItems =
-                    await db.ReferenceItems.Where(x => x.ReferenceId == id).AsQueryable().ToListAsync();
+                    await db.Utility.ReferenceItems.Where(x => x.ReferenceId == id).AsQueryable().ToListAsync();
                 return Aggregate(reference, referenceItems);
             }
         }
@@ -69,10 +69,11 @@ namespace Classlibrary.Domain.Utility
 
             using (var db = new PRACTISEV1DB())
             {
-                var references = await db.References.Where(x => x.Id != Guid.Empty).AsQueryable().ToListAsync();
+                var references = await db.Utility.References.Where(x => x.Id != Guid.Empty).AsQueryable().ToListAsync();
                 foreach (var reference in references)
                 {
-                    var referenceItems = await db.ReferenceItems.Where(x => x.ReferenceId == reference.Id).AsQueryable()
+                    var referenceItems = await db.Utility.ReferenceItems.Where(x => x.ReferenceId == reference.Id)
+                        .AsQueryable()
                         .ToListAsync();
                     items.Add(Aggregate(reference, referenceItems));
                 }
@@ -87,16 +88,16 @@ namespace Classlibrary.Domain.Utility
         /// <param name="parent">The parent.</param>
         /// <param name="child1">The child1</param>
         /// <returns></returns>
-        private Reference Aggregate(Dao.Linq2Db.Utility.Reference parent,
-            IEnumerable<Dao.Linq2Db.Utility.ReferenceItem> child1)
+        private Reference Aggregate(UtilitySchema.Reference parent,
+            IEnumerable<UtilitySchema.ReferenceItem> child1)
         {
             if (parent == null)
                 throw new ArgumentException("Invalid parent", nameof(parent));
             if (child1 == null || !child1.Any())
                 throw new ArgumentException("Invalid child1", nameof(child1));
-            var reference = Mapper.Map<Dao.Linq2Db.Utility.Reference, Reference>(parent);
+            var reference = Mapper.Map<UtilitySchema.Reference, Reference>(parent);
             var referenceItems =
-                Mapper.Map<IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>, IEnumerable<ReferenceItem>>(child1);
+                Mapper.Map<IEnumerable<UtilitySchema.ReferenceItem>, IEnumerable<ReferenceItem>>(child1);
             reference.ReferenceItems = new HashSet<ReferenceItem>(referenceItems.Select(x => x));
             return reference;
         }

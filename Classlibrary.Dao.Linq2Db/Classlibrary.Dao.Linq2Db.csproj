@@ -9,13 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Administration\Administration.tt">
+    <None Update="Neutron\Neutron.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Administration.generated.cs</LastGenOutput>
-    </None>
-    <None Update="Utility\Utility.tt">
-      <LastGenOutput>Utility.generated.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Neutron.generated.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -24,15 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Administration\Administration.generated.cs">
+    <Compile Update="Neutron\Neutron.generated.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Administration.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Utility\Utility.generated.cs">
-      <DependentUpon>Utility.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
+      <DependentUpon>Neutron.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

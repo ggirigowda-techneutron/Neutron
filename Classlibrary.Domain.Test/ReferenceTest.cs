@@ -50,12 +50,12 @@ namespace Classlibrary.Domain.Test
             // Map Reference to ReferenceDao
             var item = new Reference(Guid.NewGuid(), "Test", "US", DateTime.UtcNow, DateTime.UtcNow);
             Assert.True(item != null, "Failed to create a reference");
-            var mapped = Mapper.Map<Reference, Dao.Linq2Db.Utility.Reference>(item);
+            var mapped = Mapper.Map<Reference, Dao.Linq2Db.UtilitySchema.Reference>(item);
             Assert.True(mapped != null && mapped.Id == item.Id, "Failed to map");
             Output.WriteLine($"{mapped.Id}");
             // Map References to ReferenceDaos
             var items = Enumerable.Range(0, 10).Select(x => new Reference(Guid.NewGuid(), "Test", "US", DateTime.UtcNow, DateTime.UtcNow));
-            var mappeds = Mapper.Map<IEnumerable<Reference>, IEnumerable<Dao.Linq2Db.Utility.Reference>>(items);
+            var mappeds = Mapper.Map<IEnumerable<Reference>, IEnumerable<Dao.Linq2Db.UtilitySchema.Reference>>(items);
             Assert.True(mappeds.Count() > 9, "Failed to map enumerable");
         }
 

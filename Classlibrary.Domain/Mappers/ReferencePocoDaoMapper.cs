@@ -30,37 +30,37 @@ namespace Classlibrary.Domain.Mappers
         #region POCO
 
         /// <summary>
-        ///     Converts Dao.Linq2Db.Utility.Reference(s) to Reference(s). 
+        ///     Converts Dao.Linq2Db.UtilitySchema.Reference(s) to Reference(s). 
         /// </summary>
-        public class ReferencesConverter : ITypeConverter<IEnumerable<Dao.Linq2Db.Utility.Reference>, IEnumerable<Reference>>
+        public class ReferencesConverter : ITypeConverter<IEnumerable<Dao.Linq2Db.UtilitySchema.Reference>, IEnumerable<Reference>>
         {
             /// <summary>
-            ///     Convert Dao.Linq2Db.Utility.Reference(s) to Reference(s).
+            ///     Convert Dao.Linq2Db.UtilitySchema.Reference(s) to Reference(s).
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
             /// <returns>IEnumerable{Reference}.</returns>
-            public IEnumerable<Reference> Convert(IEnumerable<Dao.Linq2Db.Utility.Reference> source, IEnumerable<Reference> destination, ResolutionContext context)
+            public IEnumerable<Reference> Convert(IEnumerable<Dao.Linq2Db.UtilitySchema.Reference> source, IEnumerable<Reference> destination, ResolutionContext context)
             {
                 var from = source;
-                return from.Select(Mapper.Map<Dao.Linq2Db.Utility.Reference, Reference>).ToList();
+                return from.Select(Mapper.Map<Dao.Linq2Db.UtilitySchema.Reference, Reference>).ToList();
             }
         }
 
         /// <summary>
-        ///     Converts Dao.Linq2Db.Utility.Reference to Reference.
+        ///     Converts Dao.Linq2Db.UtilitySchema.Reference to Reference.
         /// </summary>
-        public class ReferenceConverter : ITypeConverter<Dao.Linq2Db.Utility.Reference, Reference>
+        public class ReferenceConverter : ITypeConverter<Dao.Linq2Db.UtilitySchema.Reference, Reference>
         {
             /// <summary>
-            ///     Convert Dao.Linq2Db.Utility.Reference to Reference.
+            ///     Convert Dao.Linq2Db.UtilitySchema.Reference to Reference.
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
             /// <returns>Reference.</returns>
-            public Reference Convert(Dao.Linq2Db.Utility.Reference source, Reference destination, ResolutionContext context)
+            public Reference Convert(Dao.Linq2Db.UtilitySchema.Reference source, Reference destination, ResolutionContext context)
             {
                 var from = source;
                 var item = new Reference
@@ -83,40 +83,40 @@ namespace Classlibrary.Domain.Mappers
         #region DAO
 
         /// <summary>
-        ///     Converts Reference(s) to Dao.Linq2Db.Utility.Reference(s). 
+        ///     Converts Reference(s) to Dao.Linq2Db.UtilitySchema.Reference(s). 
         /// </summary>
-        public class ReferenceDaosConverter : ITypeConverter<IEnumerable<Reference>, IEnumerable<Dao.Linq2Db.Utility.Reference>>
+        public class ReferenceDaosConverter : ITypeConverter<IEnumerable<Reference>, IEnumerable<Dao.Linq2Db.UtilitySchema.Reference>>
         {
             /// <summary>
-            ///     Convert Reference(s) to Dao.Linq2Db.Utility.Reference(s).
+            ///     Convert Reference(s) to Dao.Linq2Db.UtilitySchema.Reference(s).
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>IEnumerable{Dao.Linq2Db.Utility.Reference}.</returns>
-            public IEnumerable<Dao.Linq2Db.Utility.Reference> Convert(IEnumerable<Reference> source, IEnumerable<Dao.Linq2Db.Utility.Reference> destination, ResolutionContext context)
+            /// <returns>IEnumerable{Dao.Linq2Db.UtilitySchema.Reference}.</returns>
+            public IEnumerable<Dao.Linq2Db.UtilitySchema.Reference> Convert(IEnumerable<Reference> source, IEnumerable<Dao.Linq2Db.UtilitySchema.Reference> destination, ResolutionContext context)
             {
                 var from = source;
-                return from.Select(Mapper.Map<Reference, Dao.Linq2Db.Utility.Reference>).ToList();
+                return from.Select(Mapper.Map<Reference, Dao.Linq2Db.UtilitySchema.Reference>).ToList();
             }
         }
 
         /// <summary>
-        ///     Converts Reference to Dao.Linq2Db.Utility.Reference.
+        ///     Converts Reference to Dao.Linq2Db.UtilitySchema.Reference.
         /// </summary>
-        public class ReferenceDaoConverter : ITypeConverter<Reference, Dao.Linq2Db.Utility.Reference>
+        public class ReferenceDaoConverter : ITypeConverter<Reference, Dao.Linq2Db.UtilitySchema.Reference>
         {
             /// <summary>
-            ///     Convert Reference to Dao.Linq2Db.Utility.Reference.
+            ///     Convert Reference to Dao.Linq2Db.UtilitySchema.Reference.
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>Dao.Linq2Db.Utility.Reference.</returns>
-            public Dao.Linq2Db.Utility.Reference Convert(Reference source, Dao.Linq2Db.Utility.Reference destination, ResolutionContext context)
+            /// <returns>Dao.Linq2Db.UtilitySchema.Reference.</returns>
+            public Dao.Linq2Db.UtilitySchema.Reference Convert(Reference source, Dao.Linq2Db.UtilitySchema.Reference destination, ResolutionContext context)
             {
                 var from = source;
-                var item = new Dao.Linq2Db.Utility.Reference
+                var item = new Dao.Linq2Db.UtilitySchema.Reference
                 {
                     Ci = from.Ci,
                     Id = from.Id,

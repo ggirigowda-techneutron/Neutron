@@ -5,9 +5,10 @@
 <# //@ include file="$(ProjectDir)LinqToDB.Templates\LinqToDB.SqlServer.Tools.ttinclude" #>
 <# //@ include file="$(ProjectDir)LinqToDB.Templates\PluralizationService.ttinclude"     #>
 <#
-	NamespaceName = "Classlibrary.Dao.Linq2Db.Administration";
+	NamespaceName = "Classlibrary.Dao.Linq2Db";
 	IncludeDefaultSchema = true;  
-	GetSchemaOptions.IncludedSchemas = new[] { "Administration" };  
+	GenerateSchemaAsType = true;
+	//GetSchemaOptions.IncludedSchemas = new[] { "Administration" };  
 
 	// place optional configuration code here
 	// See https://linq2db.github.io/articles/Source/LinqToDB.Templates/README.html#configuring-generation-process
