@@ -82,7 +82,7 @@ namespace Classlibrary.Domain.Utility
         }
 
         /// <summary>
-        ///     Dao to aggregate aggregate.
+        ///     Dao to aggregate.
         /// </summary>
         /// <param name="parent">The parent.</param>
         /// <param name="child1">The child1</param>

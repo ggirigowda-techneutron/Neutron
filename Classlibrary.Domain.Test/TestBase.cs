@@ -48,25 +48,73 @@ namespace Classlibrary.Domain.Test
                 .AddJsonFile("appsettings.json")
                 .Build();
             ConnectionString = config["Data:DefaultConnection:ConnectionString"];
-            DataConnection.DefaultSettings = new Linq2DbSettings();
+            DataConnection.DefaultSettings = new Linq2DbSettings(ConnectionString);
         }
     }
 
+    /// <summary>
+    ///     Represents the <see cref="ConnectionStringSettings"/> class.
+    /// </summary>
     public class ConnectionStringSettings : IConnectionStringSettings
     {
+        /// <summary>
+        ///     The connection string.
+        /// </summary>
         public string ConnectionString { get; set; }
+
+        /// <summary>
+        ///     The Name.
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        ///     The Provider.
+        /// </summary>
         public string ProviderName { get; set; }
+
+        /// <summary>
+        ///     The is global?
+        /// </summary>
         public bool IsGlobal => false;
     }
 
+    /// <summary>
+    ///     Represents the <see cref="Linq2DbSettings"/> class.
+    /// </summary>
     public class Linq2DbSettings : ILinqToDBSettings
     {
+        /// <summary>
+        ///     The connection string. 
+        /// </summary>
+        private readonly string _connectionString;
+
+        /// <summary>
+        ///     Creates an instance of <see cref="Linq2DbSettings"/> class.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        public Linq2DbSettings(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
+        /// <summary>
+        ///     The data providers.
+        /// </summary>
         public IEnumerable<IDataProviderSettings> DataProviders => Enumerable.Empty<IDataProviderSettings>();
 
+        /// <summary>
+        ///     The default configuration.
+        /// </summary>
         public string DefaultConfiguration => "SqlServer";
+
+        /// <summary>
+        ///     The default data provider.
+        /// </summary>
         public string DefaultDataProvider => "SqlServer";
 
+        /// <summary>
+        ///     The  connection strings. 
+        /// </summary>
         public IEnumerable<IConnectionStringSettings> ConnectionStrings
         {
             get
@@ -76,7 +124,7 @@ namespace Classlibrary.Domain.Test
                     {
                         Name = "SqlServer",
                         ProviderName = "SqlServer",
-                        ConnectionString = @"Server=tcp:healthneutron-dev.database.windows.net,1433;Initial Catalog=PRACTISEV1;Persist Security Info=False;User ID=ggirigowda;Password=testdb99!!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+                        ConnectionString = _connectionString 
                     };
             }
         }
