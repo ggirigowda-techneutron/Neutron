@@ -14,7 +14,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Classlibrary.Dao.Utility;
 using Classlibrary.Domain.Utility;
 using Newtonsoft.Json;
 using Xunit;
@@ -51,12 +50,12 @@ namespace Classlibrary.Domain.Test
             // Map Reference to ReferenceDao
             var item = new Reference(Guid.NewGuid(), "Test", "US", DateTime.UtcNow, DateTime.UtcNow);
             Assert.True(item != null, "Failed to create a reference");
-            var mapped = Mapper.Map<Reference, ReferenceDao>(item);
+            var mapped = Mapper.Map<Reference, Dao.Linq2Db.Utility.Reference>(item);
             Assert.True(mapped != null && mapped.Id == item.Id, "Failed to map");
             Output.WriteLine($"{mapped.Id}");
             // Map References to ReferenceDaos
             var items = Enumerable.Range(0, 10).Select(x => new Reference(Guid.NewGuid(), "Test", "US", DateTime.UtcNow, DateTime.UtcNow));
-            var mappeds = Mapper.Map<IEnumerable<Reference>, IEnumerable<ReferenceDao>>(items);
+            var mappeds = Mapper.Map<IEnumerable<Reference>, IEnumerable<Dao.Linq2Db.Utility.Reference>>(items);
             Assert.True(mappeds.Count() > 9, "Failed to map enumerable");
         }
 

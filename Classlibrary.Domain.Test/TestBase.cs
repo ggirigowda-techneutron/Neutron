@@ -11,6 +11,10 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using LinqToDB.Configuration;
+using LinqToDB.Data;
 using Microsoft.Extensions.Configuration;
 using Xunit.Abstractions;
 
@@ -44,6 +48,37 @@ namespace Classlibrary.Domain.Test
                 .AddJsonFile("appsettings.json")
                 .Build();
             ConnectionString = config["Data:DefaultConnection:ConnectionString"];
+            DataConnection.DefaultSettings = new Linq2DbSettings();
+        }
+    }
+
+    public class ConnectionStringSettings : IConnectionStringSettings
+    {
+        public string ConnectionString { get; set; }
+        public string Name { get; set; }
+        public string ProviderName { get; set; }
+        public bool IsGlobal => false;
+    }
+
+    public class Linq2DbSettings : ILinqToDBSettings
+    {
+        public IEnumerable<IDataProviderSettings> DataProviders => Enumerable.Empty<IDataProviderSettings>();
+
+        public string DefaultConfiguration => "SqlServer";
+        public string DefaultDataProvider => "SqlServer";
+
+        public IEnumerable<IConnectionStringSettings> ConnectionStrings
+        {
+            get
+            {
+                yield return
+                    new ConnectionStringSettings
+                    {
+                        Name = "SqlServer",
+                        ProviderName = "SqlServer",
+                        ConnectionString = @"Server=tcp:healthneutron-dev.database.windows.net,1433;Initial Catalog=PRACTISEV1;Persist Security Info=False;User ID=ggirigowda;Password=testdb99!!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+                    };
+            }
         }
     }
 }

@@ -11,12 +11,12 @@
 #endregion
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 using System.Threading.Tasks;
-using Classlibrary.Dao.Utility;
+using AutoMapper;
+using Classlibrary.Dao.Linq2Db.Utility;
+using LinqToDB;
 
 namespace Classlibrary.Domain.Utility
 {
@@ -24,8 +24,7 @@ namespace Classlibrary.Domain.Utility
     ///     Represents the <see cref="UtilityManager" /> class.
     /// </summary>
     public class UtilityManager : IUtilityManager
-    { 
-
+    {
         /// <summary>
         ///     The connection string.
         /// </summary>
@@ -51,9 +50,13 @@ namespace Classlibrary.Domain.Utility
         {
             if (id == Guid.Empty)
                 throw new ArgumentException("Invalid id", nameof(id));
-            var reference = await ReferenceDaoExtension.GetAsync(id, _connectionString);
-            var referenceItems = await ReferenceItemDaoExtension.GetByReferenceAsync(id, _connectionString);
-            return Aggregate(reference, referenceItems);
+            using (var db = new PRACTISEV1DB())
+            {
+                var reference = await db.References.Where(x => x.Id == id).FirstOrDefaultAsync();
+                var referenceItems =
+                    await db.ReferenceItems.Where(x => x.ReferenceId == id).AsQueryable().ToListAsync();
+                return Aggregate(reference, referenceItems);
+            }
         }
 
         /// <summary>
@@ -63,12 +66,18 @@ namespace Classlibrary.Domain.Utility
         public async Task<IEnumerable<Reference>> All()
         {
             IList<Reference> items = new List<Reference>();
-            var references = await ReferenceDaoExtension.AllAsync(_connectionString);
-            foreach (var item in references)
+
+            using (var db = new PRACTISEV1DB())
             {
-                var referenceItems = await ReferenceItemDaoExtension.GetByReferenceAsync(item.Id, _connectionString);
-                items.Add(Aggregate(item, referenceItems));
+                var references = await db.References.Where(x => x.Id != Guid.Empty).AsQueryable().ToListAsync();
+                foreach (var reference in references)
+                {
+                    var referenceItems = await db.ReferenceItems.Where(x => x.ReferenceId == reference.Id).AsQueryable()
+                        .ToListAsync();
+                    items.Add(Aggregate(reference, referenceItems));
+                }
             }
+
             return items;
         }
 
@@ -78,14 +87,16 @@ namespace Classlibrary.Domain.Utility
         /// <param name="parent">The parent.</param>
         /// <param name="child1">The child1</param>
         /// <returns></returns>
-        private Reference Aggregate(ReferenceDao parent, IEnumerable<ReferenceItemDao> child1)
+        private Reference Aggregate(Dao.Linq2Db.Utility.Reference parent,
+            IEnumerable<Dao.Linq2Db.Utility.ReferenceItem> child1)
         {
-            if(parent == null)
+            if (parent == null)
                 throw new ArgumentException("Invalid parent", nameof(parent));
-            if(child1 == null || !child1.Any())
+            if (child1 == null || !child1.Any())
                 throw new ArgumentException("Invalid child1", nameof(child1));
-            var reference = Mapper.Map<ReferenceDao, Reference>(parent);
-            var referenceItems = Mapper.Map<IEnumerable<ReferenceItemDao>, IEnumerable<ReferenceItem>>(child1);
+            var reference = Mapper.Map<Dao.Linq2Db.Utility.Reference, Reference>(parent);
+            var referenceItems =
+                Mapper.Map<IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>, IEnumerable<ReferenceItem>>(child1);
             reference.ReferenceItems = new HashSet<ReferenceItem>(referenceItems.Select(x => x));
             return reference;
         }

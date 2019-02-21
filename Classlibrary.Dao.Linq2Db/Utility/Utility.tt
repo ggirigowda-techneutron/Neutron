@@ -1,0 +1,18 @@
+<#@ template language="C#" debug="True" hostSpecific="True"                           #>
+<#@ output extension=".generated.cs"                                                  #>
+<#@ include file="$(LinqToDBT4SqlServerTemplatesDirectory)LinqToDB.SqlServer.Tools.ttinclude" #>
+<#@ include file="$(LinqToDBT4SqlServerTemplatesDirectory)PluralizationService.ttinclude"     #>
+<# //@ include file="$(ProjectDir)LinqToDB.Templates\LinqToDB.SqlServer.Tools.ttinclude" #>
+<# //@ include file="$(ProjectDir)LinqToDB.Templates\PluralizationService.ttinclude"     #>
+<#
+	NamespaceName = "Classlibrary.Dao.Linq2Db.Utility";
+	IncludeDefaultSchema = true;  
+	GetSchemaOptions.IncludedSchemas = new[] { "Utility" };  
+
+	// place optional configuration code here
+	// See https://linq2db.github.io/articles/Source/LinqToDB.Templates/README.html#configuring-generation-process
+
+	LoadSqlServerMetadata(@"healthneutron-dev.database.windows.net,1433", "PRACTISEV1", "ggirigowda", "testdb99!!");
+
+	GenerateModel();
+#>

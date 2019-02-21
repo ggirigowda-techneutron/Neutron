@@ -12,7 +12,6 @@
 
 using System.Collections.Generic;
 using AutoMapper;
-using Classlibrary.Dao.Utility;
 using Classlibrary.Domain.Utility;
 
 namespace Classlibrary.Domain.Mappers
@@ -29,19 +28,19 @@ namespace Classlibrary.Domain.Mappers
         public MappingProfile()
         {
             // Reference
-            CreateMap<Reference, ReferenceDao>().ConvertUsing(new ReferencePocoDaoMapper.ReferenceDaoConverter());
-            CreateMap<IEnumerable<Reference>, IEnumerable<ReferenceDao>>()
+            CreateMap<Reference, Dao.Linq2Db.Utility.Reference>().ConvertUsing(new ReferencePocoDaoMapper.ReferenceDaoConverter());
+            CreateMap<IEnumerable<Reference>, IEnumerable<Dao.Linq2Db.Utility.Reference>>()
                 .ConvertUsing(new ReferencePocoDaoMapper.ReferenceDaosConverter());
-            CreateMap<ReferenceDao, Reference>().ConvertUsing(new ReferencePocoDaoMapper.ReferenceConverter());
-            CreateMap<IEnumerable<ReferenceDao>, IEnumerable<Reference>>()
+            CreateMap<Dao.Linq2Db.Utility.Reference, Reference>().ConvertUsing(new ReferencePocoDaoMapper.ReferenceConverter());
+            CreateMap<IEnumerable<Dao.Linq2Db.Utility.Reference>, IEnumerable<Reference>>()
                 .ConvertUsing(new ReferencePocoDaoMapper.ReferencesConverter());
 
             // ReferenceItem
-            CreateMap<ReferenceItem, ReferenceItemDao>().ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemDaoConverter());
-            CreateMap<IEnumerable<ReferenceItem>, IEnumerable<ReferenceItemDao>>()
+            CreateMap<ReferenceItem, Dao.Linq2Db.Utility.ReferenceItem>().ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemDaoConverter());
+            CreateMap<IEnumerable<ReferenceItem>, IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>>()
                 .ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemDaosConverter());
-            CreateMap<ReferenceItemDao, ReferenceItem>().ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemConverter());
-            CreateMap<IEnumerable<ReferenceItemDao>, IEnumerable<ReferenceItem>>()
+            CreateMap<Dao.Linq2Db.Utility.ReferenceItem, ReferenceItem>().ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemConverter());
+            CreateMap<IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>, IEnumerable<ReferenceItem>>()
                 .ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemsConverter());
         }
     }

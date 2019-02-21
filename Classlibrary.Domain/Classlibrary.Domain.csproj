@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Classlibrary.Dao\Classlibrary.Dao.csproj" />
+    <ProjectReference Include="..\Classlibrary.Dao.Linq2Db\Classlibrary.Dao.Linq2Db.csproj" />
     <ProjectReference Include="..\Classlibrary.Infrastructure\Classlibrary.Infrastructure.csproj" />
   </ItemGroup>
 

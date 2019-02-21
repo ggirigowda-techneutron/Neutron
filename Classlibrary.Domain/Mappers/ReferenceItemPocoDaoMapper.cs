@@ -16,7 +16,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using Classlibrary.Dao.Utility;
 using Classlibrary.Domain.Utility;
 
 #endregion
@@ -33,26 +32,26 @@ namespace Classlibrary.Domain.Mappers
         /// <summary>
         ///     Converts ReferenceItemDao(s) to ReferenceItem(s). 
         /// </summary>
-        public class ReferenceItemsConverter : ITypeConverter<IEnumerable<ReferenceItemDao>, IEnumerable<ReferenceItem>>
+        public class ReferenceItemsConverter : ITypeConverter<IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>, IEnumerable<ReferenceItem>>
         {
             /// <summary>
-            ///     Convert IEnumerable<ReferenceItemDao> to IEnumerable<ReferenceItem>.
+            ///     Convert IEnumerable<Dao.Linq2Db.Utility.ReferenceItem> to IEnumerable<ReferenceItem>.
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
             /// <returns>IEnumerable<ReferenceItem>.</returns>
-            public IEnumerable<ReferenceItem> Convert(IEnumerable<ReferenceItemDao> source, IEnumerable<ReferenceItem> destination, ResolutionContext context)
+            public IEnumerable<ReferenceItem> Convert(IEnumerable<Dao.Linq2Db.Utility.ReferenceItem> source, IEnumerable<ReferenceItem> destination, ResolutionContext context)
             {
                 var from = source;
-                return from.Select(Mapper.Map<ReferenceItemDao, ReferenceItem>).ToList();
+                return from.Select(Mapper.Map<Dao.Linq2Db.Utility.ReferenceItem, ReferenceItem>).ToList();
             }
         }
 
         /// <summary>
         ///     Converts ReferenceItemDao to ReferenceItem.
         /// </summary>
-        public class ReferenceItemConverter : ITypeConverter<ReferenceItemDao, ReferenceItem>
+        public class ReferenceItemConverter : ITypeConverter<Dao.Linq2Db.Utility.ReferenceItem, ReferenceItem>
         {
             /// <summary>
             ///     Convert ReferenceItemDao to ReferenceItem.
@@ -61,7 +60,7 @@ namespace Classlibrary.Domain.Mappers
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
             /// <returns>ReferenceItem.</returns>
-            public ReferenceItem Convert(ReferenceItemDao source, ReferenceItem destination, ResolutionContext context)
+            public ReferenceItem Convert(Dao.Linq2Db.Utility.ReferenceItem source, ReferenceItem destination, ResolutionContext context)
             {
                 var from = source;
                 var item = new ReferenceItem
@@ -89,26 +88,26 @@ namespace Classlibrary.Domain.Mappers
         /// <summary>
         ///     Converts ReferenceItem(s) to ReferenceItemDao(s). 
         /// </summary>
-        public class ReferenceItemDaosConverter : ITypeConverter<IEnumerable<ReferenceItem>, IEnumerable<ReferenceItemDao>>
+        public class ReferenceItemDaosConverter : ITypeConverter<IEnumerable<ReferenceItem>, IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>>
         {
             /// <summary>
-            ///     Convert IEnumerable<ReferenceItem> to IEnumerable<ReferenceItemDao>
+            ///     Convert IEnumerable<ReferenceItem> to IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>IEnumerable<ReferenceItemDao>.</returns>
-            public IEnumerable<ReferenceItemDao> Convert(IEnumerable<ReferenceItem> source, IEnumerable<ReferenceItemDao> destination, ResolutionContext context)
+            /// <returns>IEnumerable<Dao.Linq2Db.Utility.ReferenceItem>.</returns>
+            public IEnumerable<Dao.Linq2Db.Utility.ReferenceItem> Convert(IEnumerable<ReferenceItem> source, IEnumerable<Dao.Linq2Db.Utility.ReferenceItem> destination, ResolutionContext context)
             {
                 var from = source;
-                return from.Select(Mapper.Map<ReferenceItem, ReferenceItemDao>).ToList();
+                return from.Select(Mapper.Map<ReferenceItem, Dao.Linq2Db.Utility.ReferenceItem>).ToList();
             }
         }
 
         /// <summary>
         ///     Converts ReferenceItem to ReferenceItemDao.
         /// </summary>
-        public class ReferenceItemDaoConverter : ITypeConverter<ReferenceItem, ReferenceItemDao>
+        public class ReferenceItemDaoConverter : ITypeConverter<ReferenceItem, Dao.Linq2Db.Utility.ReferenceItem>
         {
             /// <summary>
             ///     Convert ReferenceItem to ReferenceItemDao.
@@ -117,10 +116,10 @@ namespace Classlibrary.Domain.Mappers
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
             /// <returns>ReferenceItemDao.</returns>
-            public ReferenceItemDao Convert(ReferenceItem source, ReferenceItemDao destination, ResolutionContext context)
+            public Dao.Linq2Db.Utility.ReferenceItem Convert(ReferenceItem source, Dao.Linq2Db.Utility.ReferenceItem destination, ResolutionContext context)
             {
                 var from = source;
-                var item = new ReferenceItemDao
+                var item = new Dao.Linq2Db.Utility.ReferenceItem
                 {
                     Ci = from.Ci,
                     Id = from.Id,
