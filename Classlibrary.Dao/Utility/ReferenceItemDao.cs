@@ -126,9 +126,7 @@ namespace Classlibrary.Dao.Utility
         public string Udf3 { get; set; }
 
     }
-
-
-
+    
     /// <summary>
     ///     Instance of <see cref="ReferenceItemDaoExtension" />.
     /// </summary> 
@@ -153,6 +151,37 @@ namespace Classlibrary.Dao.Utility
                 {
                     await con.OpenAsync();
                     return await con.QueryFirstAsync<ReferenceItemDao>(sql, para);
+                }
+                catch (Exception e)
+                {
+                    if (con.State != ConnectionState.Closed)
+                    {
+                        con.Close();
+                    }
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Get by reference Async.
+        /// </summary>
+        /// <param name="parent" />
+        /// <param name="connectionString" />
+        public static async Task<IEnumerable<ReferenceItemDao>> GetByReferenceAsync(Guid parent, string connectionString)
+        {
+            // Sql
+            var sql = "SELECT * FROM [Utility].[ReferenceItem] WHERE ReferenceId=@parent";
+
+            // Parameters
+            DynamicParameters para = new DynamicParameters();
+            para.Add("@parent", parent);
+            using (var con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    await con.OpenAsync();
+                    return await con.QueryAsync<ReferenceItemDao>(sql, para);
                 }
                 catch (Exception e)
                 {

@@ -16,6 +16,7 @@ using System.Linq;
 using AutoMapper;
 using Classlibrary.Dao.Utility;
 using Classlibrary.Domain.Utility;
+using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -24,18 +25,21 @@ namespace Classlibrary.Domain.Test
     /// <summary>
     ///     Represents the <see cref="ReferenceTest" /> class.
     /// </summary>
+    [Collection("TestCollection")]
     public class ReferenceTest : TestBase
     {
+        /// <summary>
+        ///     The utility manager.
+        /// </summary>
+        private readonly IUtilityManager _utilityManager;
+
         /// <summary>
         ///     Creates an instance of <see cref="ReferenceTest" /> class.
         /// </summary>
         /// <param name="output">The output.</param>
         public ReferenceTest(ITestOutputHelper output) : base(output)
         {
-            // Can also use assembly names:
-            Mapper.Initialize(cfg =>
-                cfg.AddProfiles("Classlibrary.Domain")
-            );
+            _utilityManager = new UtilityManager(ConnectionString);
         }
 
         /// <summary>
@@ -54,6 +58,17 @@ namespace Classlibrary.Domain.Test
             var items = Enumerable.Range(0, 10).Select(x => new Reference(Guid.NewGuid(), "Test", "US", DateTime.UtcNow, DateTime.UtcNow));
             var mappeds = Mapper.Map<IEnumerable<Reference>, IEnumerable<ReferenceDao>>(items);
             Assert.True(mappeds.Count() > 9, "Failed to map enumerable");
+        }
+
+        /// <summary>
+        ///     Can get references.
+        /// </summary>
+        [Fact]
+        public async void CanGetReferences()
+        {
+            var items = await _utilityManager.All();
+            Assert.True(items.Any(), "Failed to find references");
+            Output.WriteLine(JsonConvert.SerializeObject(items, Formatting.Indented));
         }
     }
 }

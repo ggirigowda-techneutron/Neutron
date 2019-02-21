@@ -25,18 +25,22 @@ namespace Classlibrary.Domain.Utility
     ///     Represents the <see cref="Reference" /> class.
     /// </summary> 
     [Serializable]
-    public sealed class Reference : Entity<Guid>, IReferenceAggregateRoot
+    public sealed class Reference : Entity<Guid>, IAggregateRoot
     {
         /// <summary>
         ///     Reference items.
         /// </summary>
-        private readonly HashSet<ReferenceItem> _referenceItems;
-        
+        private HashSet<ReferenceItem> _referenceItems;
+
         /// <summary>
         ///     Gets or sets the reference items.
         /// </summary>
-        public ISet<ReferenceItem> ReferenceItems => _referenceItems;
-
+        public ISet<ReferenceItem> ReferenceItems
+        {
+            get { return _referenceItems; }
+            set { _referenceItems = (HashSet<ReferenceItem>)value; }
+        }
+        
         /// <summary>
         ///     Creates an instance of <see cref="Reference" /> class.
         /// </summary>

@@ -35,6 +35,14 @@ namespace Classlibrary.Domain.Mappers
             CreateMap<ReferenceDao, Reference>().ConvertUsing(new ReferencePocoDaoMapper.ReferenceConverter());
             CreateMap<IEnumerable<ReferenceDao>, IEnumerable<Reference>>()
                 .ConvertUsing(new ReferencePocoDaoMapper.ReferencesConverter());
+
+            // ReferenceItem
+            CreateMap<ReferenceItem, ReferenceItemDao>().ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemDaoConverter());
+            CreateMap<IEnumerable<ReferenceItem>, IEnumerable<ReferenceItemDao>>()
+                .ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemDaosConverter());
+            CreateMap<ReferenceItemDao, ReferenceItem>().ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemConverter());
+            CreateMap<IEnumerable<ReferenceItemDao>, IEnumerable<ReferenceItem>>()
+                .ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemsConverter());
         }
     }
 }
