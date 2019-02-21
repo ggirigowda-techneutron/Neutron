@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 using AutoMapper;
 using Classlibrary.Dao.Linq2Db;
 using LinqToDB;
@@ -64,6 +65,131 @@ namespace Classlibrary.Domain.Administration
                         .ToListAsync();
                 }
                 return Mapper.Map<IEnumerable<AdministrationSchema.User>, IEnumerable<User>>(users);
+            }
+        }
+
+        /// <summary>
+        ///     Create a <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        public async Task<Guid> Create(User user, DependentTransaction transaction = null)
+        {
+            if(user.Id != Guid.Empty)
+                throw new InvalidOperationException("Id has to be empty guid");
+
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var id = Guid.NewGuid();
+                    var result = await db.Administration.Users
+                        .Value(c => c.Id, id)
+                        .Value(c => c.UserName, user.UserName)
+                        .Value(c => c.Email, user.Email)
+                        .Value(c => c.PasswordHash, user.PasswordHash)
+                        .Value(c => c.SecurityStamp, Guid.NewGuid().ToString())
+                        .Value(c => c.PhoneNumber, user.PhoneNumber)
+                        .Value(c => c.MobileNumber, user.MobileNumber)
+                        .Value(c => c.EmailConfirmed, true)
+                        .Value(c => c.PhoneNumberConfirmed, true)
+                        .Value(c => c.LockoutEnabled, false)
+                        .Value(c => c.AccessFailedCount, 0)
+                        .Value(c => c.TwoFactorEnabled, false)
+                        .Value(c => c.CreatedOn, DateTime.UtcNow)
+                        .InsertAsync();
+
+                    // Create user profile
+                    if(user.Profile != null)
+                        await Create(id, user.Profile, Transaction.Current.DependentClone(DependentCloneOption.BlockCommitUntilComplete));
+
+                    // Create user claim
+                    if(user.Claims != null && user.Claims.Any())
+                        await Create(id, user.Claims, Transaction.Current.DependentClone(DependentCloneOption.BlockCommitUntilComplete));
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return result == 1 ? id : Guid.Empty;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Create a <see cref="UserProfile"/>.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="userProfile">The user profile.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        public async Task<Guid> Create(Guid userId, UserProfile userProfile, DependentTransaction transaction = null)
+        {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user Id", nameof(userId));
+
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    await db.Administration.UserProfiles
+                        .Value(c => c.UserId, userId)
+                        .Value(c => c.LastName, userProfile.LastName)
+                        .Value(c => c.FirstName, userProfile.FirstName)
+                        .Value(c => c.UserTypeId, userProfile.UserTypeId)
+                        .Value(c => c.GenderId, userProfile.GenderId)
+                        .Value(c => c.CountryId, userProfile.CountryId)
+                        .InsertAsync();
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return userId;
+                }
+            }
+        }
+
+
+        /// <summary>
+        ///     Create a <see cref="UserClaim"/>.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="claims">The claims.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        public async Task Create(Guid userId, IEnumerable<UserClaim> claims, DependentTransaction transaction = null)
+        {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user Id", nameof(userId));
+
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    foreach (var userClaim in claims)
+                    {
+                        await db.Administration.UserClaims
+                            .Value(c => c.UserId, userId)
+                            .Value(c => c.ClaimType, userClaim.ClaimType)
+                            .Value(c => c.ClaimValue, userClaim.ClaimValue)
+                            .InsertAsync();
+                    }
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+                }
             }
         }
 

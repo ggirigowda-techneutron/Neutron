@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Classlibrary.Domain.Administration
 {
@@ -33,5 +34,31 @@ namespace Classlibrary.Domain.Administration
         /// </summary>
         /// <returns><see cref="IEnumerable{User}" />.</returns>
         Task<IEnumerable<User>> All();
+
+        /// <summary>
+        ///     Create a <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<Guid> Create(User user, DependentTransaction transaction = null);
+
+        /// <summary>
+        ///     Create a <see cref="UserProfile"/>.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="userProfile">The user profile.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<Guid> Create(Guid userId, UserProfile userProfile, DependentTransaction transaction = null);
+
+        /// <summary>
+        ///     Create a <see cref="UserClaim"/>.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="claims">The claims.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task Create(Guid userId, IEnumerable<UserClaim> claims, DependentTransaction transaction = null);
     }
 }

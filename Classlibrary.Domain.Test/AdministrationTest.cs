@@ -10,7 +10,10 @@
 
 #endregion
 
+using System;
 using System.Linq;
+using Classlibrary.Crosscutting.Security;
+using Classlibrary.Crosscutting.Testing;
 using Classlibrary.Domain.Administration;
 using Newtonsoft.Json;
 using Xunit;
@@ -25,17 +28,53 @@ namespace Classlibrary.Domain.Test
     public class AdministrationTest : TestBase
     {
         /// <summary>
-        ///     The administration manager.
-        /// </summary>
-        private readonly IAdministrationManager _administrationManager;
-
-        /// <summary>
         ///     Creates an instance of <see cref="AdministrationTest" /> class.
         /// </summary>
         /// <param name="output">The output.</param>
         public AdministrationTest(ITestOutputHelper output) : base(output)
         {
             _administrationManager = new AdministrationManager();
+            _passwordStorage = new PasswordStorage<User>();
+        }
+
+        /// <summary>
+        ///     The administration manager.
+        /// </summary>
+        private readonly IAdministrationManager _administrationManager;
+
+        /// <summary>
+        ///     The password storage.
+        /// </summary>
+        private readonly PasswordStorage<User> _passwordStorage;
+
+        /// <summary>
+        ///     Can create user.
+        /// </summary>
+        [Fact]
+        public async void CanCreateUser()
+        {
+            var random = DateTime.Now.ToString("MMddyyhhmmssfff");
+            var user = new User(Guid.Empty
+                , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault()?.Item1}-{random}"
+                , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault().Item1}-{random}@testing.com"
+                , true
+                , _passwordStorage.HashPassword(new User(), "testdb99!!")
+                , Guid.NewGuid().ToString()
+                , true
+                , false
+                , false
+                , 0
+                , DateTime.UtcNow
+                , DateTime.UtcNow);
+            user.Profile = new UserProfile(user.Id
+                , DataGenerator.GenerateRandomName(1).FirstOrDefault().Item1
+                , DataGenerator.GenerateRandomName(1).FirstOrDefault().Item2
+                , Guid.Parse("5ebf5cca-df92-49c6-ae5f-f3c9670bf9d3")
+                , Guid.Parse("2af6ff6c-8bb8-46f0-b27e-81def1b76b64")
+                , Guid.Parse("8a29a4ab-62a7-4a06-b2fa-46a40f449a84"));
+            user.Claims.Add(new UserClaim(user.Id, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "USER"));
+            var id = await _administrationManager.Create(user);
+            Assert.True(id != Guid.Empty, "Failed to create user");
         }
 
         /// <summary>

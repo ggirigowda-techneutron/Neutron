@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Classlibrary.Crosscutting\Classlibrary.Crosscutting.csproj" />
     <ProjectReference Include="..\Classlibrary.Domain\Classlibrary.Domain.csproj" />
   </ItemGroup>
 
