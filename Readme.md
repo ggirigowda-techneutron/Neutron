@@ -9,8 +9,9 @@
     ├── Classlibrary.Infrastructure - Infrastructure
     ├── Classlibrary.Crosscutting - Cross cutting utilities
     ├── Classlibrary.Dao - Data access objects with Dapper
-    ├── Classlibrary.Dao.Linq2Db - Data access objects with Linq2Db
     ├── ClassLibrary.Dao.Test - Xunit test for data access objects
+    ├── Classlibrary.Dao.Linq2Db - Data access objects with Linq2Db
+    ├── Classlibrary.Dao.Linq2Db.Test - Xunit test for data access objects with Linq2Db
     ├── ClassLibrary.Domain - Domain objects
     ├── ClassLibrary.Domain.Test - Xunit test for domain objects
 ├── Database

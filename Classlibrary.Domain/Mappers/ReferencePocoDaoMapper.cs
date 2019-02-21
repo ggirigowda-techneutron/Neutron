@@ -73,6 +73,7 @@ namespace Classlibrary.Domain.Mappers
                     Archived = from.Archived,
                     CreatedOn = from.CreatedOn,
                     ChangedOn = from.ChangedOn,
+                    ReferenceItems = from.ReferenceItems != null && from.ReferenceItems.Any() ? Mapper.Map<IEnumerable<Dao.Linq2Db.UtilitySchema.ReferenceItem>, IEnumerable<ReferenceItem>>(from.ReferenceItems).ToHashSet() : new HashSet<ReferenceItem>()
                 };
                 return item;
             }

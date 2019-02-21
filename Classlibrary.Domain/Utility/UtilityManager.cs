@@ -25,20 +25,6 @@ namespace Classlibrary.Domain.Utility
     /// </summary>
     public class UtilityManager : IUtilityManager
     {
-        /// <summary>
-        ///     The connection string.
-        /// </summary>
-        private readonly string _connectionString;
-
-        /// <summary>
-        ///     Creates an instance of <see cref="UtilityManager" /> class.
-        /// </summary>
-        /// <param name="connectionString">The connection string</param>
-        public UtilityManager(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
         #region Implementation of IReferenceManager
 
         /// <summary>
@@ -53,9 +39,8 @@ namespace Classlibrary.Domain.Utility
             using (var db = new PRACTISEV1DB())
             {
                 var reference = await db.Utility.References.Where(x => x.Id == id).FirstOrDefaultAsync();
-                var referenceItems =
-                    await db.Utility.ReferenceItems.Where(x => x.ReferenceId == id).AsQueryable().ToListAsync();
-                return Aggregate(reference, referenceItems);
+                reference.ReferenceItems = await db.Utility.ReferenceItems.Where(x => x.ReferenceId == id).AsQueryable().ToListAsync();
+                return Mapper.Map<UtilitySchema.Reference, Reference>(reference);
             }
         }
 
@@ -65,41 +50,17 @@ namespace Classlibrary.Domain.Utility
         /// <returns><see cref="IEnumerable{Reference}" />.</returns>
         public async Task<IEnumerable<Reference>> All()
         {
-            IList<Reference> items = new List<Reference>();
-
             using (var db = new PRACTISEV1DB())
             {
                 var references = await db.Utility.References.Where(x => x.Id != Guid.Empty).AsQueryable().ToListAsync();
                 foreach (var reference in references)
                 {
-                    var referenceItems = await db.Utility.ReferenceItems.Where(x => x.ReferenceId == reference.Id)
+                    reference.ReferenceItems = await db.Utility.ReferenceItems.Where(x => x.ReferenceId == reference.Id)
                         .AsQueryable()
                         .ToListAsync();
-                    items.Add(Aggregate(reference, referenceItems));
                 }
+                return Mapper.Map<IEnumerable<UtilitySchema.Reference>, IEnumerable<Reference>>(references);
             }
-
-            return items;
-        }
-
-        /// <summary>
-        ///     Dao to aggregate.
-        /// </summary>
-        /// <param name="parent">The parent.</param>
-        /// <param name="child1">The child1</param>
-        /// <returns></returns>
-        private Reference Aggregate(UtilitySchema.Reference parent,
-            IEnumerable<UtilitySchema.ReferenceItem> child1)
-        {
-            if (parent == null)
-                throw new ArgumentException("Invalid parent", nameof(parent));
-            if (child1 == null || !child1.Any())
-                throw new ArgumentException("Invalid child1", nameof(child1));
-            var reference = Mapper.Map<UtilitySchema.Reference, Reference>(parent);
-            var referenceItems =
-                Mapper.Map<IEnumerable<UtilitySchema.ReferenceItem>, IEnumerable<ReferenceItem>>(child1);
-            reference.ReferenceItems = new HashSet<ReferenceItem>(referenceItems.Select(x => x));
-            return reference;
         }
 
         #endregion

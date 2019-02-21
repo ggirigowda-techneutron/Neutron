@@ -38,7 +38,7 @@ namespace Classlibrary.Domain.Test
         /// <param name="output">The output.</param>
         public ReferenceTest(ITestOutputHelper output) : base(output)
         {
-            _utilityManager = new UtilityManager(ConnectionString);
+            _utilityManager = new UtilityManager();
         }
 
         /// <summary>
