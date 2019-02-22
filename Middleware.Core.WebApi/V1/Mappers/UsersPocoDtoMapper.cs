@@ -86,7 +86,9 @@ namespace Middleware.Core.WebApi.V1.Mappers
                     DeactivatedDate = from.DeactivatedDate,
                     Udf1 = from.Udf1,
                     Udf2 = from.Udf2,
-                    Udf3 = from.Udf3
+                    Udf3 = from.Udf3,
+                    Profile = from.Profile != null ? Mapper.Map<UserProfileDto, UserProfile>(from.Profile) : null,
+                    Claims = from.Claims != null && from.Claims.Any() ? Mapper.Map<IEnumerable<UserClaimDto>, IEnumerable<UserClaim>>(from.Claims).ToHashSet() : new HashSet<UserClaim>()
                 };
                 return item;
             }
