@@ -1,4 +1,16 @@
-﻿namespace Middleware.Core.WebApi.Auth
+﻿#region Copyright Neutron © 2019
+
+//
+// NAME:			TokenDetail.cs
+// AUTHOR:			Girish Girigowda
+// COMPANY:			Neutron
+// DATE:			2/20/2019
+// PURPOSE:			
+//
+
+#endregion
+
+namespace Middleware.Core.WebApi.Auth
 {
     /// <summary>
     ///     Represents the token details for authorization.

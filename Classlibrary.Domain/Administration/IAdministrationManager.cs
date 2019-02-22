@@ -30,6 +30,13 @@ namespace Classlibrary.Domain.Administration
         Task<User> Get(Guid id);
 
         /// <summary>
+        ///     Get user by user name.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <returns></returns>
+        Task<User> Get(string userName);
+
+        /// <summary>
         ///     All users.
         /// </summary>
         /// <returns><see cref="IEnumerable{User}" />.</returns>

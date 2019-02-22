@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using LinqToDB.Data;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Middleware.Core.WebApi.Auth
 {
@@ -37,6 +40,13 @@ namespace Middleware.Core.WebApi.Auth
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.Configure<TokenDetail>(Configuration.GetSection("TokenDetail"));
+            services.Configure<ConnectionStringSettings>(Configuration.GetSection("ConnectionStringSettings"));
+
+            // Set the default connection string
+            DataConnection.DefaultSettings = new Linq2DbSettings(services.BuildServiceProvider().GetService<IOptions<ConnectionStringSettings>>());
+
+            // Can also use multiple assembly names:
+            Mapper.Initialize(cfg => cfg.AddProfiles("Classlibrary.Domain"));
         }
 
         /// <summary>

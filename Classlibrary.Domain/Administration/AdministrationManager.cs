@@ -49,6 +49,24 @@ namespace Classlibrary.Domain.Administration
         }
 
         /// <summary>
+        ///     Get user by user name.
+        /// </summary>
+        /// <param name="userName">The user name.</param>
+        /// <returns></returns>
+        public async Task<User> Get(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+                throw new ArgumentException("Invalid user name", nameof(userName));
+            using (var db = new PRACTISEV1DB())
+            {
+                var user = await db.Administration.Users.Where(x => x.UserName == userName).FirstOrDefaultAsync();
+                user.UserProfile = await db.Administration.UserProfiles.Where(x => x.UserId == user.Id).FirstOrDefaultAsync();
+                user.UserClaims = await db.Administration.UserClaims.Where(x => x.UserId == user.Id).AsQueryable().ToListAsync();
+                return Mapper.Map<AdministrationSchema.User, User>(user);
+            }
+        }
+
+        /// <summary>
         ///     All users.
         /// </summary>
         /// <returns><see cref="IEnumerable{User}" />.</returns>
