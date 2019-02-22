@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Middleware.Core.WebApi.V2.Models;
 
 namespace Middleware.Core.WebApi.V2.Controllers
 {
     /// <summary>
-    /// Sample versioning REST API
+    /// Sample version REST API.
     /// </summary>
+    [Authorize(Roles = "ADMIN")]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -28,14 +30,14 @@ namespace Middleware.Core.WebApi.V2.Controllers
                     Id= Guid.Parse("6fab57fb-0c61-4552-9490-9161c2466e62"),
                     Name = "Product 1",
                     Price = 2.3,
-                    Description = "This is product 1 descritpion"
+                    Description = "This is product 1 description"
                 },
                 new ProductModel()
                 {
                     Id= Guid.Parse("6648eb0f-0e54-4f6a-93a1-2825e3c8fc9d"),
                     Name = "Product 2",
                     Price = 3.4,
-                    Description = "This is product 2 descritpion"
+                    Description = "This is product 2 description"
                 }
             }.ToArray());
         }

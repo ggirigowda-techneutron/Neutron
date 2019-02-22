@@ -98,7 +98,7 @@
         </member>
         <member name="T:Middleware.Core.WebApi.V2.Controllers.ProductsController">
             <summary>
-            Sample versioning REST API
+            Sample version REST API.
             </summary>
         </member>
         <member name="M:Middleware.Core.WebApi.V2.Controllers.ProductsController.Get">
