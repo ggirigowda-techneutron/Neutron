@@ -41,6 +41,11 @@
             </summary>
             <param name="id"></param>
         </member>
+        <member name="T:Middleware.Core.WebApi.Startup">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.Startup"/> class.
+            </summary>
+        </member>
         <member name="T:Middleware.Core.WebApi.SwaggerDefaultValues">
             <summary>
             Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
@@ -57,7 +62,7 @@
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.ProductsController">
             <summary>
-            Sample versioning REST API
+            Sample version REST API
             </summary>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.ProductsController.Get">
@@ -73,17 +78,22 @@
         </member>
         <member name="P:Middleware.Core.WebApi.V1.Models.ProductModel.Id">
             <summary>
-            Unique identifier of the product
+            Unique identifier of the product.
             </summary>
         </member>
         <member name="P:Middleware.Core.WebApi.V1.Models.ProductModel.Name">
             <summary>
-            Descriptive name of the product
+            Descriptive name of the product.
             </summary>
         </member>
         <member name="P:Middleware.Core.WebApi.V1.Models.ProductModel.Price">
             <summary>
-            Product price
+            Product price.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.ProductModel.UserName">
+            <summary>
+                The user name of the requestor.
             </summary>
         </member>
         <member name="T:Middleware.Core.WebApi.V2.Controllers.ProductsController">

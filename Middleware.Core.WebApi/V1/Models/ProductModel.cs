@@ -8,18 +8,23 @@ namespace Middleware.Core.WebApi.V1.Models
     public class ProductModel
     {
         /// <summary>
-        /// Unique identifier of the product
+        /// Unique identifier of the product.
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        /// Descriptive name of the product
+        /// Descriptive name of the product.
         /// </summary>
         public String Name { get; set; }
 
         /// <summary>
-        /// Product price
+        /// Product price.
         /// </summary>
         public double Price { get; set; }
+
+        /// <summary>
+        ///     The user name of the requestor.
+        /// </summary>
+        public string UserName { get; set; }
     }
 }

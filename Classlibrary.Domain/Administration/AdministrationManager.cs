@@ -39,12 +39,12 @@ namespace Classlibrary.Domain.Administration
                 throw new ArgumentException("Invalid id", nameof(id));
             using (var db = new PRACTISEV1DB())
             {
-                var user = await db.Administration.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
-                user.UserProfile =
-                    await db.Administration.UserProfiles.Where(x => x.UserId == id).FirstOrDefaultAsync();
-                user.UserClaims = await db.Administration.UserClaims.Where(x => x.UserId == id).AsQueryable()
+                var items = await db.GetTable<AdministrationSchema.User>().Where(x => x.Id == id)
+                    .LeftJoin(db.GetTable<AdministrationSchema.UserProfile>(),
+                        (user, userProfile) => user.Id == userProfile.UserId, (user, userProfile) => new { user, userProfile })
+                    .GroupJoin(db.GetTable<AdministrationSchema.UserClaim>(), user => user.user.Id, userClaim => userClaim.UserId, (parent, claims) => Build(parent.user, parent.userProfile, claims.ToList()))
                     .ToListAsync();
-                return Mapper.Map<AdministrationSchema.User, User>(user);
+                return items.FirstOrDefault();
             }
         }
 
@@ -59,10 +59,12 @@ namespace Classlibrary.Domain.Administration
                 throw new ArgumentException("Invalid user name", nameof(userName));
             using (var db = new PRACTISEV1DB())
             {
-                var user = await db.Administration.Users.Where(x => x.UserName == userName).FirstOrDefaultAsync();
-                user.UserProfile = await db.Administration.UserProfiles.Where(x => x.UserId == user.Id).FirstOrDefaultAsync();
-                user.UserClaims = await db.Administration.UserClaims.Where(x => x.UserId == user.Id).AsQueryable().ToListAsync();
-                return Mapper.Map<AdministrationSchema.User, User>(user);
+                var items = await db.GetTable<AdministrationSchema.User>().Where(x => x.UserName == userName)
+                    .LeftJoin(db.GetTable<AdministrationSchema.UserProfile>(),
+                        (user, userProfile) => user.Id == userProfile.UserId, (user, userProfile) => new { user, userProfile })
+                    .GroupJoin(db.GetTable<AdministrationSchema.UserClaim>(), user => user.user.Id, userClaim => userClaim.UserId, (parent, claims) => Build(parent.user, parent.userProfile, claims.ToList()))
+                    .ToListAsync();
+                return items.FirstOrDefault();
             }
         }
 
@@ -74,15 +76,12 @@ namespace Classlibrary.Domain.Administration
         {
             using (var db = new PRACTISEV1DB())
             {
-                var users = await db.Administration.Users.Where(x => x.Id != Guid.Empty).AsQueryable().ToListAsync();
-                foreach (var user in users)
-                {
-                    user.UserProfile =
-                        await db.Administration.UserProfiles.Where(x => x.UserId == user.Id).FirstOrDefaultAsync();
-                    user.UserClaims = await db.Administration.UserClaims.Where(x => x.UserId == user.Id).AsQueryable()
-                        .ToListAsync();
-                }
-                return Mapper.Map<IEnumerable<AdministrationSchema.User>, IEnumerable<User>>(users);
+                var items = await db.GetTable<AdministrationSchema.User>().Take(1000)
+                    .LeftJoin(db.GetTable<AdministrationSchema.UserProfile>(),
+                        (user, userProfile) => user.Id == userProfile.UserId, (user, userProfile) => new { user, userProfile })
+                    .GroupJoin(db.GetTable<AdministrationSchema.UserClaim>(), user => user.user.Id, userClaim => userClaim.UserId, (parent, claims) => Build(parent.user, parent.userProfile, claims.ToList()))
+                    .ToListAsync();
+                return items;
             }
         }
 
@@ -306,6 +305,38 @@ namespace Classlibrary.Domain.Administration
                     return result == 1;
                 }
             }
+        }
+
+        #endregion
+
+        #region Private methods
+
+        /// <summary>
+        ///     Build user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="profile">The profile.</param>
+        /// <returns></returns>
+        private static User Build(AdministrationSchema.User user, AdministrationSchema.UserProfile profile)
+        {
+            if (user != null)
+                user.UserProfile = profile;
+            return Mapper.Map<AdministrationSchema.User, User>(user);
+        }
+
+        /// <summary>
+        ///     Build User.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="profile">The profile.</param>
+        /// <param name="claims">The claim.</param>
+        /// <returns></returns>
+        private static User Build(AdministrationSchema.User user, AdministrationSchema.UserProfile profile, IEnumerable<AdministrationSchema.UserClaim> claims)
+        {
+            var item = Build(user, profile);
+            if (item != null)
+                item.Claims = Mapper.Map<IEnumerable<AdministrationSchema.UserClaim>, IEnumerable<UserClaim>>(claims).ToHashSet();
+            return item;
         }
 
         #endregion

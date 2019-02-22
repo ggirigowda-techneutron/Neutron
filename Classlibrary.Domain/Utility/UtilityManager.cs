@@ -38,9 +38,10 @@ namespace Classlibrary.Domain.Utility
                 throw new ArgumentException("Invalid id", nameof(id));
             using (var db = new PRACTISEV1DB())
             {
-                var reference = await db.Utility.References.Where(x => x.Id == id).FirstOrDefaultAsync();
-                reference.ReferenceItems = await db.Utility.ReferenceItems.Where(x => x.ReferenceId == id).AsQueryable().ToListAsync();
-                return Mapper.Map<UtilitySchema.Reference, Reference>(reference);
+                var items = await db.GetTable<UtilitySchema.Reference>().Where(x => x.Id == id)
+                    .GroupJoin(db.GetTable<UtilitySchema.ReferenceItem>(), reference => reference.Id, referenceItem => referenceItem.ReferenceId, (parent, child) => Build(parent, child.ToList()))
+                    .ToListAsync();
+                return items.FirstOrDefault();
             }
         }
 
@@ -52,17 +53,31 @@ namespace Classlibrary.Domain.Utility
         {
             using (var db = new PRACTISEV1DB())
             {
-                var references = await db.Utility.References.Where(x => x.Id != Guid.Empty).AsQueryable().ToListAsync();
-                foreach (var reference in references)
-                {
-                    reference.ReferenceItems = await db.Utility.ReferenceItems.Where(x => x.ReferenceId == reference.Id)
-                        .AsQueryable()
-                        .ToListAsync();
-                }
-                return Mapper.Map<IEnumerable<UtilitySchema.Reference>, IEnumerable<Reference>>(references);
+                var items = await db.GetTable<UtilitySchema.Reference>()
+                    .GroupJoin(db.GetTable<UtilitySchema.ReferenceItem>(), reference => reference.Id, referenceItem => referenceItem.ReferenceId, (parent, child) => Build(parent, child.ToList()))
+                    .ToListAsync();
+                return items;
             }
         }
 
         #endregion
+
+        #region Private methods
+
+        /// <summary>
+        ///     Build Reference.
+        /// </summary>
+        /// <param name="reference">The reference.</param>
+        /// <param name="referenceItems">The reference items.</param>
+        /// <returns></returns>
+        private static Reference Build(UtilitySchema.Reference reference, IEnumerable<UtilitySchema.ReferenceItem> referenceItems)
+        {
+            if (reference != null)
+                reference.ReferenceItems = referenceItems;
+            return Mapper.Map<UtilitySchema.Reference, Reference>(reference);
+        }
+
+        #endregion
+
     }
 }

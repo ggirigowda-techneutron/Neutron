@@ -1,21 +1,34 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Middleware.Core.WebApi
 {
+    /// <summary>
+    ///     Represents the <see cref="Startup"/> class.
+    /// </summary>
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            // Setup Ocelot
+            var builder = new ConfigurationBuilder();
+            Configuration = builder.SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables().Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -67,6 +80,30 @@ namespace Middleware.Core.WebApi
                         $"{GetType().Assembly.GetName().Name}.xml"
                     ));
                 });
+            // Token 
+            var tokenDetail = Configuration.GetSection("TokenDetail");
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(tokenDetail["Secret"]));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = tokenDetail["Issuer"],
+                ValidateAudience = true,
+                ValidAudience = tokenDetail["Audience"],
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero,
+                RequireExpirationTime = true,
+            };
+            services.AddAuthentication(o =>
+                {
+                    o.DefaultAuthenticateScheme = "DefaultAuthKey";
+                })
+                .AddJwtBearer("DefaultAuthKey", x =>
+                {
+                    x.RequireHttpsMetadata = true;
+                    x.TokenValidationParameters = tokenValidationParameters;
+                });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -84,13 +121,47 @@ namespace Middleware.Core.WebApi
             app.UseSwaggerUI(
                 options =>
                 {
-                    //Build a swagger endpoint for each discovered API version  
+                    // Build a swagger endpoint for each discovered API version  
                     foreach (var description in provider.ApiVersionDescriptions)
                         options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
                             description.GroupName.ToUpperInvariant());
                 });
 
+            app.UseExceptionHandler(appBuilder =>
+            {
+                appBuilder.Use(async (context, next) =>
+                {
+                    var error = context.Features[typeof(IExceptionHandlerFeature)] as IExceptionHandlerFeature;
 
+                    // When authorization has failed, should return a json message to client
+                    if (error?.Error is SecurityTokenException || error?.Error.Message.Contains("authenticationScheme") == true)
+                    {
+                        context.Response.StatusCode = 401;
+                        context.Response.ContentType = "application/json";
+
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                        {
+                            State = "Unauthorized",
+                            Msg = "token expired/invalid"
+                        }));
+                    }
+                    // When other error, return a error message json to client
+                    else if (error?.Error != null)
+                    {
+                        context.Response.StatusCode = 500;
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync(JsonConvert.SerializeObject(new
+                        {
+                            State = "Internal Server Error",
+                            Msg = error.Error.Message
+                        }));
+                    }
+                    // When no error, do next.
+                    else await next();
+                });
+            });
+
+            app.UseAuthentication();
             app.UseMvc();
         }
     }

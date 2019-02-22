@@ -79,27 +79,34 @@ namespace Middleware.Core.WebApi.Auth.Controllers
 
                 var claims = new List<Claim>
                 {
-                    new Claim(JwtRegisteredClaimNames.Sub, found.UserName),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64),
+                    new Claim(JwtRegisteredClaimNames.Sub, found.UserName), // The subject of the token.
+                    new Claim(JwtRegisteredClaimNames.Email, found.Email),  // The email.
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // Unique identifier for the JWT. Can be used to prevent the JWT from being replayed.This is helpful for a one time use token.
+                    new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64) // The time the JWT was issued. Can be used to determine the age of the JWT.
                 };
                 claims.AddRange(found.Claims.Select(foundClaim => new Claim(foundClaim.ClaimType, foundClaim.ClaimValue)));
+                claims.Add(new Claim(ClaimTypes.Email, found.Email));
+                // Include the user Id, FirstName in the claims
+                claims.Add(found.Profile != null
+                    ? new Claim(ClaimTypes.Name, $"{found.Profile.FirstName} {found.Profile.LastName}")
+                    : new Claim(ClaimTypes.Name, $"{found.UserName}"));
 
                 var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_settings.Value.Secret));
 
                 var jwt = new JwtSecurityToken(
-                    _settings.Value.Issuer,
-                    _settings.Value.Audience,
-                    claims,
-                    now,
-                    now.Add(TimeSpan.FromMinutes(2)),
-                    new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+                    issuer: _settings.Value.Issuer,
+                    audience:_settings.Value.Audience, 
+                    claims: claims,
+                    notBefore: now,
+                    // Token will live 60 minutes
+                    expires: now.Add(TimeSpan.FromMinutes(60)),
+                    signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
                 );
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
                 var responseJson = new
                 {
                     access_token = encodedJwt,
-                    expires_in = (int)TimeSpan.FromMinutes(2).TotalSeconds
+                    expires_in = (int)TimeSpan.FromMinutes(60).TotalSeconds
                 };
                 return new JsonResult(responseJson);
             }
