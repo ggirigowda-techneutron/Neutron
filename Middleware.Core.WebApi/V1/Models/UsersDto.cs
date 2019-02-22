@@ -14,6 +14,7 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 #endregion
@@ -26,12 +27,23 @@ namespace Middleware.Core.WebApi.V1.Models
     [Serializable]
     public sealed class UserDto
     {
+
+        /// <summary>
+        ///     The claims.
+        /// </summary>
+        public IList<UserClaimDto> Claims { get; set; }
+
+        /// <summary>
+        ///     The profile.
+        /// </summary>
+        public UserProfileDto Profile { get; set; }
    
         /// <summary>
         ///     Creates an instance of <see cref="UserDto" /> class.
         /// </summary>
         public UserDto()
         {
+            Claims = new List<UserClaimDto>();
         }
 
         
@@ -50,7 +62,7 @@ namespace Middleware.Core.WebApi.V1.Models
 		/// <param name="accessFailedCount">The AccessFailedCount.</param>
 		/// <param name="createdOn">The CreatedOn.</param>
 		/// <param name="changedOn">The ChangedOn.</param>
-        public UserDto(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn)
+        public UserDto(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn) : this()
         {
             Id = id;
             UserName = userName;
@@ -96,13 +108,17 @@ namespace Middleware.Core.WebApi.V1.Models
 	    [Display(Name = "EmailConfirmed")]
 		[Required(ErrorMessage = "EmailConfirmed is required")]
 		public bool EmailConfirmed { get; set; }
-        
-        
+
+        /// <summary>
+        ///     The Password.
+        /// </summary>
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
         /// <summary>
         ///     The PasswordHash.
         /// </summary>
-	    [Display(Name = "PasswordHash")]
-		[Required(ErrorMessage = "PasswordHash is required")]
+        [Display(Name = "PasswordHash")]
 		public string PasswordHash { get; set; }
         
         
@@ -110,7 +126,6 @@ namespace Middleware.Core.WebApi.V1.Models
         ///     The SecurityStamp.
         /// </summary>
 	    [Display(Name = "SecurityStamp")]
-		[Required(ErrorMessage = "SecurityStamp is required")]
 		public string SecurityStamp { get; set; }
         
         
@@ -179,7 +194,6 @@ namespace Middleware.Core.WebApi.V1.Models
         ///     The ChangedOn.
         /// </summary>
 	    [Display(Name = "ChangedOn")]
-		[Required(ErrorMessage = "ChangedOn is required")]
 		public DateTime ChangedOn { get; set; }
         
         

@@ -28,6 +28,10 @@ namespace Middleware.Core.WebApi
     /// </summary>
     public class Startup
     {
+        /// <summary>
+        ///     Creates an instance of <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
             // Setup Ocelot
@@ -39,7 +43,10 @@ namespace Middleware.Core.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        ///     This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore()
@@ -63,7 +70,7 @@ namespace Middleware.Core.WebApi
             services.AddSwaggerGen(
                 options =>
                 {
-                    // Resolve the temprary IApiVersionDescriptionProvider service  
+                    // Resolve the temporary IApiVersionDescriptionProvider service  
                     var provider = services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
 
                     // Add a swagger document for each discovered API version  
@@ -77,7 +84,7 @@ namespace Middleware.Core.WebApi
                                 : GetType().Assembly.GetCustomAttribute<AssemblyDescriptionAttribute>().Description
                         });
 
-                    // Add a custom filter for settint the default values  
+                    // Add a custom filter for setting the default values  
                     options.OperationFilter<SwaggerDefaultValues>();
 
                     // Tells swagger to pick up the output XML document file  
@@ -117,7 +124,7 @@ namespace Middleware.Core.WebApi
             DataConnection.DefaultSettings = new Linq2DbSettings(services.BuildServiceProvider().GetService<IOptions<ConnectionStringSettings>>());
 
             // Can also use multiple assembly names:
-            Mapper.Initialize(cfg => cfg.AddProfiles("Classlibrary.Domain"));
+            Mapper.Initialize(cfg => cfg.AddProfiles("Classlibrary.Domain", "Middleware.Core.WebApi"));
 
             // Setup DI's
             services.AddSingleton<IUtilityManager>(new UtilityManager());
@@ -125,7 +132,13 @@ namespace Middleware.Core.WebApi
             services.AddSingleton<Microsoft.AspNetCore.Identity.IPasswordHasher<User>>(new PasswordStorage<User>());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        /// <summary>
+        ///     This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        /// <param name="provider"></param>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())

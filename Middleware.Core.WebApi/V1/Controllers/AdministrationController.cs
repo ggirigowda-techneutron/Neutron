@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Middleware.Core.WebApi.V1.Models;
+using AutoMapper;
 
 namespace Middleware.Core.WebApi.V1.Controllers
 {
@@ -85,10 +86,17 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = "ADMIN")]
         [HttpPost("user/create")]
-        public async Task<Guid> CreateUser(UserDto model)
+        public async Task<IActionResult> CreateUser(UserDto model)
         {
-            if (ModelState.IsValid) return Guid.Empty;
-            return Guid.Empty;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var item = Mapper.Map<UserDto, User>(model);
+            item.CreatedOn = DateTime.UtcNow;
+            item.PasswordHash = _passwordStorage.HashPassword(item, model.Password);
+            var result = await _administrationManager.Create(item);
+            return new JsonResult(result);
         }
     }
 }
