@@ -121,6 +121,52 @@
             <param name="operation">The operation to apply the filter to.</param>
             <param name="context">The current operation filter context.</param>
         </member>
+        <member name="T:Middleware.Core.WebApi.V1.Controllers.AdministrationController">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.AdministrationController" /> controller.
+            </summary>
+        </member>
+        <member name="F:Middleware.Core.WebApi.V1.Controllers.AdministrationController._administrationManager">
+            <summary>
+                The administration manager.
+            </summary>
+        </member>
+        <member name="F:Middleware.Core.WebApi.V1.Controllers.AdministrationController._passwordStorage">
+            <summary>
+                The password storage.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.#ctor(Classlibrary.Domain.Administration.IAdministrationManager,Microsoft.AspNetCore.Identity.IPasswordHasher{Classlibrary.Domain.Administration.User})">
+            <summary>
+                Initializes a new instance of the <see cref="T:Middleware.Core.WebApi.V1.Controllers.AdministrationController" /> controller.
+            </summary>
+            <param name="administrationManager"></param>
+            <param name="passwordStorage"></param>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)">
+            <summary>
+                Get a user.
+            </summary>
+            <returns>
+                <see cref="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)" />
+            </returns>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.Users">
+            <summary>
+                Get all the users.
+            </summary>
+            <returns>
+                <see cref="T:System.Collections.Generic.IEnumerable`1" />
+            </returns>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.CreateUser(Middleware.Core.WebApi.V1.Models.UserDto)">
+            <summary>
+                Create user.
+            </summary>
+            <returns>
+                <see cref="T:System.Guid" />
+            </returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.ProductsController">
             <summary>
             Sample version REST API
@@ -142,22 +188,22 @@
                 The utility manager.
             </summary>
         </member>
-        <member name="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.#ctor">
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.#ctor(Classlibrary.Domain.Utility.IUtilityManager)">
             <summary>
                 Initializes a new instance of the <see cref="T:Middleware.Core.WebApi.V1.Controllers.UtilityController" /> controller.
             </summary>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.Reference(System.Guid)">
             <summary>
-                Retrieve a reference
+                Get a reference,
             </summary>
-            <returns>Collection of ProductModel instances</returns>
+            <returns><see cref="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.Reference(System.Guid)"/></returns>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.References">
             <summary>
-                Retrieve all the references
+               Get all the references,
             </summary>
-            <returns>Collection of ProductModel instances</returns>
+            <returns><see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Models.ProductModel">
             <summary>
@@ -182,6 +228,272 @@
         <member name="P:Middleware.Core.WebApi.V1.Models.ProductModel.UserName">
             <summary>
                 The user name of the requestor.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Models.UserClaimDto">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Models.UserClaimDto" /> class.
+            </summary> 
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserClaimDto.#ctor">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserClaimDto" /> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserClaimDto.#ctor(System.Guid,System.String,System.String)">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserClaimDto" /> class.
+            </summary>
+            <param name="userId">The UserId.</param>
+            <param name="claimType">The ClaimType.</param>
+            <param name="claimValue">The ClaimValue.</param>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserClaimDto.UserId">
+            <summary>
+                The UserId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserClaimDto.ClaimType">
+            <summary>
+                The ClaimType.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserClaimDto.ClaimValue">
+            <summary>
+                The ClaimValue.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Models.UserProfileDto">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Models.UserProfileDto" /> class.
+            </summary> 
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserProfileDto.#ctor">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserProfileDto" /> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserProfileDto.#ctor(System.Guid,System.String,System.String,System.Guid,System.Guid,System.Guid)">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserProfileDto" /> class.
+            </summary>
+            <param name="userId">The UserId.</param>
+            <param name="firstName">The FirstName.</param>
+            <param name="lastName">The LastName.</param>
+            <param name="userTypeId">The UserTypeId.</param>
+            <param name="genderId">The GenderId.</param>
+            <param name="countryId">The CountryId.</param>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.UserId">
+            <summary>
+                The UserId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.FirstName">
+            <summary>
+                The FirstName.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.LastName">
+            <summary>
+                The LastName.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.UserTypeId">
+            <summary>
+                The UserTypeId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Title">
+            <summary>
+                The Title.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Suffix">
+            <summary>
+                The Suffix.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Prefix">
+            <summary>
+                The Prefix.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.PrefferedName">
+            <summary>
+                The PrefferedName.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Dob">
+            <summary>
+                The Dob.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.GenderId">
+            <summary>
+                The GenderId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.CountryId">
+            <summary>
+                The CountryId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Organization">
+            <summary>
+                The Organization.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Department">
+            <summary>
+                The Department.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.PictureUrl">
+            <summary>
+                The PictureUrl.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Udf1">
+            <summary>
+                The Udf1.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Udf2">
+            <summary>
+                The Udf2.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserProfileDto.Udf3">
+            <summary>
+                The Udf3.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Models.UserDto">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Models.UserDto" /> class.
+            </summary> 
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserDto.#ctor">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserDto" /> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserDto.#ctor(System.Guid,System.String,System.String,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.DateTime,System.DateTime)">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserDto" /> class.
+            </summary>
+            <param name="id">The Id.</param>
+            <param name="userName">The UserName.</param>
+            <param name="email">The Email.</param>
+            <param name="emailConfirmed">The EmailConfirmed.</param>
+            <param name="passwordHash">The PasswordHash.</param>
+            <param name="securityStamp">The SecurityStamp.</param>
+            <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
+            <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
+            <param name="lockoutEnabled">The LockoutEnabled.</param>
+            <param name="accessFailedCount">The AccessFailedCount.</param>
+            <param name="createdOn">The CreatedOn.</param>
+            <param name="changedOn">The ChangedOn.</param>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.Id">
+            <summary>
+                The Id.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.UserName">
+            <summary>
+                The UserName.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.Email">
+            <summary>
+                The Email.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.EmailConfirmed">
+            <summary>
+                The EmailConfirmed.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.PasswordHash">
+            <summary>
+                The PasswordHash.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.SecurityStamp">
+            <summary>
+                The SecurityStamp.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.PhoneNumber">
+            <summary>
+                The PhoneNumber.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.PhoneNumberConfirmed">
+            <summary>
+                The PhoneNumberConfirmed.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.MobileNumber">
+            <summary>
+                The MobileNumber.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.TwoFactorEnabled">
+            <summary>
+                The TwoFactorEnabled.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.LockoutEndDateUtc">
+            <summary>
+                The LockoutEndDateUtc.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.LockoutEnabled">
+            <summary>
+                The LockoutEnabled.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.AccessFailedCount">
+            <summary>
+                The AccessFailedCount.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.CreatedOn">
+            <summary>
+                The CreatedOn.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.ChangedOn">
+            <summary>
+                The ChangedOn.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.DeletedOn">
+            <summary>
+                The DeletedOn.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.DeactivatedDate">
+            <summary>
+                The DeactivatedDate.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.Udf1">
+            <summary>
+                The Udf1.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.Udf2">
+            <summary>
+                The Udf2.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.Udf3">
+            <summary>
+                The Udf3.
             </summary>
         </member>
         <member name="T:Middleware.Core.WebApi.V2.Controllers.ProductsController">

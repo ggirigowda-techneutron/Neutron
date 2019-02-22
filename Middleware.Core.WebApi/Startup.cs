@@ -15,6 +15,9 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
+using Classlibrary.Crosscutting.Security;
+using Classlibrary.Domain.Administration;
+using Classlibrary.Domain.Utility;
 using LinqToDB.Data;
 using Microsoft.Extensions.Options;
 
@@ -115,6 +118,11 @@ namespace Middleware.Core.WebApi
 
             // Can also use multiple assembly names:
             Mapper.Initialize(cfg => cfg.AddProfiles("Classlibrary.Domain"));
+
+            // Setup DI's
+            services.AddSingleton<IUtilityManager>(new UtilityManager());
+            services.AddSingleton<IAdministrationManager>(new AdministrationManager());
+            services.AddSingleton<Microsoft.AspNetCore.Identity.IPasswordHasher<User>>(new PasswordStorage<User>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

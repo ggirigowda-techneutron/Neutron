@@ -34,17 +34,17 @@ namespace Middleware.Core.WebApi.V1.Controllers
         private readonly IUtilityManager _utilityManager;
 
         /// <summary>
-        ///     Initializes a new instance of the <see cref=" UtilityController" /> controller.
+        ///     Initializes a new instance of the <see cref="UtilityController" /> controller.
         /// </summary>
-        public UtilityController()
+        public UtilityController(IUtilityManager utilityManager)
         {
-            _utilityManager = new UtilityManager();
+            _utilityManager = utilityManager;
         }
 
         /// <summary>
-        ///     Retrieve a reference
+        ///     Get a reference,
         /// </summary>
-        /// <returns>Collection of ProductModel instances</returns>
+        /// <returns><see cref="Reference"/></returns>
         [HttpGet("reference/{id}")]
         public async Task<Reference> Reference(Guid id)
         {
@@ -52,9 +52,9 @@ namespace Middleware.Core.WebApi.V1.Controllers
         }
 
         /// <summary>
-        ///     Retrieve all the references
+        ///    Get all the references,
         /// </summary>
-        /// <returns>Collection of ProductModel instances</returns>
+        /// <returns><see cref="IEnumerable{Reference}"/></returns>
         [HttpGet("references")]
         public async Task<IEnumerable<Reference>> References()
         {
