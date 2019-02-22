@@ -78,6 +78,38 @@ namespace Classlibrary.Domain.Test
         }
 
         /// <summary>
+        ///     Can update user.
+        /// </summary>
+        [Fact]
+        public async void CanUpdateUser()
+        {
+            var random = DateTime.Now.ToString("MMddyyhhmmssfff");
+            // Create
+            var user = new User(Guid.Empty
+                , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault()?.Item1}-{random}"
+                , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault().Item1}-{random}@testing.com"
+                , true
+                , _passwordStorage.HashPassword(new User(), "testdb99!!")
+                , Guid.NewGuid().ToString()
+                , true
+                , false
+                , false
+                , 0
+                , DateTime.UtcNow
+                , DateTime.UtcNow);
+            user.PhoneNumber = "123-456-7890";
+            var id = await _administrationManager.Create(user);
+            Assert.True(id != Guid.Empty, "Failed to create user");
+            // Find
+            var found = await _administrationManager.Get(id);
+            Assert.True(found != null, "Failed to find user");
+            // Update
+            found.PhoneNumber = "999-999-9999";
+            var update = await _administrationManager.Update(found);
+            Assert.True(update, "Failed to update user");
+        }
+
+        /// <summary>
         ///     Can get users.
         /// </summary>
         [Fact]

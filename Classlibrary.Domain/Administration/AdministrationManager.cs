@@ -121,6 +121,39 @@ namespace Classlibrary.Domain.Administration
         }
 
         /// <summary>
+        ///     Update a <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="transaction">Thr transaction.</param>
+        /// <returns></returns>
+        public async Task<bool> Update(User user, DependentTransaction transaction = null)
+        {
+            if(user.Id == Guid.Empty)
+                throw new InvalidOperationException("Invalid user Id");
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var result = await db.Administration.Users.Where(x => x.Id == user.Id)
+                        .Set(u => u.Email, user.Email)
+                        .Set(u => u.PhoneNumber, user.PhoneNumber)
+                        .Set(u => u.MobileNumber, user.MobileNumber)
+                        .Set(u => u.ChangedOn, DateTime.UtcNow)
+                        .UpdateAsync();
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return result == 1;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Create a <see cref="UserProfile"/>.
         /// </summary>
         /// <param name="userId">The user Id.</param>
@@ -157,6 +190,40 @@ namespace Classlibrary.Domain.Administration
             }
         }
 
+        /// <summary>
+        ///     Update a <see cref="UserProfile"/>.
+        /// </summary>
+        /// <param name="userProfile">The user profile.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        public async Task<bool> Update(UserProfile userProfile, DependentTransaction transaction = null)
+        {
+            if (userProfile.UserId == Guid.Empty)
+                throw new InvalidOperationException("Invalid user Id");
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var result = await db.Administration.UserProfiles.Where(x => x.UserId == userProfile.UserId)
+                        .Set(u => u.LastName, userProfile.LastName)
+                        .Set(u => u.FirstName, userProfile.FirstName)
+                        .Set(u => u.UserTypeId, userProfile.UserTypeId)
+                        .Set(u => u.GenderId, userProfile.GenderId)
+                        .Set(u => u.CountryId, userProfile.CountryId)
+                        .UpdateAsync();
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return result == 1;
+                }
+            }
+        }
+
 
         /// <summary>
         ///     Create a <see cref="UserClaim"/>.
@@ -189,6 +256,36 @@ namespace Classlibrary.Domain.Administration
 
                     if (transaction != null)
                         transaction.Complete();
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Delete a <see cref="UserClaim"/>.
+        /// </summary>
+        /// <param name="userClaim">The user claim.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        public async Task<bool> Delete(UserClaim userClaim, DependentTransaction transaction = null)
+        {
+            if (userClaim.UserId == Guid.Empty || string.IsNullOrEmpty(userClaim.ClaimType) || string.IsNullOrEmpty(userClaim.ClaimValue))
+                throw new InvalidOperationException("Invalid claim");
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var result = await db.Administration.UserClaims.Where(x =>
+                        x.UserId == userClaim.UserId && x.ClaimType == userClaim.ClaimType &&
+                        x.ClaimValue == userClaim.ClaimValue).DeleteAsync();
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return result == 1;
                 }
             }
         }

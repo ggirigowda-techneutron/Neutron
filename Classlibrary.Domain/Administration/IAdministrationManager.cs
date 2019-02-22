@@ -44,6 +44,14 @@ namespace Classlibrary.Domain.Administration
         Task<Guid> Create(User user, DependentTransaction transaction = null);
 
         /// <summary>
+        ///     Update a <see cref="User"/>.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="transaction">Thr transaction.</param>
+        /// <returns></returns>
+        Task<bool> Update(User user, DependentTransaction transaction = null);
+
+        /// <summary>
         ///     Create a <see cref="UserProfile"/>.
         /// </summary>
         /// <param name="userId">The user Id.</param>
@@ -53,6 +61,14 @@ namespace Classlibrary.Domain.Administration
         Task<Guid> Create(Guid userId, UserProfile userProfile, DependentTransaction transaction = null);
 
         /// <summary>
+        ///     Update a <see cref="UserProfile"/>.
+        /// </summary>
+        /// <param name="userProfile">The user profile.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<bool> Update(UserProfile userProfile, DependentTransaction transaction = null);
+
+        /// <summary>
         ///     Create a <see cref="UserClaim"/>.
         /// </summary>
         /// <param name="userId">The user Id.</param>
@@ -60,5 +76,13 @@ namespace Classlibrary.Domain.Administration
         /// <param name="transaction">The transaction.</param>
         /// <returns></returns>
         Task Create(Guid userId, IEnumerable<UserClaim> claims, DependentTransaction transaction = null);
+
+        /// <summary>
+        ///     Delete a <see cref="UserClaim"/>.
+        /// </summary>
+        /// <param name="userClaim">The user claim.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<bool> Delete(UserClaim userClaim, DependentTransaction transaction = null);
     }
 }
