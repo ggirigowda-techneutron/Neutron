@@ -14,6 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
+using LinqToDB.Data;
+using Microsoft.Extensions.Options;
 
 namespace Middleware.Core.WebApi
 {
@@ -105,6 +108,13 @@ namespace Middleware.Core.WebApi
                     x.TokenValidationParameters = tokenValidationParameters;
                 });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<ConnectionStringSettings>(Configuration.GetSection("ConnectionStringSettings"));
+
+            // Set the default connection string
+            DataConnection.DefaultSettings = new Linq2DbSettings(services.BuildServiceProvider().GetService<IOptions<ConnectionStringSettings>>());
+
+            // Can also use multiple assembly names:
+            Mapper.Initialize(cfg => cfg.AddProfiles("Classlibrary.Domain"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

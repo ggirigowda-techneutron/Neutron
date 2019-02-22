@@ -27,6 +27,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Classlibrary.Crosscutting\Classlibrary.Crosscutting.csproj" />
+    <ProjectReference Include="..\Classlibrary.Domain\Classlibrary.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Middleware.Core.WebApi.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

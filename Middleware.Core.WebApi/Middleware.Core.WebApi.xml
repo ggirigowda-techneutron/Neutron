@@ -4,6 +4,31 @@
         <name>Middleware.Core.WebApi</name>
     </assembly>
     <members>
+        <member name="T:Middleware.Core.WebApi.ConnectionStringSettings">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.ConnectionStringSettings" /> class.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.ConnectionStringSettings.ConnectionString">
+            <summary>
+                The connection string.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.ConnectionStringSettings.Name">
+            <summary>
+                The Name.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.ConnectionStringSettings.ProviderName">
+            <summary>
+                The Provider.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.ConnectionStringSettings.IsGlobal">
+            <summary>
+                The is global?
+            </summary>
+        </member>
         <member name="T:Middleware.Core.WebApi.Controllers.ValuesController">
             <summary>
                 Values controller
@@ -41,6 +66,42 @@
             </summary>
             <param name="id"></param>
         </member>
+        <member name="T:Middleware.Core.WebApi.Linq2DbSettings">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.Linq2DbSettings"/> class.
+            </summary>
+        </member>
+        <member name="F:Middleware.Core.WebApi.Linq2DbSettings._settings">
+            <summary>
+                Gets or sets the settings.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Linq2DbSettings.#ctor(Microsoft.Extensions.Options.IOptions{Middleware.Core.WebApi.ConnectionStringSettings})">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.Linq2DbSettings"/> class.
+            </summary>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="P:Middleware.Core.WebApi.Linq2DbSettings.DataProviders">
+            <summary>
+                The data providers.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.Linq2DbSettings.DefaultConfiguration">
+            <summary>
+                The default configuration.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.Linq2DbSettings.DefaultDataProvider">
+            <summary>
+                The default data provider.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.Linq2DbSettings.ConnectionStrings">
+            <summary>
+                The  connection strings. 
+            </summary>
+        </member>
         <member name="T:Middleware.Core.WebApi.Startup">
             <summary>
                 Represents the <see cref="T:Middleware.Core.WebApi.Startup"/> class.
@@ -68,6 +129,33 @@
         <member name="M:Middleware.Core.WebApi.V1.Controllers.ProductsController.Get">
             <summary>
             Retrieve all the products
+            </summary>
+            <returns>Collection of ProductModel instances</returns>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Controllers.UtilityController">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.UtilityController" /> controller.
+            </summary>
+        </member>
+        <member name="F:Middleware.Core.WebApi.V1.Controllers.UtilityController._utilityManager">
+            <summary>
+                The utility manager.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.#ctor">
+            <summary>
+                Initializes a new instance of the <see cref="T:Middleware.Core.WebApi.V1.Controllers.UtilityController" /> controller.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.Reference(System.Guid)">
+            <summary>
+                Retrieve a reference
+            </summary>
+            <returns>Collection of ProductModel instances</returns>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.UtilityController.References">
+            <summary>
+                Retrieve all the references
             </summary>
             <returns>Collection of ProductModel instances</returns>
         </member>
