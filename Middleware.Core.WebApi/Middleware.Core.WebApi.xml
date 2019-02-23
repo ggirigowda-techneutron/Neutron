@@ -183,8 +183,18 @@
             <summary>
                 Create user.
             </summary>
+            <param name="model">The model</param>
             <returns>
                 <see cref="T:System.Guid" />
+            </returns>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.UpdateUser(Middleware.Core.WebApi.V1.Models.UserUpdateDto)">
+            <summary>
+                Update user.
+            </summary>
+            <param name="model">The model</param>
+            <returns>
+                <see cref="T:System.Boolean"/>
             </returns>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.BaseController">
@@ -423,6 +433,39 @@
             <param name="destination">The destination.</param>
             <param name="context">The context.</param>
             <returns>UserDto.</returns>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserUpdatePocoDtoMapper">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Mappers.UserUpdatePocoDtoMapper" /> class.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserUpdatePocoDtoMapper.UsersConverter">
+            <summary>
+                Converts UserUpdateDto(s) to User(s).
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserUpdatePocoDtoMapper.UsersConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserUpdateDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.User},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserUpdateDto} to IEnumerable{User}
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>IEnumerable{User}.</returns>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserUpdatePocoDtoMapper.UserConverter">
+            <summary>
+                Converts UserUpdateDto to User.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserUpdatePocoDtoMapper.UserConverter.Convert(Middleware.Core.WebApi.V1.Models.UserUpdateDto,Classlibrary.Domain.Administration.User,AutoMapper.ResolutionContext)">
+            <summary>
+                Convert UserUpdateDto to User.
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>User.</returns>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Models.ProductModel">
             <summary>
@@ -715,6 +758,111 @@
             </summary>
         </member>
         <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.Udf3">
+            <summary>
+                The Udf3.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Models.UserUpdateDto">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Models.UserUpdateDto" /> class.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Id">
+            <summary>
+                The Id.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Email">
+            <summary>
+                The Email.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.PhoneNumber">
+            <summary>
+                The PhoneNumber.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.MobileNumber">
+            <summary>
+                The MobileNumber.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.FirstName">
+            <summary>
+                The FirstName.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.LastName">
+            <summary>
+                The LastName.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.UserTypeId">
+            <summary>
+                The UserTypeId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Title">
+            <summary>
+                The Title.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Suffix">
+            <summary>
+                The Suffix.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Prefix">
+            <summary>
+                The Prefix.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.PrefferedName">
+            <summary>
+                The PrefferedName.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Dob">
+            <summary>
+                The Dob.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.GenderId">
+            <summary>
+                The GenderId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.CountryId">
+            <summary>
+                The CountryId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Organization">
+            <summary>
+                The Organization.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Department">
+            <summary>
+                The Department.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.PictureUrl">
+            <summary>
+                The PictureUrl.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Udf1">
+            <summary>
+                The Udf1.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Udf2">
+            <summary>
+                The Udf2.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Udf3">
             <summary>
                 The Udf3.
             </summary>

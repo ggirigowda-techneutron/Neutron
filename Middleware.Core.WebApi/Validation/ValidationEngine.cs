@@ -49,8 +49,6 @@ namespace Middleware.Core.WebApi.Validation
                     .With(x => x.Message = "Password should have more than 7 characters");
                 Check(i => i.Email).Required("Invalid Email").Group(m => m.Matches(RegexPattern.EMAIL));
                 Check(i => i.CreatedOn).Required("Invalid Created On").Group(s => s.IsNullOrDefault());
-                Check(i => i.Claims).Optional().ForEachSpecification();
-                Check(i => i.Profile).Required("Invalid Profile").Specification();
                 // Validate username if the user is new
                 Check(i => i.UserName)
                     .If(x => x.Id == Guid.Empty)
@@ -62,6 +60,8 @@ namespace Middleware.Core.WebApi.Validation
                             return false;
                         return true;
                     }, "Username taken");
+                Check(i => i.Claims).Optional().ForEachSpecification();
+                Check(i => i.Profile).Required("Invalid Profile").Specification();
             }
         }
 

@@ -82,6 +82,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// <summary>
         ///     Create user.
         /// </summary>
+        /// <param name="model">The model</param>
         /// <returns>
         ///     <see cref="Guid" />
         /// </returns>
@@ -107,9 +108,49 @@ namespace Middleware.Core.WebApi.V1.Controllers
             {
                 foreach (var allErrorMessage in error.AllErrorMessages())
                 {
-                    ModelState.AddModelError("Error_" + DateTime.UtcNow, allErrorMessage);
+                    ModelState.AddModelError("Error(s): ", allErrorMessage);
                 }
             }
+            return BadRequest(ModelState);
+        }
+
+        /// <summary>
+        ///     Update user.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        ///     <see cref="bool"/>
+        /// </returns>
+        [Authorize(Roles = "USER")]
+        [HttpPut("user/update")]
+        public async Task<IActionResult> UpdateUser(UserUpdateDto model)
+        {
+            if (!ModelState.IsValid || model.Id == Guid.Empty)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Find user
+            var found = await _administrationManager.Get(model.Id);
+            if (found != null)
+            {
+                Mapper.Map<UserUpdateDto, User>(model, found);
+                var validation = ValidationCatalog.Validate(found);
+                if (validation.IsValid)
+                {
+                    var result = await _administrationManager.Update(found);
+                    return new JsonResult(result);
+                }
+                // Add the errors
+                foreach (var error in validation.Errors)
+                {
+                    foreach (var allErrorMessage in error.AllErrorMessages())
+                    {
+                        ModelState.AddModelError("Error(s): ", allErrorMessage);
+                    }
+                }
+            }
+
             return BadRequest(ModelState);
         }
     }

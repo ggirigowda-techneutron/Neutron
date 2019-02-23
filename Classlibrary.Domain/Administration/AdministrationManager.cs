@@ -160,6 +160,10 @@ namespace Classlibrary.Domain.Administration
                         .Set(u => u.ChangedOn, DateTime.UtcNow)
                         .UpdateAsync();
 
+                    // Update user profile
+                    if (user.Profile != null && user.Profile.UserId != Guid.Empty)
+                        await Update(user.Profile, Transaction.Current.DependentClone(DependentCloneOption.BlockCommitUntilComplete));
+
                     tx.Complete();
 
                     if (transaction != null)
@@ -228,6 +232,14 @@ namespace Classlibrary.Domain.Administration
                         .Value(c => c.UserTypeId, userProfile.UserTypeId)
                         .Value(c => c.GenderId, userProfile.GenderId)
                         .Value(c => c.CountryId, userProfile.CountryId)
+                        .Value(u => u.Title, userProfile.Title)
+                        .Value(u => u.Suffix, userProfile.Suffix)
+                        .Value(u => u.Prefix, userProfile.Prefix)
+                        .Value(u => u.PrefferedName, userProfile.PrefferedName)
+                        .Value(u => u.Dob, userProfile.Dob)
+                        .Value(u => u.Organization, userProfile.Organization)
+                        .Value(u => u.Department, userProfile.Department)
+                        .Value(c => c.PictureUrl, userProfile.PictureUrl)
                         .InsertAsync();
 
                     tx.Complete();
@@ -262,6 +274,14 @@ namespace Classlibrary.Domain.Administration
                         .Set(u => u.UserTypeId, userProfile.UserTypeId)
                         .Set(u => u.GenderId, userProfile.GenderId)
                         .Set(u => u.CountryId, userProfile.CountryId)
+                        .Set(u => u.Title, userProfile.Title)
+                        .Set(u => u.Suffix, userProfile.Suffix)
+                        .Set(u => u.Prefix, userProfile.Prefix)
+                        .Set(u => u.PrefferedName, userProfile.PrefferedName)
+                        .Set(u => u.Dob, userProfile.Dob)
+                        .Set(u => u.Organization, userProfile.Organization)
+                        .Set(u => u.Department, userProfile.Department)
+                        .Set(u => u.PictureUrl, userProfile.PictureUrl)
                         .UpdateAsync();
 
                     tx.Complete();

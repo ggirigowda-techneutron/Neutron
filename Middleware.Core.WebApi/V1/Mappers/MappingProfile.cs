@@ -35,6 +35,10 @@ namespace Middleware.Core.WebApi.V1.Mappers
             CreateMap<UserDto, User>().ConvertUsing(new UserPocoDtoMapper.UserConverter());
             CreateMap<IEnumerable<UserDto>, IEnumerable<User>>()
                 .ConvertUsing(new UserPocoDtoMapper.UsersConverter());
+            // User Update
+            CreateMap<UserUpdateDto, User>().ConvertUsing(new UserUpdatePocoDtoMapper.UserConverter());
+            CreateMap<IEnumerable<UserUpdateDto>, IEnumerable<User>>()
+                .ConvertUsing(new UserUpdatePocoDtoMapper.UsersConverter());
 
             // UserProfile
             CreateMap<UserProfile, UserProfileDto>()
