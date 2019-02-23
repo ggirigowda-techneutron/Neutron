@@ -713,5 +713,40 @@
             Product brief description
             </summary>
         </member>
+        <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine" /> class.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine.UsersSpecification">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UsersSpecification" /> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Validation.ValidationEngine.UsersSpecification.#ctor">
+            <summary>
+                Creates an instance of the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UsersSpecification" /> class.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserProfileSpecification">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserProfileSpecification"/> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Validation.ValidationEngine.UserProfileSpecification.#ctor">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserProfileSpecification"/> class.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserClaimSpecification">
+            <summary>
+               Represents the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserClaimSpecification"/> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Validation.ValidationEngine.UserClaimSpecification.#ctor">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserClaimSpecification"/> class.
+            </summary>
+        </member>
     </members>
 </doc>

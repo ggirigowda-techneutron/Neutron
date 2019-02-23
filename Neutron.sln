@@ -36,9 +36,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classlibrary.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classlibrary.Domain.Test", "Classlibrary.Domain.Test\Classlibrary.Domain.Test.csproj", "{166A29FA-270B-4A6E-B3BF-4F36245B5A38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classlibrary.Dao.Linq2Db", "Classlibrary.Dao.Linq2Db\Classlibrary.Dao.Linq2Db.csproj", "{4C2253BC-AEF9-4434-A144-25E0EBC748F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classlibrary.Dao.Linq2Db", "Classlibrary.Dao.Linq2Db\Classlibrary.Dao.Linq2Db.csproj", "{4C2253BC-AEF9-4434-A144-25E0EBC748F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classlibrary.Dao.Linq2Db.Test", "Classlibrary.Dao.Linq2Db.Test\Classlibrary.Dao.Linq2Db.Test.csproj", "{D0413279-6AC6-4539-8A32-85B973F56B85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Classlibrary.Dao.Linq2Db.Test", "Classlibrary.Dao.Linq2Db.Test\Classlibrary.Dao.Linq2Db.Test.csproj", "{D0413279-6AC6-4539-8A32-85B973F56B85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

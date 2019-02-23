@@ -98,15 +98,15 @@ namespace Middleware.Core.WebApi.Auth.Controllers
                     audience:_settings.Value.Audience, 
                     claims: claims,
                     notBefore: now,
-                    // Token will live 60 minutes
-                    expires: now.Add(TimeSpan.FromMinutes(60)),
+                    // Token will live 48 hours
+                    expires: now.Add(TimeSpan.FromHours(48)),
                     signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
                 );
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
                 var responseJson = new
                 {
                     access_token = encodedJwt,
-                    expires_in = (int)TimeSpan.FromMinutes(60).TotalSeconds
+                    expires_in = (int)TimeSpan.FromHours(48).TotalSeconds
                 };
                 return new JsonResult(responseJson);
             }

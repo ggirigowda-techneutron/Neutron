@@ -22,7 +22,7 @@ BEGIN TRY
 	DECLARE @userTypes UNIQUEIDENTIFIER = 'ad695e54-df4a-410b-9757-6b7b512c679a';
 	PRINT @usertypes; 
 	INSERT INTO [Utility].[Reference] ([Id], [Name], [Description], [CountryCode]) VALUES (@userTypes, 'LstUserTypes', 'List of user types', 'US');
-	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('e21dcb05-1f7b-4c95-9c29-0e583b120e44', @userTypes, 'EMP', 'School');
+	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('e21dcb05-1f7b-4c95-9c29-0e583b120e44', @userTypes, 'EMP', 'Employee');
 	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('5ebf5cca-df92-49c6-ae5f-f3c9670bf9d3', @userTypes, 'CUS', 'Customer');
 	
 	-- USER

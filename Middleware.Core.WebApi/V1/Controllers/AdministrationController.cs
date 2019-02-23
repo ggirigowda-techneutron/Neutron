@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Middleware.Core.WebApi.V1.Models;
 using AutoMapper;
+using Classlibrary.Crosscutting.General;
+using SpecExpress;
 
 namespace Middleware.Core.WebApi.V1.Controllers
 {
@@ -95,8 +97,21 @@ namespace Middleware.Core.WebApi.V1.Controllers
             var item = Mapper.Map<UserDto, User>(model);
             item.CreatedOn = DateTime.UtcNow;
             item.PasswordHash = _passwordStorage.HashPassword(item, model.Password);
-            var result = await _administrationManager.Create(item);
-            return new JsonResult(result);
+            var validation = ValidationCatalog.Validate(item);
+            if (validation.IsValid)
+            {
+                var result = await _administrationManager.Create(item);
+                return new JsonResult(result);
+            }
+            // Add the errors
+            foreach (var error in validation.Errors)
+            {
+                foreach (var allErrorMessage in error.AllErrorMessages())
+                {
+                    ModelState.AddModelError("Error_" + DateTime.UtcNow, allErrorMessage);
+                }
+            }
+            return BadRequest(ModelState);
         }
     }
 }
