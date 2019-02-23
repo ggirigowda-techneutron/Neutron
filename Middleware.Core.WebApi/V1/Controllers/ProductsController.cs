@@ -16,7 +16,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseController
     {
         /// <summary>
         /// Retrieve all the products

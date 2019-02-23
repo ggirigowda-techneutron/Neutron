@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Classlibrary.Crosscutting.General;
 using Classlibrary.Domain.Administration;
 using SpecExpress;
@@ -24,6 +25,12 @@ namespace Middleware.Core.WebApi.Validation
     /// </summary>
     public static class ValidationEngine
     {
+
+        /// <summary>
+        ///     The administration manager.
+        /// </summary>
+        public static IAdministrationManager AdministrationManager { set; get; }
+
         #region Administration
 
         /// <summary>
@@ -44,6 +51,17 @@ namespace Middleware.Core.WebApi.Validation
                 Check(i => i.CreatedOn).Required("Invalid Created On").Group(s => s.IsNullOrDefault());
                 Check(i => i.Claims).Optional().ForEachSpecification();
                 Check(i => i.Profile).Required("Invalid Profile").Specification();
+                // Validate username if the user is new
+                Check(i => i.UserName)
+                    .If(x => x.Id == Guid.Empty)
+                    .Required("Invalid username")
+                    .Expect((obj, c) =>
+                    {
+                        var found = Task.Run(async () => await AdministrationManager.Get(c)).Result;
+                        if (found != null)
+                            return false;
+                        return true;
+                    }, "Username taken");
             }
         }
 
@@ -113,9 +131,6 @@ namespace Middleware.Core.WebApi.Validation
             }
         }
 
-        #endregion
-
-        #region DTO
         #endregion
     }
 }

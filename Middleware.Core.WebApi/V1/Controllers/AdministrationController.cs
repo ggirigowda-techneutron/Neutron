@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Middleware.Core.WebApi.V1.Models;
 using AutoMapper;
-using Classlibrary.Crosscutting.General;
 using SpecExpress;
 
 namespace Middleware.Core.WebApi.V1.Controllers
@@ -30,7 +29,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class AdministrationController : ControllerBase
+    public class AdministrationController : BaseController
     {
         /// <summary>
         ///     The administration manager.

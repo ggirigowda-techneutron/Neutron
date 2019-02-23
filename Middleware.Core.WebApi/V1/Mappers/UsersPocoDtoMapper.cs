@@ -36,12 +36,12 @@ namespace Middleware.Core.WebApi.V1.Mappers
         public class UsersConverter : ITypeConverter<IEnumerable<UserDto>, IEnumerable<User>>
         {
             /// <summary>
-            ///     Convert IEnumerable<UserDto> to IEnumerable<User>
+            ///     Convert IEnumerable{UserDto} to IEnumerable{User}
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>IEnumerable<User>.</returns>
+            /// <returns>IEnumerable{User}.</returns>
             public IEnumerable<User> Convert(IEnumerable<UserDto> source, IEnumerable<User> destination,
                 ResolutionContext context)
             {
@@ -71,8 +71,6 @@ namespace Middleware.Core.WebApi.V1.Mappers
                     UserName = from.UserName,
                     Email = from.Email,
                     EmailConfirmed = from.EmailConfirmed,
-                    PasswordHash = from.PasswordHash,
-                    SecurityStamp = from.SecurityStamp,
                     PhoneNumber = from.PhoneNumber,
                     PhoneNumberConfirmed = from.PhoneNumberConfirmed,
                     MobileNumber = from.MobileNumber,
@@ -104,12 +102,12 @@ namespace Middleware.Core.WebApi.V1.Mappers
         public class UserDtosConverter : ITypeConverter<IEnumerable<User>, IEnumerable<UserDto>>
         {
             /// <summary>
-            ///     Convert IEnumerable<User> to IEnumerable<UserDto>.
+            ///     Convert IEnumerable{User} to IEnumerable{UserDto}.
             /// </summary>
             /// <param name="context">The context.</param>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
-            /// <returns>IEnumerable<UserDto>.</returns>
+            /// <returns>IEnumerable{UserDto}.</returns>
             public IEnumerable<UserDto> Convert(IEnumerable<User> source, IEnumerable<UserDto> destination,
                 ResolutionContext context)
             {
@@ -139,8 +137,6 @@ namespace Middleware.Core.WebApi.V1.Mappers
                     UserName = from.UserName,
                     Email = from.Email,
                     EmailConfirmed = from.EmailConfirmed,
-                    PasswordHash = from.PasswordHash,
-                    SecurityStamp = from.SecurityStamp,
                     PhoneNumber = from.PhoneNumber,
                     PhoneNumberConfirmed = from.PhoneNumberConfirmed,
                     MobileNumber = from.MobileNumber,

@@ -36,12 +36,12 @@ namespace Middleware.Core.WebApi.V1.Mappers
         public class UserClaimsConverter : ITypeConverter<IEnumerable<UserClaimDto>, IEnumerable<UserClaim>>
         {
             /// <summary>
-            ///     Convert IEnumerable<UserClaimDto> to IEnumerable<UserClaim>
+            ///     Convert IEnumerable{UserClaimDto} to IEnumerable{UserClaim}
             /// </summary>
 			/// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>IEnumerable<UserClaim>.</returns>
+            /// <returns>IEnumerable{UserClaim}.</returns>
             public IEnumerable<UserClaim> Convert(IEnumerable<UserClaimDto> source, IEnumerable<UserClaim> destination, ResolutionContext context)
             {
                 var from = source;
@@ -84,12 +84,12 @@ namespace Middleware.Core.WebApi.V1.Mappers
         public class UserClaimDtosConverter : ITypeConverter<IEnumerable<UserClaim>, IEnumerable<UserClaimDto>>
         {
             /// <summary>
-            ///     Convert IEnumerable<UserClaim> to IEnumerable<UserClaimDto>.
+            ///     Convert IEnumerable{UserClaim} to IEnumerable{UserClaimDto}.
             /// </summary>
             /// <param name="context">The context.</param>
 			/// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
-            /// <returns>IEnumerable<UserClaimDto>.</returns>
+            /// <returns>IEnumerable{UserClaimDto}.</returns>
             public IEnumerable<UserClaimDto> Convert(IEnumerable<UserClaim> source, IEnumerable<UserClaimDto> destination, ResolutionContext context)
             {
                 var from = source;

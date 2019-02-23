@@ -54,9 +54,18 @@ namespace Classlibrary.Domain.Administration
         ///     Update a <see cref="User"/>.
         /// </summary>
         /// <param name="user">The user.</param>
-        /// <param name="transaction">Thr transaction.</param>
+        /// <param name="transaction">The transaction.</param>
         /// <returns></returns>
         Task<bool> Update(User user, DependentTransaction transaction = null);
+
+        /// <summary>
+        ///     Update password.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<bool> UpdatePassword(Guid userId, string passwordHash, DependentTransaction transaction = null);
 
         /// <summary>
         ///     Create a <see cref="UserProfile"/>.

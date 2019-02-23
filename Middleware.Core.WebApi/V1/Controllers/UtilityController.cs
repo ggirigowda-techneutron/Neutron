@@ -26,7 +26,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class UtilityController : ControllerBase
+    public class UtilityController : BaseController
     {
         /// <summary>
         ///     The utility manager.

@@ -187,6 +187,11 @@
                 <see cref="T:System.Guid" />
             </returns>
         </member>
+        <member name="T:Middleware.Core.WebApi.V1.Controllers.BaseController">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.BaseController" /> class.
+            </summary>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.ProductsController">
             <summary>
             Sample version REST API
@@ -246,7 +251,15 @@
                 Converts UserClaimDto(s) to UserClaim(s). 
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Middleware.Core.WebApi.V1.Mappers.UserClaimPocoDtoMapper.UserClaimsConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserClaimDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserClaim},AutoMapper.ResolutionContext)" -->
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserClaimPocoDtoMapper.UserClaimsConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserClaimDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserClaim},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserClaimDto} to IEnumerable{UserClaim}
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>IEnumerable{UserClaim}.</returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Mappers.UserClaimPocoDtoMapper.UserClaimConverter">
             <summary>
                 Converts UserClaimDto to UserClaim.
@@ -266,7 +279,15 @@
                 Converts UserClaim(s) to UserClaimDto(s). 
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Middleware.Core.WebApi.V1.Mappers.UserClaimPocoDtoMapper.UserClaimDtosConverter.Convert(System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserClaim},System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserClaimDto},AutoMapper.ResolutionContext)" -->
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserClaimPocoDtoMapper.UserClaimDtosConverter.Convert(System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserClaim},System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserClaimDto},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserClaim} to IEnumerable{UserClaimDto}.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <returns>IEnumerable{UserClaimDto}.</returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Mappers.UserClaimPocoDtoMapper.UserClaimDtoConverter">
             <summary>
                 Converts UserClaim to UserClaimDto.
@@ -291,7 +312,15 @@
                 Converts UserProfileDto(s) to UserProfile(s).
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Middleware.Core.WebApi.V1.Mappers.UserProfilePocoDtoMapper.UserProfilesConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserProfileDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserProfile},AutoMapper.ResolutionContext)" -->
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserProfilePocoDtoMapper.UserProfilesConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserProfileDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserProfile},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserProfileDto} to IEnumerable{UserProfile}
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>IEnumerable{UserProfile}.</returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Mappers.UserProfilePocoDtoMapper.UserProfileConverter">
             <summary>
                 Converts UserProfileDto to UserProfile.
@@ -311,7 +340,15 @@
                 Converts UserProfile(s) to UserProfileDto(s).
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Middleware.Core.WebApi.V1.Mappers.UserProfilePocoDtoMapper.UserProfileDtosConverter.Convert(System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserProfile},System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserProfileDto},AutoMapper.ResolutionContext)" -->
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserProfilePocoDtoMapper.UserProfileDtosConverter.Convert(System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserProfile},System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserProfileDto},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserProfile} to IEnumerable{UserProfileDto}.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <returns>IEnumerable{UserProfileDto}.</returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Mappers.UserProfilePocoDtoMapper.UserProfileDtoConverter">
             <summary>
                 Converts UserProfile to UserProfileDto.
@@ -336,7 +373,15 @@
                 Converts UserDto(s) to User(s).
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Middleware.Core.WebApi.V1.Mappers.UserPocoDtoMapper.UsersConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.User},AutoMapper.ResolutionContext)" -->
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserPocoDtoMapper.UsersConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.User},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserDto} to IEnumerable{User}
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>IEnumerable{User}.</returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Mappers.UserPocoDtoMapper.UserConverter">
             <summary>
                 Converts UserDto to User.
@@ -356,7 +401,15 @@
                 Converts User(s) to UserDto(s).
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Middleware.Core.WebApi.V1.Mappers.UserPocoDtoMapper.UserDtosConverter.Convert(System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.User},System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserDto},AutoMapper.ResolutionContext)" -->
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserPocoDtoMapper.UserDtosConverter.Convert(System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.User},System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserDto},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{User} to IEnumerable{UserDto}.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <returns>IEnumerable{UserDto}.</returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Mappers.UserPocoDtoMapper.UserDtoConverter">
             <summary>
                 Converts User to UserDto.
@@ -555,7 +608,7 @@
                 Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserDto" /> class.
             </summary>
         </member>
-        <member name="M:Middleware.Core.WebApi.V1.Models.UserDto.#ctor(System.Guid,System.String,System.String,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.DateTime,System.DateTime)">
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserDto.#ctor(System.Guid,System.String,System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.DateTime,System.DateTime)">
             <summary>
                 Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserDto" /> class.
             </summary>
@@ -563,8 +616,7 @@
             <param name="userName">The UserName.</param>
             <param name="email">The Email.</param>
             <param name="emailConfirmed">The EmailConfirmed.</param>
-            <param name="passwordHash">The PasswordHash.</param>
-            <param name="securityStamp">The SecurityStamp.</param>
+            <param name="password">The PasswordWord.</param>
             <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
             <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
             <param name="lockoutEnabled">The LockoutEnabled.</param>
@@ -595,16 +647,6 @@
         <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.Password">
             <summary>
                 The Password.
-            </summary>
-        </member>
-        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.PasswordHash">
-            <summary>
-                The PasswordHash.
-            </summary>
-        </member>
-        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.SecurityStamp">
-            <summary>
-                The SecurityStamp.
             </summary>
         </member>
         <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.PhoneNumber">
@@ -716,6 +758,11 @@
         <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine">
             <summary>
                 Represents the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine" /> class.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.Validation.ValidationEngine.AdministrationManager">
+            <summary>
+                The administration manager.
             </summary>
         </member>
         <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine.UsersSpecification">

@@ -20,7 +20,9 @@ using Classlibrary.Domain.Administration;
 using Classlibrary.Domain.Utility;
 using LinqToDB.Data;
 using Microsoft.Extensions.Options;
+using Middleware.Core.WebApi.Validation;
 using SpecExpress;
+using SpecExpress.Ioc;
 
 namespace Middleware.Core.WebApi
 {
@@ -126,14 +128,18 @@ namespace Middleware.Core.WebApi
 
             // Can also use multiple assembly names:
             Mapper.Initialize(cfg => cfg.AddProfiles("Classlibrary.Domain", "Middleware.Core.WebApi"));
-            
+
             // Add spec express
-            ValidationCatalog.Scan(x => x.AddAssembly(System.Reflection.Assembly.GetExecutingAssembly()));
+            ValidationCatalog.Scan(x => x.AddAssembly(Assembly.GetExecutingAssembly()));
 
             // Setup DI's
             services.AddSingleton<IUtilityManager>(new UtilityManager());
             services.AddSingleton<IAdministrationManager>(new AdministrationManager());
             services.AddSingleton<Microsoft.AspNetCore.Identity.IPasswordHasher<User>>(new PasswordStorage<User>());
+
+            // Add the dependencies that the validation engine needs.
+            ValidationEngine.AdministrationManager =
+                services.BuildServiceProvider().GetService<IAdministrationManager>();
         }
 
 

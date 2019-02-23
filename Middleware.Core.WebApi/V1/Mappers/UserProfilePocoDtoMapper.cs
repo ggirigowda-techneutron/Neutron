@@ -36,12 +36,12 @@ namespace Middleware.Core.WebApi.V1.Mappers
         public class UserProfilesConverter : ITypeConverter<IEnumerable<UserProfileDto>, IEnumerable<UserProfile>>
         {
             /// <summary>
-            ///     Convert IEnumerable<UserProfileDto> to IEnumerable<UserProfile>
+            ///     Convert IEnumerable{UserProfileDto} to IEnumerable{UserProfile}
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>IEnumerable<UserProfile>.</returns>
+            /// <returns>IEnumerable{UserProfile}.</returns>
             public IEnumerable<UserProfile> Convert(IEnumerable<UserProfileDto> source,
                 IEnumerable<UserProfile> destination, ResolutionContext context)
             {
@@ -99,12 +99,12 @@ namespace Middleware.Core.WebApi.V1.Mappers
         public class UserProfileDtosConverter : ITypeConverter<IEnumerable<UserProfile>, IEnumerable<UserProfileDto>>
         {
             /// <summary>
-            ///     Convert IEnumerable<UserProfile> to IEnumerable<UserProfileDto>.
+            ///     Convert IEnumerable{UserProfile} to IEnumerable{UserProfileDto}.
             /// </summary>
             /// <param name="context">The context.</param>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
-            /// <returns>IEnumerable<UserProfileDto>.</returns>
+            /// <returns>IEnumerable{UserProfileDto}.</returns>
             public IEnumerable<UserProfileDto> Convert(IEnumerable<UserProfile> source,
                 IEnumerable<UserProfileDto> destination, ResolutionContext context)
             {

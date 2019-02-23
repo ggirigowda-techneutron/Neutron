@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Classlibrary.Crosscutting.General;
 
 #endregion
 
@@ -54,22 +55,20 @@ namespace Middleware.Core.WebApi.V1.Models
 		/// <param name="userName">The UserName.</param>
 		/// <param name="email">The Email.</param>
 		/// <param name="emailConfirmed">The EmailConfirmed.</param>
-		/// <param name="passwordHash">The PasswordHash.</param>
-		/// <param name="securityStamp">The SecurityStamp.</param>
+		/// <param name="password">The PasswordWord.</param>
 		/// <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
 		/// <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
 		/// <param name="lockoutEnabled">The LockoutEnabled.</param>
 		/// <param name="accessFailedCount">The AccessFailedCount.</param>
 		/// <param name="createdOn">The CreatedOn.</param>
 		/// <param name="changedOn">The ChangedOn.</param>
-        public UserDto(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn) : this()
+        public UserDto(Guid id, string userName, string email, bool emailConfirmed, string password, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn) : this()
         {
             Id = id;
             UserName = userName;
             Email = email;
             EmailConfirmed = emailConfirmed;
-            PasswordHash = passwordHash;
-            SecurityStamp = securityStamp;
+            Password = password;
             PhoneNumberConfirmed = phoneNumberConfirmed;
             TwoFactorEnabled = twoFactorEnabled;
             LockoutEnabled = lockoutEnabled;
@@ -113,21 +112,8 @@ namespace Middleware.Core.WebApi.V1.Models
         ///     The Password.
         /// </summary>
         [Display(Name = "Password")]
+        [RegularExpression(RegexPattern.STRONG_PASSWORD, ErrorMessage = "Invalid password")]
         public string Password { get; set; }
-
-        /// <summary>
-        ///     The PasswordHash.
-        /// </summary>
-        [Display(Name = "PasswordHash")]
-		public string PasswordHash { get; set; }
-        
-        
-        /// <summary>
-        ///     The SecurityStamp.
-        /// </summary>
-	    [Display(Name = "SecurityStamp")]
-		public string SecurityStamp { get; set; }
-        
         
         /// <summary>
         ///     The PhoneNumber.
@@ -135,14 +121,12 @@ namespace Middleware.Core.WebApi.V1.Models
 	    [Display(Name = "PhoneNumber")]
 		public string PhoneNumber { get; set; }
         
-        
         /// <summary>
         ///     The PhoneNumberConfirmed.
         /// </summary>
 	    [Display(Name = "PhoneNumberConfirmed")]
 		[Required(ErrorMessage = "PhoneNumberConfirmed is required")]
 		public bool PhoneNumberConfirmed { get; set; }
-        
         
         /// <summary>
         ///     The MobileNumber.

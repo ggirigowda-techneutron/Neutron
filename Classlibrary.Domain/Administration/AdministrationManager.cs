@@ -171,6 +171,39 @@ namespace Classlibrary.Domain.Administration
         }
 
         /// <summary>
+        ///     Update password.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="passwordHash">The password hash.</param>
+        /// <param name="transaction">The transaction.</param>
+        public async Task<bool> UpdatePassword(Guid userId, string passwordHash, DependentTransaction transaction = null)
+        {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user Id", nameof(userId));
+            if(string.IsNullOrEmpty(passwordHash))
+                throw new ArgumentException("Invalid password hash", nameof(passwordHash));
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var result = await db.Administration.Users.Where(x => x.Id == userId)
+                        .Set(u => u.PasswordHash, passwordHash)
+                        .Set(u => u.ChangedOn, DateTime.UtcNow)
+                        .UpdateAsync();
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return result == 1;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Create a <see cref="UserProfile"/>.
         /// </summary>
         /// <param name="userId">The user Id.</param>
