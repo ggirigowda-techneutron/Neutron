@@ -60,7 +60,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         ///     Get a user.
         /// </summary>
         /// <returns>
-        ///     <see cref="User" />
+        ///     <see cref="User" />.
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [HttpGet("user/{id}")]
@@ -73,7 +73,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         ///     Get all the users.
         /// </summary>
         /// <returns>
-        ///     <see cref="IEnumerable{User}" />
+        ///     <see cref="IEnumerable{User}" />.
         /// </returns>
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpGet("users")]
@@ -97,6 +97,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var item = Mapper.Map<UserDto, User>(model);
             item.CreatedOn = DateTime.UtcNow;
             item.PasswordHash = _passwordStorage.HashPassword(item, model.Password);
@@ -106,6 +107,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
                 var result = await _administrationManager.Create(item);
                 return new JsonResult(result);
             }
+
             // Add the errors
             foreach (var error in validation.Errors)
             {
@@ -114,15 +116,16 @@ namespace Middleware.Core.WebApi.V1.Controllers
                     ModelState.AddModelError("Error(s): ", allErrorMessage);
                 }
             }
+
             return BadRequest(ModelState);
         }
 
         /// <summary>
         ///     Update user.
         /// </summary>
-        /// <param name="model">The model</param>
+        /// <param name="model">The model.</param>
         /// <returns>
-        ///     <see cref="bool"/>
+        ///     <see cref="bool"/>.
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [Authorize(Roles = Helper.ClaimAdmin)]
@@ -135,7 +138,9 @@ namespace Middleware.Core.WebApi.V1.Controllers
             }
 
             // Ensure the user is either in the admin role or is the user itself
-            if (HttpContext.User.HasClaim(claim => claim.Type == Helper.RoleClaimKey && claim.Value == Helper.ClaimAdmin) || HttpContext.User.Claims.First(x => x.Type == ClaimTypes.PrimarySid).Value == model.Id.ToString())
+            if (HttpContext.User.HasClaim(
+                    claim => claim.Type == Helper.RoleClaimKey && claim.Value == Helper.ClaimAdmin) ||
+                HttpContext.User.Claims.First(x => x.Type == ClaimTypes.PrimarySid).Value == model.Id.ToString())
             {
                 // Find user
                 var found = await _administrationManager.Get(model.Id);
@@ -148,6 +153,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
                         var result = await _administrationManager.Update(found);
                         return new JsonResult(result);
                     }
+
                     // Add the errors
                     foreach (var error in validation.Errors)
                     {
@@ -156,6 +162,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
                             ModelState.AddModelError("Error(s): ", allErrorMessage);
                         }
                     }
+
                     return BadRequest(ModelState);
                 }
             }
@@ -166,9 +173,9 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// <summary>
         ///     Update password.
         /// </summary>
-        /// <param name="model">The model</param>
+        /// <param name="model">The model.</param>
         /// <returns>
-        ///     <see cref="bool"/>
+        ///     <see cref="bool"/>.
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [Authorize(Roles = Helper.ClaimAdmin)]
@@ -181,23 +188,84 @@ namespace Middleware.Core.WebApi.V1.Controllers
             }
 
             // Ensure the user is either in the admin role or is the user itself
-            if (HttpContext.User.HasClaim(claim => claim.Type == Helper.RoleClaimKey && claim.Value == Helper.ClaimAdmin) || HttpContext.User.Claims.First(x => x.Type == ClaimTypes.PrimarySid).Value == model.Id.ToString())
+            if (HttpContext.User.HasClaim(
+                    claim => claim.Type == Helper.RoleClaimKey && claim.Value == Helper.ClaimAdmin) ||
+                HttpContext.User.Claims.First(x => x.Type == ClaimTypes.PrimarySid).Value == model.Id.ToString())
             {
                 // Find user
                 var found = await _administrationManager.Get(model.Id);
                 if (found != null)
                 {
                     // Ensure that the current password matches 
-                    if (_passwordStorage.VerifyHashedPassword(new User(), found.PasswordHash, model.CurrentPassword) == PasswordVerificationResult.Success)
+                    if (_passwordStorage.VerifyHashedPassword(new User(), found.PasswordHash, model.CurrentPassword) ==
+                        PasswordVerificationResult.Success)
                     {
-                        var result = await _administrationManager.UpdatePassword(model.Id, _passwordStorage.HashPassword(found, model.NewPassword));
+                        var result = await _administrationManager.UpdatePassword(model.Id,
+                            _passwordStorage.HashPassword(found, model.NewPassword));
                         return new JsonResult(result);
                     }
+
                     ModelState.AddModelError("CurrentPassword", "Invalid current password");
                     return BadRequest(ModelState);
                 }
             }
+
             return Unauthorized();
+        }
+
+        /// <summary>
+        ///     Delete claim.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        ///     <see cref="bool"/>.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimAdmin)]
+        [HttpDelete("user/claim/delete")]
+        public async Task<IActionResult> DeleteClaim(UserClaimDto model)
+        {
+            if (!ModelState.IsValid || model.UserId == Guid.Empty)
+            {
+                return BadRequest(ModelState);
+            }
+            var item = Mapper.Map<UserClaimDto, UserClaim>(model);
+            var result = await _administrationManager.Delete(item);
+            return new JsonResult(result);
+        }
+
+        /// <summary>
+        ///     Create claim.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        ///     <see cref="bool"/>.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimAdmin)]
+        [HttpPost("user/claim/create")]
+        public async Task<IActionResult> CreateClaim(UserClaimDto model)
+        {
+            if (!ModelState.IsValid || model.UserId == Guid.Empty)
+            {
+                return BadRequest(ModelState);
+            }
+            var item = Mapper.Map<UserClaimDto, UserClaim>(model);
+            var validation = ValidationCatalog.Validate(item);
+            if (validation.IsValid)
+            {
+                await _administrationManager.Create(model.UserId, new List<UserClaim> { item });
+                return new JsonResult(true);
+            }
+
+            // Add the errors
+            foreach (var error in validation.Errors)
+            {
+                foreach (var allErrorMessage in error.AllErrorMessages())
+                {
+                    ModelState.AddModelError("Error(s): ", allErrorMessage);
+                }
+            }
+
+            return BadRequest(ModelState);
         }
     }
 }

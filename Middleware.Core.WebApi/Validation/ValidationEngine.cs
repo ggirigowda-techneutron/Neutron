@@ -12,6 +12,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Classlibrary.Crosscutting.General;
 using Classlibrary.Domain.Administration;
@@ -128,6 +129,17 @@ namespace Middleware.Core.WebApi.Validation
                 Check(i => i.ClaimType).Required("Invalid Claim Type").Group(s => s.Matches(Helper.RoleClaimKey));
                 Check(i => i.ClaimValue).Required("Invalid Claim Value").Group(s => s.Matches(Helper.ClaimAdmin)
                     .Or.Matches(Helper.ClaimUser));
+                // Validate claim if the user exists so that there are no duplicates
+                Check(i => i.UserId)
+                    .If(x => x.UserId != Guid.Empty)
+                    .Optional()
+                    .Expect((obj, c) =>
+                    {
+                        var found = Task.Run(async () => await AdministrationManager.Get(c)).Result;
+                        if (found != null && found.Claims.FirstOrDefault(x => x.ClaimType == obj.ClaimType && x.ClaimValue == obj.ClaimValue) != null)
+                            return false;
+                        return true;
+                    }, "Claim already exists");
             }
         }
 

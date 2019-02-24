@@ -168,7 +168,7 @@
                 Get a user.
             </summary>
             <returns>
-                <see cref="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)" />
+                <see cref="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)" />.
             </returns>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.Users">
@@ -176,7 +176,7 @@
                 Get all the users.
             </summary>
             <returns>
-                <see cref="T:System.Collections.Generic.IEnumerable`1" />
+                <see cref="T:System.Collections.Generic.IEnumerable`1" />.
             </returns>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.CreateUser(Middleware.Core.WebApi.V1.Models.UserDto)">
@@ -192,18 +192,36 @@
             <summary>
                 Update user.
             </summary>
-            <param name="model">The model</param>
+            <param name="model">The model.</param>
             <returns>
-                <see cref="T:System.Boolean"/>
+                <see cref="T:System.Boolean"/>.
             </returns>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.UpdateUserPassword(Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto)">
             <summary>
                 Update password.
             </summary>
-            <param name="model">The model</param>
+            <param name="model">The model.</param>
             <returns>
-                <see cref="T:System.Boolean"/>
+                <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.DeleteClaim(Middleware.Core.WebApi.V1.Models.UserClaimDto)">
+            <summary>
+                Delete claim.
+            </summary>
+            <param name="model">The model.</param>
+            <returns>
+                <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.CreateClaim(Middleware.Core.WebApi.V1.Models.UserClaimDto)">
+            <summary>
+                Create claim.
+            </summary>
+            <param name="model">The model.</param>
+            <returns>
+                <see cref="T:System.Boolean"/>.
             </returns>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.BaseController">
