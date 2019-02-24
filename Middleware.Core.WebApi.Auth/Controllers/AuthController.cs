@@ -84,9 +84,13 @@ namespace Middleware.Core.WebApi.Auth.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // Unique identifier for the JWT. Can be used to prevent the JWT from being replayed.This is helpful for a one time use token.
                     new Claim(JwtRegisteredClaimNames.Iat, now.ToUniversalTime().ToString(CultureInfo.InvariantCulture), ClaimValueTypes.Integer64) // The time the JWT was issued. Can be used to determine the age of the JWT.
                 };
+                // Include user claims
                 claims.AddRange(found.Claims.Select(foundClaim => new Claim(foundClaim.ClaimType, foundClaim.ClaimValue)));
+                // Include user Id
+                claims.Add(new Claim(ClaimTypes.PrimarySid, found.Id.ToString()));
+                // Include email
                 claims.Add(new Claim(ClaimTypes.Email, found.Email));
-                // Include the user Id, FirstName in the claims
+                // Include the name in the claims
                 claims.Add(found.Profile != null
                     ? new Claim(ClaimTypes.Name, $"{found.Profile.FirstName} {found.Profile.LastName}")
                     : new Claim(ClaimTypes.Name, $"{found.UserName}"));

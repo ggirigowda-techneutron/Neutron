@@ -197,6 +197,15 @@
                 <see cref="T:System.Boolean"/>
             </returns>
         </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.UpdateUserPassword(Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto)">
+            <summary>
+                Update password.
+            </summary>
+            <param name="model">The model</param>
+            <returns>
+                <see cref="T:System.Boolean"/>
+            </returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.BaseController">
             <summary>
                 Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.BaseController" /> class.
@@ -865,6 +874,26 @@
         <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Udf3">
             <summary>
                 The Udf3.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto" /> class.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto.Id">
+            <summary>
+                The user Id.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto.CurrentPassword">
+            <summary>
+                The current password.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto.NewPassword">
+            <summary>
+                The new password.
             </summary>
         </member>
         <member name="T:Middleware.Core.WebApi.V2.Controllers.ProductsController">

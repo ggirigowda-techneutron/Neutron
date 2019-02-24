@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Classlibrary.Crosscutting.General;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Middleware.Core.WebApi.V1.Models;
@@ -12,7 +13,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
     /// <summary>
     /// Sample version REST API
     /// </summary>
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = Helper.ClaimUser)]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]

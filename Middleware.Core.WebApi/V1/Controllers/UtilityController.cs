@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Classlibrary.Crosscutting.General;
 using Classlibrary.Domain.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
     /// <summary>
     ///     Represents the <see cref="UtilityController" /> controller.
     /// </summary>
-    [Authorize(Roles = "USER")]
+    [Authorize(Roles = Helper.ClaimUser)]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
