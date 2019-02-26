@@ -47,22 +47,23 @@ namespace Middleware.Core.WebApi.V1.Models
             Claims = new List<UserClaimDto>();
         }
 
-        
+
         /// <summary>
         ///     Creates an instance of <see cref="UserDto" /> class.
         /// </summary>
-		/// <param name="id">The Id.</param>
-		/// <param name="userName">The UserName.</param>
-		/// <param name="email">The Email.</param>
-		/// <param name="emailConfirmed">The EmailConfirmed.</param>
-		/// <param name="password">The PasswordWord.</param>
-		/// <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
-		/// <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
-		/// <param name="lockoutEnabled">The LockoutEnabled.</param>
-		/// <param name="accessFailedCount">The AccessFailedCount.</param>
-		/// <param name="createdOn">The CreatedOn.</param>
-		/// <param name="changedOn">The ChangedOn.</param>
-        public UserDto(Guid id, string userName, string email, bool emailConfirmed, string password, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn) : this()
+        /// <param name="id">The Id.</param>
+        /// <param name="userName">The UserName.</param>
+        /// <param name="email">The Email.</param>
+        /// <param name="emailConfirmed">The EmailConfirmed.</param>
+        /// <param name="password">The PasswordWord.</param>
+        /// <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
+        /// <param name="mobileNumberConfirmed">The MobileNumberConfirmed.</param>
+        /// <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
+        /// <param name="lockoutEnabled">The LockoutEnabled.</param>
+        /// <param name="accessFailedCount">The AccessFailedCount.</param>
+        /// <param name="createdOn">The CreatedOn.</param>
+        /// <param name="changedOn">The ChangedOn.</param>
+        public UserDto(Guid id, string userName, string email, bool emailConfirmed, string password, bool phoneNumberConfirmed, bool mobileNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn) : this()
         {
             Id = id;
             UserName = userName;
@@ -70,6 +71,7 @@ namespace Middleware.Core.WebApi.V1.Models
             EmailConfirmed = emailConfirmed;
             Password = password;
             PhoneNumberConfirmed = phoneNumberConfirmed;
+            MobileNumberConfirmed = mobileNumberConfirmed;
             TwoFactorEnabled = twoFactorEnabled;
             LockoutEnabled = lockoutEnabled;
             AccessFailedCount = accessFailedCount;
@@ -133,12 +135,31 @@ namespace Middleware.Core.WebApi.V1.Models
         /// </summary>
 	    [Display(Name = "MobileNumber")]
 		public string MobileNumber { get; set; }
-        
-        
+
+        /// <summary>
+        ///     The MobileNumberConfirmed.
+        /// </summary>
+        [Display(Name = "MobileNumberConfirmed")]
+        [Required(ErrorMessage = "MobileNumberConfirmed is required")]
+        public bool MobileNumberConfirmed { get; set; }
+
+        /// <summary>
+        ///     The NationalId.
+        /// </summary>
+        [Display(Name = "NationalId")]
+        public string NationalId { get; set; }
+
+        /// <summary>
+        ///     The NationalIdVerificationDateUtc.
+        /// </summary>
+        [Display(Name = "NationalIdVerificationDate")]
+        public DateTime? NationalIdVerificationDateUtc { get; set; }
+
+
         /// <summary>
         ///     The TwoFactorEnabled.
         /// </summary>
-	    [Display(Name = "TwoFactorEnabled")]
+        [Display(Name = "TwoFactorEnabled")]
 		[Required(ErrorMessage = "TwoFactorEnabled is required")]
 		public bool TwoFactorEnabled { get; set; }
         

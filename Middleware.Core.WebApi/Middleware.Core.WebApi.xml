@@ -678,7 +678,7 @@
                 Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserDto" /> class.
             </summary>
         </member>
-        <member name="M:Middleware.Core.WebApi.V1.Models.UserDto.#ctor(System.Guid,System.String,System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.DateTime,System.DateTime)">
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserDto.#ctor(System.Guid,System.String,System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.DateTime,System.DateTime)">
             <summary>
                 Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserDto" /> class.
             </summary>
@@ -688,6 +688,7 @@
             <param name="emailConfirmed">The EmailConfirmed.</param>
             <param name="password">The PasswordWord.</param>
             <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
+            <param name="mobileNumberConfirmed">The MobileNumberConfirmed.</param>
             <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
             <param name="lockoutEnabled">The LockoutEnabled.</param>
             <param name="accessFailedCount">The AccessFailedCount.</param>
@@ -732,6 +733,21 @@
         <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.MobileNumber">
             <summary>
                 The MobileNumber.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.MobileNumberConfirmed">
+            <summary>
+                The MobileNumberConfirmed.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.NationalId">
+            <summary>
+                The NationalId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.NationalIdVerificationDateUtc">
+            <summary>
+                The NationalIdVerificationDateUtc.
             </summary>
         </member>
         <member name="P:Middleware.Core.WebApi.V1.Models.UserDto.TwoFactorEnabled">

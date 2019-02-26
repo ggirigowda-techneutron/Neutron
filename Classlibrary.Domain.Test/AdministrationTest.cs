@@ -61,6 +61,7 @@ namespace Classlibrary.Domain.Test
                 , _passwordStorage.HashPassword(new User(), "testdb99!!")
                 , Guid.NewGuid().ToString()
                 , true
+                , true
                 , false
                 , false
                 , 0
@@ -91,6 +92,7 @@ namespace Classlibrary.Domain.Test
                 , true
                 , _passwordStorage.HashPassword(new User(), "testdb99!!")
                 , Guid.NewGuid().ToString()
+                , true
                 , true
                 , false
                 , false

@@ -66,7 +66,7 @@ namespace Classlibrary.Dao.Test
                     , true
                     , _passwordStorage.HashPassword(new UserDao(), "testdb99!!")
                     , Guid.NewGuid().ToString()
-                    , true, false, false, 0
+                    , true, true, false, false, 0
                     , DateTime.UtcNow,
                     DateTime.UtcNow);
             var result = await item.InsertAsync(ConnectionString);

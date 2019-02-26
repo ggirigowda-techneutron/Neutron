@@ -123,27 +123,30 @@ namespace Classlibrary.Dao.Linq2Db
 		[Table(Schema="Administration", Name="Users")]
 		public partial class User
 		{
-			[Identity               ] public int       Ci                   { get; set; } // int
-			[PrimaryKey, NotNull    ] public Guid      Id                   { get; set; } // uniqueidentifier
-			[Column,     NotNull    ] public string    UserName             { get; set; } // nvarchar(256)
-			[Column,     NotNull    ] public string    Email                { get; set; } // nvarchar(256)
-			[Column,     NotNull    ] public bool      EmailConfirmed       { get; set; } // bit
-			[Column,     NotNull    ] public string    PasswordHash         { get; set; } // nvarchar(max)
-			[Column,     NotNull    ] public string    SecurityStamp        { get; set; } // nvarchar(256)
-			[Column,        Nullable] public string    PhoneNumber          { get; set; } // nvarchar(256)
-			[Column,     NotNull    ] public bool      PhoneNumberConfirmed { get; set; } // bit
-			[Column,        Nullable] public string    MobileNumber         { get; set; } // nvarchar(256)
-			[Column,     NotNull    ] public bool      TwoFactorEnabled     { get; set; } // bit
-			[Column,        Nullable] public DateTime? LockoutEndDateUtc    { get; set; } // datetime
-			[Column,     NotNull    ] public bool      LockoutEnabled       { get; set; } // bit
-			[Column,     NotNull    ] public int       AccessFailedCount    { get; set; } // int
-			[Column,     NotNull    ] public DateTime  CreatedOn            { get; set; } // datetime
-			[Column,     NotNull    ] public DateTime  ChangedOn            { get; set; } // datetime
-			[Column,        Nullable] public DateTime? DeletedOn            { get; set; } // datetime
-			[Column,        Nullable] public DateTime? DeactivatedDate      { get; set; } // datetime
-			[Column,        Nullable] public string    Udf1                 { get; set; } // nvarchar(512)
-			[Column,        Nullable] public string    Udf2                 { get; set; } // nvarchar(512)
-			[Column,        Nullable] public string    Udf3                 { get; set; } // nvarchar(512)
+			[Identity               ] public int       Ci                            { get; set; } // int
+			[PrimaryKey, NotNull    ] public Guid      Id                            { get; set; } // uniqueidentifier
+			[Column,     NotNull    ] public string    UserName                      { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public string    Email                         { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public bool      EmailConfirmed                { get; set; } // bit
+			[Column,     NotNull    ] public string    PasswordHash                  { get; set; } // nvarchar(max)
+			[Column,     NotNull    ] public string    SecurityStamp                 { get; set; } // nvarchar(256)
+			[Column,        Nullable] public string    PhoneNumber                   { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public bool      PhoneNumberConfirmed          { get; set; } // bit
+			[Column,        Nullable] public string    MobileNumber                  { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public bool      TwoFactorEnabled              { get; set; } // bit
+			[Column,        Nullable] public DateTime? LockoutEndDateUtc             { get; set; } // datetime
+			[Column,     NotNull    ] public bool      LockoutEnabled                { get; set; } // bit
+			[Column,     NotNull    ] public int       AccessFailedCount             { get; set; } // int
+			[Column,     NotNull    ] public DateTime  CreatedOn                     { get; set; } // datetime
+			[Column,     NotNull    ] public DateTime  ChangedOn                     { get; set; } // datetime
+			[Column,        Nullable] public DateTime? DeletedOn                     { get; set; } // datetime
+			[Column,        Nullable] public DateTime? DeactivatedDate               { get; set; } // datetime
+			[Column,        Nullable] public string    Udf1                          { get; set; } // nvarchar(512)
+			[Column,        Nullable] public string    Udf2                          { get; set; } // nvarchar(512)
+			[Column,        Nullable] public string    Udf3                          { get; set; } // nvarchar(512)
+			[Column,     NotNull    ] public bool      MobileNumberConfirmed         { get; set; } // bit
+			[Column,        Nullable] public string    NationalId                    { get; set; } // nvarchar(512)
+			[Column,        Nullable] public DateTime? NationalIdVerificationDateUtc { get; set; } // datetime
 
 			#region Associations
 

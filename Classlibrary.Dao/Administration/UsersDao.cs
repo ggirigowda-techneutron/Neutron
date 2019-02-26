@@ -49,12 +49,13 @@ namespace Classlibrary.Dao.Administration
         /// <param name="passwordHash">The PasswordHash.</param>
         /// <param name="securityStamp">The SecurityStamp.</param>
         /// <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
+        /// <param name="mobileNumberConfirmed"></param>
         /// <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
         /// <param name="lockoutEnabled">The LockoutEnabled.</param>
         /// <param name="accessFailedCount">The AccessFailedCount.</param>
         /// <param name="createdOn">The CreatedOn.</param>
         /// <param name="changedOn">The ChangedOn.</param>
-        public UserDao(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn)
+        public UserDao(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool mobileNumberConfirmed,  bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn)
         {
             Id = id;
             UserName = userName;
@@ -63,6 +64,7 @@ namespace Classlibrary.Dao.Administration
             PasswordHash = passwordHash;
             SecurityStamp = securityStamp;
             PhoneNumberConfirmed = phoneNumberConfirmed;
+            MobileNumberConfirmed = mobileNumberConfirmed;
             TwoFactorEnabled = twoFactorEnabled;
             LockoutEnabled = lockoutEnabled;
             AccessFailedCount = accessFailedCount;
@@ -131,6 +133,20 @@ namespace Classlibrary.Dao.Administration
         /// </summary>
         public string MobileNumber { get; set; }
 
+        /// <summary>
+        ///     The MobileNumberConfirmed.
+        /// </summary>
+        public bool MobileNumberConfirmed { get; set; }
+
+        /// <summary>
+        ///     The NationalId.
+        /// </summary>
+        public string NationalId { get; set; }
+
+        /// <summary>
+        ///     The NationalIdVerificationDateUtc.
+        /// </summary>
+        public DateTime? NationalIdVerificationDateUtc { get; set; }
 
         /// <summary>
         ///     The TwoFactorEnabled.
@@ -305,9 +321,9 @@ namespace Classlibrary.Dao.Administration
         {
             // Sql
             string sql = @"INSERT INTO [Administration].[Users] 
-				 ([Id], [UserName], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [MobileNumber], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [CreatedOn], [ChangedOn], [DeletedOn], [DeactivatedDate], [Udf1], [Udf2], [Udf3]) 
+				 ([Id], [UserName], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [MobileNumber], [MobileNumberConfirmed], [NationalId], [NationalIdVerificationDateUtc], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [CreatedOn], [ChangedOn], [DeletedOn], [DeactivatedDate], [Udf1], [Udf2], [Udf3]) 
 				 OUTPUT [INSERTED].Id 
-				 VALUES(@Id, @UserName, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @MobileNumber, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @CreatedOn, @ChangedOn, @DeletedOn, @DeactivatedDate, @Udf1, @Udf2, @Udf3)";
+				 VALUES(@Id, @UserName, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @MobileNumber, @MobileNumberConfirmed, @NationalId, @NationalIdVerificationDateUtc, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @CreatedOn, @ChangedOn, @DeletedOn, @DeactivatedDate, @Udf1, @Udf2, @Udf3)";
 
             // Parameters
             DynamicParameters para = new DynamicParameters();
@@ -320,6 +336,9 @@ namespace Classlibrary.Dao.Administration
             para.Add("@PhoneNumber", entity.PhoneNumber);
             para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
             para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@MobileNumberConfirmed", entity.MobileNumberConfirmed);
+            para.Add("@NationalId", entity.NationalId);
+            para.Add("@NationalIdVerificationDateUtc", entity.NationalIdVerificationDateUtc);
             para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
             para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
             para.Add("@LockoutEnabled", entity.LockoutEnabled);
@@ -368,9 +387,9 @@ namespace Classlibrary.Dao.Administration
         {
             // Sql
             string sql = @"INSERT INTO [Administration].[Users] 
-				 ([Id], [UserName], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [MobileNumber], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [CreatedOn], [ChangedOn], [DeletedOn], [DeactivatedDate], [Udf1], [Udf2], [Udf3]) 
+				 ([Id], [UserName], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [MobileNumber], [MobileNumberConfirmed], [NationalId], [NationalIdVerificationDateUtc], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [CreatedOn], [ChangedOn], [DeletedOn], [DeactivatedDate], [Udf1], [Udf2], [Udf3]) 
 				 OUTPUT [INSERTED].Id 
-				 VALUES(@Id, @UserName, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @MobileNumber, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @CreatedOn, @ChangedOn, @DeletedOn, @DeactivatedDate, @Udf1, @Udf2, @Udf3)";
+				 VALUES(@Id, @UserName, @Email, @EmailConfirmed, @PasswordHash, @SecurityStamp, @PhoneNumber, @PhoneNumberConfirmed, @MobileNumber, @MobileNumberConfirmed, @NationalId, @NationalIdVerificationDateUtc, @TwoFactorEnabled, @LockoutEndDateUtc, @LockoutEnabled, @AccessFailedCount, @CreatedOn, @ChangedOn, @DeletedOn, @DeactivatedDate, @Udf1, @Udf2, @Udf3)";
 
             // Parameters
             DynamicParameters para = new DynamicParameters();
@@ -383,6 +402,9 @@ namespace Classlibrary.Dao.Administration
             para.Add("@PhoneNumber", entity.PhoneNumber);
             para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
             para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@MobileNumberConfirmed", entity.MobileNumberConfirmed);
+            para.Add("@NationalId", entity.NationalId);
+            para.Add("@NationalIdVerificationDateUtc", entity.NationalIdVerificationDateUtc);
             para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
             para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
             para.Add("@LockoutEnabled", entity.LockoutEnabled);
@@ -425,7 +447,7 @@ namespace Classlibrary.Dao.Administration
         {
             // Sql
             string sql = @"UPDATE [Administration].[Users] 
-				 SET UserName=@UserName,Email=@Email,EmailConfirmed=@EmailConfirmed,PasswordHash=@PasswordHash,SecurityStamp=@SecurityStamp,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,MobileNumber=@MobileNumber,TwoFactorEnabled=@TwoFactorEnabled,LockoutEndDateUtc=@LockoutEndDateUtc,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn,DeletedOn=@DeletedOn,DeactivatedDate=@DeactivatedDate,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
+				 SET UserName=@UserName,Email=@Email,EmailConfirmed=@EmailConfirmed,PasswordHash=@PasswordHash,SecurityStamp=@SecurityStamp,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,MobileNumber=@MobileNumber,MobileNumberConfirmed=@MobileNumberConfirmed,NationalId=@NationalId,NationalIdVerificationDateUtc=@NationalIdVerificationDateUtc,TwoFactorEnabled=@TwoFactorEnabled,LockoutEndDateUtc=@LockoutEndDateUtc,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn,DeletedOn=@DeletedOn,DeactivatedDate=@DeactivatedDate,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
 				 WHERE Id=@Id;";
 
             // Parameters
@@ -439,6 +461,9 @@ namespace Classlibrary.Dao.Administration
             para.Add("@PhoneNumber", entity.PhoneNumber);
             para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
             para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@MobileNumberConfirmed", entity.MobileNumberConfirmed);
+            para.Add("@NationalId", entity.NationalId);
+            para.Add("@NationalIdVerificationDateUtc", entity.NationalIdVerificationDateUtc);
             para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
             para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
             para.Add("@LockoutEnabled", entity.LockoutEnabled);
@@ -486,7 +511,7 @@ namespace Classlibrary.Dao.Administration
         {
             // Sql
             string sql = @"UPDATE [Administration].[Users] 
-				 SET UserName=@UserName,Email=@Email,EmailConfirmed=@EmailConfirmed,PasswordHash=@PasswordHash,SecurityStamp=@SecurityStamp,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,MobileNumber=@MobileNumber,TwoFactorEnabled=@TwoFactorEnabled,LockoutEndDateUtc=@LockoutEndDateUtc,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn,DeletedOn=@DeletedOn,DeactivatedDate=@DeactivatedDate,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
+				 SET UserName=@UserName,Email=@Email,EmailConfirmed=@EmailConfirmed,PasswordHash=@PasswordHash,SecurityStamp=@SecurityStamp,PhoneNumber=@PhoneNumber,PhoneNumberConfirmed=@PhoneNumberConfirmed,MobileNumber=@MobileNumber,MobileNumberConfirmed=@MobileNumberConfirmed,NationalId=@NationalId,NationalIdVerificationDateUtc=@NationalIdVerificationDateUtc,TwoFactorEnabled=@TwoFactorEnabled,LockoutEndDateUtc=@LockoutEndDateUtc,LockoutEnabled=@LockoutEnabled,AccessFailedCount=@AccessFailedCount,CreatedOn=@CreatedOn,ChangedOn=@ChangedOn,DeletedOn=@DeletedOn,DeactivatedDate=@DeactivatedDate,Udf1=@Udf1,Udf2=@Udf2,Udf3=@Udf3 
 				 WHERE Id=@Id;";
 
             // Parameters
@@ -500,6 +525,9 @@ namespace Classlibrary.Dao.Administration
             para.Add("@PhoneNumber", entity.PhoneNumber);
             para.Add("@PhoneNumberConfirmed", entity.PhoneNumberConfirmed);
             para.Add("@MobileNumber", entity.MobileNumber);
+            para.Add("@MobileNumberConfirmed", entity.MobileNumberConfirmed);
+            para.Add("@NationalId", entity.NationalId);
+            para.Add("@NationalIdVerificationDateUtc", entity.NationalIdVerificationDateUtc);
             para.Add("@TwoFactorEnabled", entity.TwoFactorEnabled);
             para.Add("@LockoutEndDateUtc", entity.LockoutEndDateUtc);
             para.Add("@LockoutEnabled", entity.LockoutEnabled);

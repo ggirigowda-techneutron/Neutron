@@ -56,23 +56,24 @@ namespace Classlibrary.Domain.Administration
             _claims = new HashSet<UserClaim>();
         }
 
-        
+
         /// <summary>
         ///     Creates an instance of <see cref="User" /> class.
         /// </summary>
-		/// <param name="id">The Id.</param>
-		/// <param name="userName">The UserName.</param>
-		/// <param name="email">The Email.</param>
-		/// <param name="emailConfirmed">The EmailConfirmed.</param>
-		/// <param name="passwordHash">The PasswordHash.</param>
-		/// <param name="securityStamp">The SecurityStamp.</param>
-		/// <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
-		/// <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
-		/// <param name="lockoutEnabled">The LockoutEnabled.</param>
-		/// <param name="accessFailedCount">The AccessFailedCount.</param>
-		/// <param name="createdOn">The CreatedOn.</param>
-		/// <param name="changedOn">The ChangedOn.</param>
-        public User(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn) : this()
+        /// <param name="id">The Id.</param>
+        /// <param name="userName">The UserName.</param>
+        /// <param name="email">The Email.</param>
+        /// <param name="emailConfirmed">The EmailConfirmed.</param>
+        /// <param name="passwordHash">The PasswordHash.</param>
+        /// <param name="securityStamp">The SecurityStamp.</param>
+        /// <param name="phoneNumberConfirmed">The PhoneNumberConfirmed.</param>
+        /// <param name="mobileNumberConfirmed">The MobileNumberConfirmed</param>
+        /// <param name="twoFactorEnabled">The TwoFactorEnabled.</param>
+        /// <param name="lockoutEnabled">The LockoutEnabled.</param>
+        /// <param name="accessFailedCount">The AccessFailedCount.</param>
+        /// <param name="createdOn">The CreatedOn.</param>
+        /// <param name="changedOn">The ChangedOn.</param>
+        public User(Guid id, string userName, string email, bool emailConfirmed, string passwordHash, string securityStamp, bool phoneNumberConfirmed, bool mobileNumberConfirmed, bool twoFactorEnabled, bool lockoutEnabled, int accessFailedCount, DateTime createdOn, DateTime changedOn) : this()
         {
             Id = id;
             UserName = userName;
@@ -81,6 +82,7 @@ namespace Classlibrary.Domain.Administration
             PasswordHash = passwordHash;
             SecurityStamp = securityStamp;
             PhoneNumberConfirmed = phoneNumberConfirmed;
+            MobileNumberConfirmed = MobileNumberConfirmed;
             TwoFactorEnabled = twoFactorEnabled;
             LockoutEnabled = lockoutEnabled;
             AccessFailedCount = accessFailedCount;
@@ -141,8 +143,23 @@ namespace Classlibrary.Domain.Administration
         ///     The MobileNumber.
         /// </summary>
         public string MobileNumber { get; set; }
-        
-        
+
+        /// <summary>
+        ///     The MobileNumberConfirmed.
+        /// </summary>
+        public bool MobileNumberConfirmed { get; set; }
+
+        /// <summary>
+        ///     The NationalId.
+        /// </summary>
+        public string NationalId { get; set; }
+
+        /// <summary>
+        ///     The NationalIdVerificationDateUtc.
+        /// </summary>
+        public DateTime? NationalIdVerificationDateUtc { get; set; }
+
+
         /// <summary>
         ///     The TwoFactorEnabled.
         /// </summary>

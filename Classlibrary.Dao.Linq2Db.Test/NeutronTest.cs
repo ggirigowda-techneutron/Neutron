@@ -65,6 +65,7 @@ namespace Classlibrary.Dao.Linq2Db.Test
                         .Value(c => c.PhoneNumber, "123-456-7890")
                         .Value(c => c.EmailConfirmed, true)
                         .Value(c => c.PhoneNumberConfirmed, true)
+                        .Value(c => c.MobileNumberConfirmed, true)
                         .Value(c => c.LockoutEnabled, false)
                         .Value(c => c.AccessFailedCount, 0)
                         .Value(c => c.TwoFactorEnabled, false)
