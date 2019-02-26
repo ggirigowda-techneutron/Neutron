@@ -206,6 +206,15 @@
                 <see cref="T:System.Boolean"/>.
             </returns>
         </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.UpdateUserNationalId(Middleware.Core.WebApi.V1.Models.UserUpdateNationalIdDto)">
+            <summary>
+                Update national Id.
+            </summary>
+            <param name="model">The model.</param>
+            <returns>
+                <see cref="T:System.Boolean"/>.
+            </returns>
+        </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.DeleteClaim(Middleware.Core.WebApi.V1.Models.UserClaimDto)">
             <summary>
                 Delete claim.
@@ -908,6 +917,26 @@
         <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateDto.Udf3">
             <summary>
                 The Udf3.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Models.UserUpdateNationalIdDto">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Models.UserUpdateNationalIdDto" /> class.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateNationalIdDto.Id">
+            <summary>
+                The user Id.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateNationalIdDto.NationalId">
+            <summary>
+                Gets or sets the national Id.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserUpdateNationalIdDto.NationalIdVerificationDateTimeUtc">
+            <summary>
+                Gets or sets the national Id verification date time UTC
             </summary>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Models.UserUpdatePasswordDto">

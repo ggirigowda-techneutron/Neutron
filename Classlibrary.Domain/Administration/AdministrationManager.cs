@@ -208,6 +208,41 @@ namespace Classlibrary.Domain.Administration
                 }
             }
         }
+        /// <summary>
+        ///     Update national Id.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="nationalId">The national Id.</param>
+        /// <param name="nationalIdVerificationDateUtc">The national Id verification date.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        public async Task<bool> UpdateNationalId(Guid userId, string nationalId, DateTime? nationalIdVerificationDateUtc, DependentTransaction transaction = null)
+        {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user Id", nameof(userId));
+            if (string.IsNullOrEmpty(nationalId))
+                throw new ArgumentException("Invalid national Id", nameof(nationalId));
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var result = await db.Administration.Users.Where(x => x.Id == userId)
+                        .Set(u => u.NationalId, nationalId)
+                        .Set(u => u.NationalIdVerificationDateUtc, nationalIdVerificationDateUtc)
+                        .Set(u => u.ChangedOn, DateTime.UtcNow)
+                        .UpdateAsync();
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return result == 1;
+                }
+            }
+        }
 
         /// <summary>
         ///     Create a <see cref="UserProfile"/>.

@@ -68,6 +68,16 @@ namespace Classlibrary.Domain.Administration
         Task<bool> UpdatePassword(Guid userId, string passwordHash, DependentTransaction transaction = null);
 
         /// <summary>
+        ///     Update national Id.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="nationalId">The national Id.</param>
+        /// <param name="nationalIdVerificationDateUtc">The national Id verification date.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<bool> UpdateNationalId(Guid userId, string nationalId, DateTime? nationalIdVerificationDateUtc, DependentTransaction transaction = null);
+
+        /// <summary>
         ///     Create a <see cref="UserProfile"/>.
         /// </summary>
         /// <param name="userId">The user Id.</param>

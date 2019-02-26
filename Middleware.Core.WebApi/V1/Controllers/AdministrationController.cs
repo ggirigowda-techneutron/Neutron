@@ -214,6 +214,32 @@ namespace Middleware.Core.WebApi.V1.Controllers
         }
 
         /// <summary>
+        ///     Update national Id.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        ///     <see cref="bool"/>.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimAdmin)]
+        [HttpPut("user/updatenationalid")]
+        public async Task<IActionResult> UpdateUserNationalId(UserUpdateNationalIdDto model)
+        {
+            if (!ModelState.IsValid || model.Id == Guid.Empty)
+            {
+                return BadRequest(ModelState);
+            }
+            // Find user
+            var found = await _administrationManager.Get(model.Id);
+            if (found != null)
+            {
+                // Update
+                var result = await _administrationManager.UpdateNationalId(model.Id, model.NationalId, model.NationalIdVerificationDateTimeUtc);
+                return new JsonResult(result);
+            }
+            return Unauthorized();
+        }
+
+        /// <summary>
         ///     Delete claim.
         /// </summary>
         /// <param name="model">The model.</param>
