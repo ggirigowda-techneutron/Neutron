@@ -308,5 +308,20 @@ namespace Middleware.Core.WebApi.V1.Controllers
             var items = await _administrationManager.UserAddresses(id);
             return Mapper.Map<IEnumerable<UserAddress>, IEnumerable<UserAddressDto>>(items);
         }
+
+        /// <summary>
+        ///     Get user address.
+        /// </summary>
+        /// <param name="id">The Id.</param>
+        /// <returns>
+        ///     <see cref="UserAddressDto" />.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimUser)]
+        [HttpGet("user/address/{id}")]
+        public async Task<UserAddressDto> UserAddress(Guid id)
+        {
+            var item = await _administrationManager.UserAddress(id);
+            return Mapper.Map<UserAddress, UserAddressDto>(item);
+        }
     }
 }
