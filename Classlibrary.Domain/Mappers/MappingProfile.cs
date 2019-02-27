@@ -44,6 +44,14 @@ namespace Classlibrary.Domain.Mappers
             CreateMap<IEnumerable<Dao.Linq2Db.UtilitySchema.ReferenceItem>, IEnumerable<ReferenceItem>>()
                 .ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemsConverter());
 
+            // Address
+            CreateMap<Address, Dao.Linq2Db.UtilitySchema.Address>().ConvertUsing(new AddressPocoDaoMapper.AddressDaoConverter());
+            CreateMap<IEnumerable<Address>, IEnumerable<Dao.Linq2Db.UtilitySchema.Address>>()
+                .ConvertUsing(new AddressPocoDaoMapper.AddressDaosConverter());
+            CreateMap<Dao.Linq2Db.UtilitySchema.Address, Address>().ConvertUsing(new AddressPocoDaoMapper.AddressConverter());
+            CreateMap<IEnumerable<Dao.Linq2Db.UtilitySchema.Address>, IEnumerable<Address>>()
+                .ConvertUsing(new AddressPocoDaoMapper.AddresssConverter());
+
             // User
             CreateMap<User, Dao.Linq2Db.AdministrationSchema.User>().ConvertUsing(new UserPocoDaoMapper.UserDaoConverter());
             CreateMap<IEnumerable<User>, IEnumerable<Dao.Linq2Db.AdministrationSchema.User>>()
@@ -67,6 +75,14 @@ namespace Classlibrary.Domain.Mappers
             CreateMap<Dao.Linq2Db.AdministrationSchema.UserClaim, UserClaim>().ConvertUsing(new UserClaimPocoDaoMapper.UserClaimConverter());
             CreateMap<IEnumerable<Dao.Linq2Db.AdministrationSchema.UserClaim>, IEnumerable<UserClaim>>()
                 .ConvertUsing(new UserClaimPocoDaoMapper.UserClaimsConverter());
+
+            // UserAddress
+            CreateMap<UserAddress, Dao.Linq2Db.AdministrationSchema.UserAddress>().ConvertUsing(new UserAddressPocoDaoMapper.UserAddressDaoConverter());
+            CreateMap<IEnumerable<UserAddress>, IEnumerable<Dao.Linq2Db.AdministrationSchema.UserAddress>>()
+                .ConvertUsing(new UserAddressPocoDaoMapper.UserAddressDaosConverter());
+            CreateMap<Dao.Linq2Db.AdministrationSchema.UserAddress, UserAddress>().ConvertUsing(new UserAddressPocoDaoMapper.UserAddressConverter());
+            CreateMap<IEnumerable<Dao.Linq2Db.AdministrationSchema.UserAddress>, IEnumerable<UserAddress>>()
+                .ConvertUsing(new UserAddressPocoDaoMapper.UserAddresssConverter());
         }
     }
 }

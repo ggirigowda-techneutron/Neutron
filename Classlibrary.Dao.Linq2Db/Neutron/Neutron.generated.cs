@@ -108,9 +108,10 @@ namespace Classlibrary.Dao.Linq2Db
 	{
 		public partial class DataContext
 		{
-			public ITable<User>        Users        { get { return _dataContext.GetTable<User>(); } }
-			public ITable<UserClaim>   UserClaims   { get { return _dataContext.GetTable<UserClaim>(); } }
-			public ITable<UserProfile> UserProfiles { get { return _dataContext.GetTable<UserProfile>(); } }
+			public ITable<User>        Users         { get { return _dataContext.GetTable<User>(); } }
+			public ITable<UserAddress> UserAddresses { get { return _dataContext.GetTable<UserAddress>(); } }
+			public ITable<UserClaim>   UserClaims    { get { return _dataContext.GetTable<UserClaim>(); } }
+			public ITable<UserProfile> UserProfiles  { get { return _dataContext.GetTable<UserProfile>(); } }
 
 			private readonly IDataContext _dataContext;
 
@@ -151,6 +152,12 @@ namespace Classlibrary.Dao.Linq2Db
 			#region Associations
 
 			/// <summary>
+			/// FK_Administration_UserAddress_User_BackReference
+			/// </summary>
+			[Association(ThisKey="Id", OtherKey="UserId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
+			public IEnumerable<AdministrationSchema.UserAddress> UserAddressUsers { get; set; }
+
+			/// <summary>
 			/// FK_Administration_UserClaim_Users_BackReference
 			/// </summary>
 			[Association(ThisKey="Id", OtherKey="UserId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
@@ -161,6 +168,32 @@ namespace Classlibrary.Dao.Linq2Db
 			/// </summary>
 			[Association(ThisKey="Id", OtherKey="UserId", CanBeNull=true, Relationship=Relationship.OneToOne, IsBackReference=true)]
 			public AdministrationSchema.UserProfile UserProfile { get; set; }
+
+			#endregion
+		}
+
+		[Table(Schema="Administration", Name="UserAddress")]
+		public partial class UserAddress
+		{
+			[Identity           ] public int  Ci        { get; set; } // int
+			[PrimaryKey, NotNull] public Guid Id        { get; set; } // uniqueidentifier
+			[Column,     NotNull] public Guid UserId    { get; set; } // uniqueidentifier
+			[Column,     NotNull] public Guid AddressId { get; set; } // uniqueidentifier
+			[Column,     NotNull] public bool Preffered { get; set; } // bit
+
+			#region Associations
+
+			/// <summary>
+			/// FK_Administration_UserAddress_Utility_Address
+			/// </summary>
+			[Association(ThisKey="AddressId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK_Administration_UserAddress_Utility_Address", BackReferenceName="AdministrationUserAddresses")]
+			public UtilitySchema.Address Address { get; set; }
+
+			/// <summary>
+			/// FK_Administration_UserAddress_User
+			/// </summary>
+			[Association(ThisKey="UserId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK_Administration_UserAddress_User", BackReferenceName="UserAddressUsers")]
+			public AdministrationSchema.User User { get; set; }
 
 			#endregion
 		}
@@ -266,6 +299,12 @@ namespace Classlibrary.Dao.Linq2Db
 				t.Id == Id);
 		}
 
+		public static UserAddress Find(this ITable<UserAddress> table, Guid Id)
+		{
+			return table.FirstOrDefault(t =>
+				t.Id == Id);
+		}
+
 		public static UserClaim Find(this ITable<UserClaim> table, Guid UserId, string ClaimType, string ClaimValue)
 		{
 			return table.FirstOrDefault(t =>
@@ -313,6 +352,7 @@ namespace Classlibrary.Dao.Linq2Db
 	{
 		public partial class DataContext
 		{
+			public ITable<Address>       Addresses      { get { return _dataContext.GetTable<Address>(); } }
 			public ITable<Reference>     References     { get { return _dataContext.GetTable<Reference>(); } }
 			public ITable<ReferenceItem> ReferenceItems { get { return _dataContext.GetTable<ReferenceItem>(); } }
 
@@ -322,6 +362,50 @@ namespace Classlibrary.Dao.Linq2Db
 			{
 				_dataContext = dataContext;
 			}
+		}
+
+		[Table(Schema="Utility", Name="Address")]
+		public partial class Address
+		{
+			[Identity               ] public int      Ci            { get; set; } // int
+			[PrimaryKey, NotNull    ] public Guid     Id            { get; set; } // uniqueidentifier
+			[Column,     NotNull    ] public string   Address1      { get; set; } // nvarchar(512)
+			[Column,        Nullable] public string   Address2      { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public string   City          { get; set; } // nvarchar(256)
+			[Column,        Nullable] public string   County        { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public string   State         { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public string   Zip           { get; set; } // nvarchar(256)
+			[Column,     NotNull    ] public Guid     CountryId     { get; set; } // uniqueidentifier
+			[Column,     NotNull    ] public Guid     AddressTypeId { get; set; } // uniqueidentifier
+			[Column,        Nullable] public decimal? Latitude      { get; set; } // decimal(9, 6)
+			[Column,        Nullable] public decimal? Longitude     { get; set; } // decimal(9, 6)
+			[Column,     NotNull    ] public DateTime CreatedOn     { get; set; } // datetime
+			[Column,     NotNull    ] public DateTime ChangedOn     { get; set; } // datetime
+			[Column,        Nullable] public string   Udf1          { get; set; } // nvarchar(512)
+			[Column,        Nullable] public string   Udf2          { get; set; } // nvarchar(512)
+			[Column,        Nullable] public string   Udf3          { get; set; } // nvarchar(512)
+
+			#region Associations
+
+			/// <summary>
+			/// FK_Utility_Address_ReferenceItem_AddressType
+			/// </summary>
+			[Association(ThisKey="AddressTypeId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK_Utility_Address_ReferenceItem_AddressType", BackReferenceName="AddressAddressTypes")]
+			public UtilitySchema.ReferenceItem AddressType { get; set; }
+
+			/// <summary>
+			/// FK_Administration_UserAddress_Utility_Address_BackReference
+			/// </summary>
+			[Association(ThisKey="Id", OtherKey="AddressId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
+			public IEnumerable<AdministrationSchema.UserAddress> AdministrationUserAddresses { get; set; }
+
+			/// <summary>
+			/// FK_UtilityAddress_ReferenceItem_Country
+			/// </summary>
+			[Association(ThisKey="CountryId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK_UtilityAddress_ReferenceItem_Country", BackReferenceName="UtilityAddressCountries")]
+			public UtilitySchema.ReferenceItem Country { get; set; }
+
+			#endregion
 		}
 
 		[Table(Schema="Utility", Name="Reference")]
@@ -365,6 +449,12 @@ namespace Classlibrary.Dao.Linq2Db
 			#region Associations
 
 			/// <summary>
+			/// FK_Utility_Address_ReferenceItem_AddressType_BackReference
+			/// </summary>
+			[Association(ThisKey="Id", OtherKey="AddressTypeId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
+			public IEnumerable<UtilitySchema.Address> AddressAddressTypes { get; set; }
+
+			/// <summary>
 			/// FK_Administration_UserProfile_ReferenceItem_Country_BackReference
 			/// </summary>
 			[Association(ThisKey="Id", OtherKey="CountryId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
@@ -388,10 +478,22 @@ namespace Classlibrary.Dao.Linq2Db
 			[Association(ThisKey="ReferenceId", OtherKey="Id", CanBeNull=false, Relationship=Relationship.ManyToOne, KeyName="FK_Utility_ReferenceItem_Reference", BackReferenceName="ReferenceItems")]
 			public UtilitySchema.Reference Reference { get; set; }
 
+			/// <summary>
+			/// FK_UtilityAddress_ReferenceItem_Country_BackReference
+			/// </summary>
+			[Association(ThisKey="Id", OtherKey="CountryId", CanBeNull=true, Relationship=Relationship.OneToMany, IsBackReference=true)]
+			public IEnumerable<UtilitySchema.Address> UtilityAddressCountries { get; set; }
+
 			#endregion
 		}
 
 		#region Table Extensions
+
+		public static Address Find(this ITable<Address> table, Guid Id)
+		{
+			return table.FirstOrDefault(t =>
+				t.Id == Id);
+		}
 
 		public static Reference Find(this ITable<Reference> table, Guid Id)
 		{

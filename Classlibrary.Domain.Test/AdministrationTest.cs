@@ -127,5 +127,20 @@ namespace Classlibrary.Domain.Test
             Assert.True(items.Any(), "Failed to find users");
             Output.WriteLine(JsonConvert.SerializeObject(items, Formatting.Indented));
         }
+
+        /// <summary>
+        ///     Can get user addresses.
+        /// </summary>
+        [Fact]
+        public async void CanGetUserAddresses()
+        {
+            var users = await _administrationManager.All();
+            Assert.True(users.Any(), "Failed to find users");
+            foreach (var user in users)
+            {
+                var items = await _administrationManager.Addresses(user.Id);
+                Assert.True(items != null, "Failed to find addresses");
+            }
+        }
     }
 }

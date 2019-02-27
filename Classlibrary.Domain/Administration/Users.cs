@@ -47,7 +47,6 @@ namespace Classlibrary.Domain.Administration
         /// </summary>
         public UserProfile Profile { get; set; }
 
-
         /// <summary>
         ///     Creates an instance of <see cref="User" /> class.
         /// </summary>

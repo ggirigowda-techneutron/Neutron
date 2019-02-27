@@ -65,6 +65,32 @@ CREATE TABLE [Utility].[ReferenceItem](
 );
 GO
 
+-- Address
+CREATE TABLE [Utility].[Address](
+	[Ci] [int] IDENTITY(1,1) NOT NULL,
+	[Id] uniqueidentifier NOT NULL,
+	[Address1] [nvarchar](512) NOT NULL,
+	[Address2] [nvarchar](256),
+	[City] [nvarchar](256) NOT NULL,
+	[County] [nvarchar](256) NULL,
+	[State] [nvarchar](256) NOT NULL,
+	[Zip] [nvarchar](256) NOT NULL,
+	[CountryId] uniqueidentifier NOT NULL,
+	[AddressTypeId] uniqueidentifier NOT NULL,
+	[Latitude] DECIMAL(9,6) NULL,
+	[Longitude] DECIMAL(9,6) NULL,
+	[CreatedOn] [datetime] NOT NULL DEFAULT GETUTCDATE(),
+	[ChangedOn] [datetime] NOT NULL DEFAULT GETUTCDATE(),
+	[Udf1]  [nvarchar](512) NULL,
+	[Udf2]  [nvarchar](512) NULL,
+	[Udf3]  [nvarchar](512) NULL,
+	CONSTRAINT [PK_Utility_Address] PRIMARY KEY NONCLUSTERED([Id] ASC),
+	CONSTRAINT [CI_Utility_Address] UNIQUE CLUSTERED ([Ci] ASC),
+	CONSTRAINT [FK_UtilityAddress_ReferenceItem_Country] FOREIGN KEY ([CountryId]) REFERENCES [Utility].[ReferenceItem] ([Id]),
+	CONSTRAINT [FK_Utility_Address_ReferenceItem_AddressType] FOREIGN KEY ([AddressTypeId]) REFERENCES [Utility].[ReferenceItem] ([Id])
+);
+GO
+
 -- Administration
 CREATE SCHEMA [Administration];
 GO
@@ -178,6 +204,21 @@ CREATE TABLE [Administration].[UserProfile](
 ); 
 GO
 CREATE INDEX [IX_Administration_UserProfile_UserId] ON [Administration].[UserProfile]([UserId]);
+GO
+
+-- UserAddress
+CREATE TABLE [Administration].[UserAddress](
+	[Ci] [int] IDENTITY(1,1) NOT NULL,
+	[Id] uniqueidentifier NOT NULL,
+	[UserId] uniqueidentifier NOT NULL,
+	[AddressId] uniqueidentifier NOT NULL,
+	[Preffered] BIT NOT NULL DEFAULT 0,
+	CONSTRAINT [PK_Administration_UserAddress] PRIMARY KEY NONCLUSTERED([Id] ASC),
+	CONSTRAINT [CI_Administration_UserAddress] UNIQUE CLUSTERED ([Ci] ASC),
+	CONSTRAINT [FK_Administration_UserAddress_User] FOREIGN KEY ([UserId]) REFERENCES [Administration].[Users] ([Id]),
+	CONSTRAINT [FK_Administration_UserAddress_Utility_Address] FOREIGN KEY ([AddressId]) REFERENCES [Utility].[Address] ([Id]),
+	CONSTRAINT [UQ_Administration_UserAddress_User_Address] UNIQUE ([UserId], [AddressId]),
+);
 GO
 
 -- COMMITT TRANSACTION

@@ -24,6 +24,15 @@ BEGIN TRY
 	INSERT INTO [Utility].[Reference] ([Id], [Name], [Description], [CountryCode]) VALUES (@userTypes, 'LstUserTypes', 'List of user types', 'US');
 	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('e21dcb05-1f7b-4c95-9c29-0e583b120e44', @userTypes, 'EMP', 'Employee');
 	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('5ebf5cca-df92-49c6-ae5f-f3c9670bf9d3', @userTypes, 'CUS', 'Customer');
+
+	-- ADDRESSTYPES
+	DECLARE @addressTypes UNIQUEIDENTIFIER = '7540c54e-fbc5-4d9f-b7a1-eec380a4b90a';
+	PRINT @addressTypes;
+	INSERT INTO [Utility].[Reference] ([Id], [Name], [Description], [CountryCode]) VALUES (@addressTypes, 'LstAddressTypes', 'List of address types', 'US');
+	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('e0e08fcd-a1e3-4810-ab49-7f49124b52d3', @addressTypes, 'MA', 'Mailing');
+	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('781469bf-8815-478c-b1ef-8baf06149f07', @addressTypes, 'BI', 'Billing');
+	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('89917168-ff35-4619-a500-632410868499', @addressTypes, 'SH', 'Shipping');
+	INSERT INTO [Utility].[ReferenceItem] ([Id], [ReferenceId], [Code] , [Description]) VALUES ('9f131320-420b-43cc-af22-0d60400fe8dd', @addressTypes, 'HO', 'Home');
 	
 	-- USER
 	DECLARE @ggUserId UNIQUEIDENTIFIER = '88237092-ed98-4da9-98e6-2de1d10e0fd0';	

@@ -397,6 +397,25 @@ namespace Classlibrary.Domain.Administration
             }
         }
 
+        /// <summary>
+        ///     Addresses.
+        /// </summary>
+        /// <param name="id">The user Id.</param>
+        /// <returns><see cref="IEnumerable{Address}" />.</returns>
+        public async Task<IEnumerable<UserAddress>> Addresses(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentException("Invalid id", nameof(id));
+            using (var db = new PRACTISEV1DB())
+            {
+                var items = await db.GetTable<AdministrationSchema.UserAddress>().Where(x => x.UserId == id)
+                    .LeftJoin(db.GetTable<UtilitySchema.Address>(),
+                        (userAddress, address) => userAddress.AddressId == address.Id, (userAddress, address) => Build(userAddress, address))
+                    .ToListAsync();
+                return items;
+            }
+        }
+
         #endregion
 
         #region Private methods
@@ -427,6 +446,19 @@ namespace Classlibrary.Domain.Administration
             if (item != null)
                 item.Claims = Mapper.Map<IEnumerable<AdministrationSchema.UserClaim>, IEnumerable<UserClaim>>(claims).ToHashSet();
             return item;
+        }
+
+        /// <summary>
+        ///     Build user address.
+        /// </summary>
+        /// <param name="userAddress">The user address.</param>
+        /// <param name="address">The address.</param>
+        /// <returns></returns>
+        private static UserAddress Build(AdministrationSchema.UserAddress userAddress, UtilitySchema.Address address)
+        {
+            if (userAddress != null)
+                userAddress.Address = address;
+            return Mapper.Map<AdministrationSchema.UserAddress, UserAddress>(userAddress);
         }
 
         #endregion

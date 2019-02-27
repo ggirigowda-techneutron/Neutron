@@ -110,5 +110,12 @@ namespace Classlibrary.Domain.Administration
         /// <param name="transaction">The transaction.</param>
         /// <returns></returns>
         Task<bool> Delete(UserClaim userClaim, DependentTransaction transaction = null);
+
+        /// <summary>
+        ///     Addresses.
+        /// </summary>
+        /// <param name="id">The user Id.</param>
+        /// <returns><see cref="IEnumerable{Address}" />.</returns>
+        Task<IEnumerable<UserAddress>> Addresses(Guid id);
     }
 }
