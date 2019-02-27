@@ -112,20 +112,34 @@ namespace Classlibrary.Domain.Administration
         Task<bool> Delete(UserClaim userClaim, DependentTransaction transaction = null);
 
         /// <summary>
-        ///     Addresses.
-        /// </summary>
-        /// <param name="id">The user Id.</param>
-        /// <returns><see cref="IEnumerable{Address}" />.</returns>
-        Task<IEnumerable<UserAddress>> Addresses(Guid id);
-
-        /// <summary>
-        ///     Create a <see cref="Utility.Address"/>.
+        ///     UserAddresses.
         /// </summary>
         /// <param name="userId">The user Id.</param>
-        /// <param name="address">The address.</param>
-        /// <param name="preffered">The preffered.</param>
+        /// <returns><see cref="IEnumerable{UserAddress}" />.</returns>
+        Task<IEnumerable<UserAddress>> UserAddresses(Guid userId);
+
+        /// <summary>
+        ///     UserAddress.
+        /// </summary>
+        /// <param name="id">The user address Id.</param>
+        /// <returns></returns>
+        Task<UserAddress> UserAddress(Guid id);
+
+        /// <summary>
+        ///     Create a <see cref="Administration.UserAddress"/>.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="userAddress">The user address.</param>
         /// <param name="transaction">The transaction.</param>
         /// <returns></returns>
-        Task<Guid> Create(Guid userId, Utility.Address address, bool preffered = false, DependentTransaction transaction = null);
+        Task<Guid> Create(Guid userId, UserAddress userAddress, DependentTransaction transaction = null);
+
+        /// <summary>
+        ///     Update a <see cref="Administration.UserAddress"/>.
+        /// </summary>
+        /// <param name="userAddress">The user address.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<bool> Update(UserAddress userAddress, DependentTransaction transaction = null);
     }
 }

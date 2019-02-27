@@ -293,5 +293,20 @@ namespace Middleware.Core.WebApi.V1.Controllers
 
             return BadRequest(ModelState);
         }
+        
+        /// <summary>
+        ///     Get user addresses.
+        /// </summary>
+        /// <param name="id">The user Id.</param>
+        /// <returns>
+        ///     <see cref="IEnumerable{UserAddressDto}" />.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimUser)]
+        [HttpGet("user/addresses/{id}")]
+        public async Task<IEnumerable<UserAddressDto>> UserAddresses(Guid id)
+        {
+            var items = await _administrationManager.UserAddresses(id);
+            return Mapper.Map<IEnumerable<UserAddress>, IEnumerable<UserAddressDto>>(items);
+        }
     }
 }

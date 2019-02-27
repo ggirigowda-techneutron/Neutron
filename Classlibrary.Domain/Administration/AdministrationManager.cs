@@ -17,7 +17,6 @@ using System.Threading.Tasks;
 using System.Transactions;
 using AutoMapper;
 using Classlibrary.Dao.Linq2Db;
-using Classlibrary.Domain.Utility;
 using LinqToDB;
 
 namespace Classlibrary.Domain.Administration
@@ -399,17 +398,17 @@ namespace Classlibrary.Domain.Administration
         }
 
         /// <summary>
-        ///     Addresses.
+        ///     UserAddresses.
         /// </summary>
-        /// <param name="id">The user Id.</param>
-        /// <returns><see cref="IEnumerable{Address}" />.</returns>
-        public async Task<IEnumerable<UserAddress>> Addresses(Guid id)
+        /// <param name="userId">The user Id.</param>
+        /// <returns><see cref="IEnumerable{UserAddress}" />.</returns>
+        public async Task<IEnumerable<UserAddress>> UserAddresses(Guid userId)
         {
-            if (id == Guid.Empty)
-                throw new ArgumentException("Invalid id", nameof(id));
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user id", nameof(userId));
             using (var db = new PRACTISEV1DB())
             {
-                var items = await db.GetTable<AdministrationSchema.UserAddress>().Where(x => x.UserId == id)
+                var items = await db.GetTable<AdministrationSchema.UserAddress>().Where(x => x.UserId == userId)
                     .LeftJoin(db.GetTable<UtilitySchema.Address>(),
                         (userAddress, address) => userAddress.AddressId == address.Id, (userAddress, address) => Build(userAddress, address))
                     .ToListAsync();
@@ -418,19 +417,38 @@ namespace Classlibrary.Domain.Administration
         }
 
         /// <summary>
-        ///     Create a <see cref="Utility.Address"/>.
+        ///     UserAddress.
+        /// </summary>
+        /// <param name="id">The user address Id.</param>
+        /// <returns></returns>
+        public async Task<UserAddress> UserAddress(Guid id)
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentException("Invalid id", nameof(id));
+            using (var db = new PRACTISEV1DB())
+            {
+                var items = await db.GetTable<AdministrationSchema.UserAddress>().Where(x => x.Id == id)
+                    .LeftJoin(db.GetTable<UtilitySchema.Address>(),
+                        (userAddress, address) => userAddress.AddressId == address.Id, (userAddress, address) => Build(userAddress, address))
+                    .ToListAsync();
+                return items.FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        ///     Create a <see cref="Administration.UserAddress"/>.
         /// </summary>
         /// <param name="userId">The user Id.</param>
-        /// <param name="address">The address.</param>
-        /// <param name="preffered">The preffered.</param>
+        /// <param name="userAddress"></param>
         /// <param name="transaction">The transaction.</param>
-        public async Task<Guid> Create(Guid userId, Address address, bool preffered = false, DependentTransaction transaction = null)
+        public async Task<Guid> Create(Guid userId, UserAddress userAddress, DependentTransaction transaction = null)
         {
             if (userId == Guid.Empty)
                 throw new ArgumentException("Invalid user Id", nameof(userId));
-            if (address.Id != Guid.Empty)
+            if (userAddress.Id != Guid.Empty)
                 throw new InvalidOperationException("Id has to be empty guid");
-
+            if(userAddress.Address == null)
+                throw new InvalidOperationException("UserAddress is required");
             using (var tx = transaction != null
                 ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
                 : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
@@ -441,16 +459,16 @@ namespace Classlibrary.Domain.Administration
                     var userAddressId = Guid.NewGuid();
                     var result = await db.Utility.Addresses
                         .Value(c => c.Id, id)
-                        .Value(c => c.Address1, address.Address1)
-                        .Value(c => c.Address2, address.Address2)
-                        .Value(c => c.AddressTypeId, address.AddressTypeId)
-                        .Value(c => c.City, address.City)
-                        .Value(c => c.County, address.County)
-                        .Value(c => c.CountryId, address.CountryId)
-                        .Value(u => u.State, address.State)
-                        .Value(u => u.Zip, address.Zip)
-                        .Value(u => u.CreatedOn, address.CreatedOn)
-                        .Value(u => u.ChangedOn, address.ChangedOn)
+                        .Value(c => c.Address1, userAddress.Address.Address1)
+                        .Value(c => c.Address2, userAddress.Address.Address2)
+                        .Value(c => c.AddressTypeId, userAddress.Address.AddressTypeId)
+                        .Value(c => c.City, userAddress.Address.City)
+                        .Value(c => c.County, userAddress.Address.County)
+                        .Value(c => c.CountryId, userAddress.Address.CountryId)
+                        .Value(u => u.State, userAddress.Address.State)
+                        .Value(u => u.Zip, userAddress.Address.Zip)
+                        .Value(u => u.CreatedOn, DateTime.UtcNow)
+                        .Value(u => u.ChangedOn, DateTime.UtcNow)
                         .InsertAsync();
                     if (result == 1)
                     {
@@ -458,7 +476,7 @@ namespace Classlibrary.Domain.Administration
                             .Value(c => c.Id, userAddressId)
                             .Value(c => c.UserId , userId)
                             .Value(c => c.AddressId, id)
-                            .Value(c => c.Preffered, preffered)
+                            .Value(c => c.Preffered, userAddress.Preffered)
                             .InsertAsync();
                     }
 
@@ -468,6 +486,53 @@ namespace Classlibrary.Domain.Administration
                         transaction.Complete();
 
                     return userAddressId;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Update a <see cref="Administration.UserAddress"/>.
+        /// </summary>
+        /// <param name="userAddress">The user address.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        public async Task<bool> Update(UserAddress userAddress, DependentTransaction transaction = null)
+        {
+            if (userAddress.Id == Guid.Empty)
+                throw new InvalidOperationException("Invalid Id");
+            if(userAddress.Address == null)
+                throw new ArgumentException("Invalid address");
+            if(userAddress.Address.Id == Guid.Empty)
+                throw new ArgumentException("Invalid address Id");
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var result = await db.Administration.UserAddresses.Where(x => x.Id == userAddress.Id)
+                        .Set(u => u.Preffered, userAddress.Preffered)
+                        .UpdateAsync();
+
+                    // Update the address
+                    await db.Utility.Addresses.Where(x => x.Id == userAddress.Address.Id)
+                        .Set(u => u.Address1, userAddress.Address.Address1)
+                        .Set(u => u.Address2, userAddress.Address.Address2)
+                        .Set(u => u.AddressTypeId, userAddress.Address.AddressTypeId)
+                        .Set(u => u.City, userAddress.Address.City)
+                        .Set(u => u.County, userAddress.Address.County)
+                        .Set(u => u.CountryId, userAddress.Address.CountryId)
+                        .Set(u => u.State, userAddress.Address.State)
+                        .Set(u => u.Zip, userAddress.Address.Zip)
+                        .Set(u => u.ChangedOn, DateTime.UtcNow)
+                        .UpdateAsync();
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return result == 1;
                 }
             }
         }

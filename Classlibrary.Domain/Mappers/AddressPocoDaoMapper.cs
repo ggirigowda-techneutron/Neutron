@@ -30,17 +30,17 @@ namespace Classlibrary.Domain.Mappers
         #region POCO
 		
 		/// <summary>
-        ///     Converts Dao.Linq2Db.UtilitySchema.Address(s) to Address(s). 
+        ///     Converts Dao.Linq2Db.UtilitySchema.UserAddress(s) to UserAddress(s). 
         /// </summary>
         public class AddresssConverter : ITypeConverter<IEnumerable<Dao.Linq2Db.UtilitySchema.Address>, IEnumerable<Address>>
         {
             /// <summary>
-            ///     Convert Dao.Linq2Db.UtilitySchema.Address(s) to Address(s).
+            ///     Convert Dao.Linq2Db.UtilitySchema.UserAddress(s) to UserAddress(s).
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>IEnumerable{Address}.</returns>
+            /// <returns>IEnumerable{UserAddress}.</returns>
             public IEnumerable<Address> Convert(IEnumerable<Dao.Linq2Db.UtilitySchema.Address> source, IEnumerable<Address> destination, ResolutionContext context)
             {
                 var from = source;
@@ -49,17 +49,17 @@ namespace Classlibrary.Domain.Mappers
         }
 		
 		/// <summary>
-        ///     Converts Dao.Linq2Db.UtilitySchema.Address to Address.
+        ///     Converts Dao.Linq2Db.UtilitySchema.UserAddress to UserAddress.
         /// </summary>
         public class AddressConverter : ITypeConverter<Dao.Linq2Db.UtilitySchema.Address, Address>
         {
             /// <summary>
-            ///     Convert Dao.Linq2Db.UtilitySchema.Address to Address.
+            ///     Convert Dao.Linq2Db.UtilitySchema.UserAddress to UserAddress.
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>Address.</returns>
+            /// <returns>UserAddress.</returns>
             public Address Convert(Dao.Linq2Db.UtilitySchema.Address source, Address destination, ResolutionContext context)
             {
                 var from = source;
@@ -92,17 +92,17 @@ namespace Classlibrary.Domain.Mappers
 		#region DAO
 		
 		/// <summary>
-        ///     Converts Address(s) to Dao.Linq2Db.UtilitySchema.Address(s). 
+        ///     Converts UserAddress(s) to Dao.Linq2Db.UtilitySchema.UserAddress(s). 
         /// </summary>
         public class AddressDaosConverter : ITypeConverter<IEnumerable<Address>, IEnumerable<Dao.Linq2Db.UtilitySchema.Address>>
         {
             /// <summary>
-            ///     Convert Address(s) to Dao.Linq2Db.UtilitySchema.Address(s).
+            ///     Convert UserAddress(s) to Dao.Linq2Db.UtilitySchema.UserAddress(s).
             /// </summary>
             /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>IEnumerable{Dao.Linq2Db.UtilitySchema.Address}.</returns>
+            /// <returns>IEnumerable{Dao.Linq2Db.UtilitySchema.UserAddress}.</returns>
             public IEnumerable<Dao.Linq2Db.UtilitySchema.Address> Convert(IEnumerable<Address> source, IEnumerable<Dao.Linq2Db.UtilitySchema.Address> destination, ResolutionContext context)
             {
                 var from = source;
@@ -111,17 +111,17 @@ namespace Classlibrary.Domain.Mappers
         }
 		
 		/// <summary>
-        ///     Converts Address to Dao.Linq2Db.UtilitySchema.Address.
+        ///     Converts UserAddress to Dao.Linq2Db.UtilitySchema.UserAddress.
         /// </summary>
         public class AddressDaoConverter : ITypeConverter<Address, Dao.Linq2Db.UtilitySchema.Address>
         {
             /// <summary>
-            ///     Convert Address to Dao.Linq2Db.UtilitySchema.Address.
+            ///     Convert UserAddress to Dao.Linq2Db.UtilitySchema.UserAddress.
             /// </summary>
              /// <param name="source">The source.</param>
             /// <param name="destination">The destination.</param>
             /// <param name="context">The context.</param>
-            /// <returns>Dao.Linq2Db.UtilitySchema.Address.</returns>
+            /// <returns>Dao.Linq2Db.UtilitySchema.UserAddress.</returns>
             public Dao.Linq2Db.UtilitySchema.Address Convert(Address source, Dao.Linq2Db.UtilitySchema.Address destination, ResolutionContext context)
             {
                 var from = source;

@@ -1,7 +1,7 @@
 #region Copyright TechNeutron © 2019
 
 //
-// NAME:			Address.cs
+// NAME:			UserAddress.cs
 // AUTHOR:			Girish Girigowda
 // COMPANY:			TechNeutron
 // DATE:			2/27/2019

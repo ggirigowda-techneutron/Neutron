@@ -44,7 +44,7 @@ namespace Classlibrary.Domain.Mappers
             CreateMap<IEnumerable<Dao.Linq2Db.UtilitySchema.ReferenceItem>, IEnumerable<ReferenceItem>>()
                 .ConvertUsing(new ReferenceItemPocoDaoMapper.ReferenceItemsConverter());
 
-            // Address
+            // UserAddress
             CreateMap<Address, Dao.Linq2Db.UtilitySchema.Address>().ConvertUsing(new AddressPocoDaoMapper.AddressDaoConverter());
             CreateMap<IEnumerable<Address>, IEnumerable<Dao.Linq2Db.UtilitySchema.Address>>()
                 .ConvertUsing(new AddressPocoDaoMapper.AddressDaosConverter());

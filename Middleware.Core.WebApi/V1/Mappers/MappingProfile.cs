@@ -56,6 +56,14 @@ namespace Middleware.Core.WebApi.V1.Mappers
             CreateMap<UserClaimDto, UserClaim>().ConvertUsing(new UserClaimPocoDtoMapper.UserClaimConverter());
             CreateMap<IEnumerable<UserClaimDto>, IEnumerable<UserClaim>>()
                 .ConvertUsing(new UserClaimPocoDtoMapper.UserClaimsConverter());
+
+            // UserAddress
+            CreateMap<UserAddress, UserAddressDto>().ConvertUsing(new UserAddressPocoDtoMapper.UserAddressDtoConverter());
+            CreateMap<IEnumerable<UserAddress>, IEnumerable<UserAddressDto>>()
+                .ConvertUsing(new UserAddressPocoDtoMapper.UserAddressDtosConverter());
+            CreateMap<UserAddressDto, UserAddress>().ConvertUsing(new UserAddressPocoDtoMapper.UserAddressConverter());
+            CreateMap<IEnumerable<UserAddressDto>, IEnumerable<UserAddress>>()
+                .ConvertUsing(new UserAddressPocoDtoMapper.UserAddresssConverter());
         }
     }
 }

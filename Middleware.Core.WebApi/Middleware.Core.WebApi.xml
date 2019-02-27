@@ -233,6 +233,15 @@
                 <see cref="T:System.Boolean"/>.
             </returns>
         </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.UserAddresses(System.Guid)">
+            <summary>
+                Get user addresses.
+            </summary>
+            <param name="id">The user Id.</param>
+            <returns>
+                <see cref="T:System.Collections.Generic.IEnumerable`1" />.
+            </returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.BaseController">
             <summary>
                 Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.BaseController" /> class.
@@ -286,6 +295,67 @@
             <summary>
                 Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Mappers.MappingProfile" /> class.
             </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper" /> class.
+            </summary> 
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddresssConverter">
+            <summary>
+                Converts UserAddressDto(s) to UserAddress(s). 
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddresssConverter.Convert(System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserAddressDto},System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserAddress},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserAddressDto} to IEnumerable{UserAddress}
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>IEnumerable{UserAddress}.</returns>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddressConverter">
+            <summary>
+                Converts UserAddressDto to UserAddress.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddressConverter.Convert(Middleware.Core.WebApi.V1.Models.UserAddressDto,Classlibrary.Domain.Administration.UserAddress,AutoMapper.ResolutionContext)">
+            <summary>
+                Convert UserAddressDto to UserAddress.
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>UserAddress.</returns>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddressDtosConverter">
+            <summary>
+                Converts UserAddress(s) to UserAddressDto(s). 
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddressDtosConverter.Convert(System.Collections.Generic.IEnumerable{Classlibrary.Domain.Administration.UserAddress},System.Collections.Generic.IEnumerable{Middleware.Core.WebApi.V1.Models.UserAddressDto},AutoMapper.ResolutionContext)">
+            <summary>
+                Convert IEnumerable{UserAddress} to IEnumerable{UserAddressDto}.
+            </summary>
+            <param name="context">The context.</param>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <returns>IEnumerable{UserAddressDto}.</returns>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddressDtoConverter">
+            <summary>
+                Converts UserAddress to UserAddressDto.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Mappers.UserAddressPocoDtoMapper.UserAddressDtoConverter.Convert(Classlibrary.Domain.Administration.UserAddress,Middleware.Core.WebApi.V1.Models.UserAddressDto,AutoMapper.ResolutionContext)">
+            <summary>
+                Convert UserAddress to UserAddressDto.
+            </summary>
+            <param name="source">The source.</param>
+            <param name="destination">The destination.</param>
+            <param name="context">The context.</param>
+            <returns>UserAddressDto.</returns>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Mappers.UserClaimPocoDtoMapper">
             <summary>
@@ -526,6 +596,126 @@
         <member name="P:Middleware.Core.WebApi.V1.Models.ProductModel.UserName">
             <summary>
                 The user name of the requestor.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.V1.Models.UserAddressDto">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.V1.Models.UserAddressDto" /> class.
+            </summary> 
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserAddressDto.#ctor">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserAddressDto" /> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Models.UserAddressDto.#ctor(System.Guid,System.Guid,System.Guid,System.String,System.String,System.String,System.String,System.Guid,System.Guid,System.Boolean)">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.V1.Models.UserAddressDto" /> class.
+            </summary>
+            <param name="id"></param>
+            <param name="userId">The user Id.</param>
+            <param name="addressId">The address Id.</param>
+            <param name="address1">The Address1.</param>
+            <param name="city">The City.</param>
+            <param name="state">The State.</param>
+            <param name="zip">The Zip.</param>
+            <param name="countryId">The CountryId.</param>
+            <param name="addressTypeId">The AddressTypeId.</param>
+            <param name="preferred">The preferred</param>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Id">
+            <summary>
+                The Id.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.UserId">
+            <summary>
+                The UserId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.AddressId">
+            <summary>
+                The AddressId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Address1">
+            <summary>
+                The Address1.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Address2">
+            <summary>
+                The Address2.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.City">
+            <summary>
+                The City.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.County">
+            <summary>
+                The County.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.State">
+            <summary>
+                The State.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Zip">
+            <summary>
+                The Zip.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.CountryId">
+            <summary>
+                The CountryId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.AddressTypeId">
+            <summary>
+                The AddressTypeId.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Preferred">
+            <summary>
+                The Preferred.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Latitude">
+            <summary>
+                The Latitude.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Longitude">
+            <summary>
+                The Longitude.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.CreatedOn">
+            <summary>
+                The CreatedOn.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.ChangedOn">
+            <summary>
+                The ChangedOn.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Udf1">
+            <summary>
+                The Udf1.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Udf2">
+            <summary>
+                The Udf2.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Models.UserAddressDto.Udf3">
+            <summary>
+                The Udf3.
             </summary>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Models.UserClaimDto">

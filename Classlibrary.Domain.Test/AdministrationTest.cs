@@ -138,16 +138,16 @@ namespace Classlibrary.Domain.Test
             Assert.True(users.Any(), "Failed to find users");
             foreach (var user in users)
             {
-                var items = await _administrationManager.Addresses(user.Id);
+                var items = await _administrationManager.UserAddresses(user.Id);
                 Assert.True(items != null, "Failed to find addresses");
             }
         }
 
         /// <summary>
-        ///     Can create user address.
+        ///     Can create & update user address.
         /// </summary>
         [Fact]
-        public async void CanCreateUserAddress()
+        public async void CanCreateUpdateUserAddress()
         {
             var random = DateTime.Now.ToString("MMddyyhhmmssfff");
             var user = new User(Guid.Empty
@@ -172,6 +172,8 @@ namespace Classlibrary.Domain.Test
             user.Claims.Add(new UserClaim(user.Id, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "USER"));
             var id = await _administrationManager.Create(user);
             Assert.True(id != Guid.Empty, "Failed to create user");
+
+            // Create 
             var address = new Utility.Address(Guid.Empty
                 , "One Main Street"
                 , "Maintown"
@@ -181,8 +183,22 @@ namespace Classlibrary.Domain.Test
                 , Guid.Parse("e0e08fcd-a1e3-4810-ab49-7f49124b52d3")
                 , DateTime.UtcNow
                 , DateTime.UtcNow);
-            var addressId = await _administrationManager.Create(id, address);
-            Assert.True(addressId != Guid.Empty, "Failed to create user address");
+            var userAddress = new UserAddress
+            {
+                Address = address,
+                Preffered = false
+            };
+            var userAddressId = await _administrationManager.Create(id, userAddress);
+            Assert.True(userAddressId != Guid.Empty, "Failed to create user address");
+
+            // Find 
+            var found = await _administrationManager.UserAddress(userAddressId);
+            Assert.True(found != null, "Failed to find address");
+
+            // Update
+            found.Address.Address1 = $"UserAddress {random}";
+            var update = await _administrationManager.Update(found);
+            Assert.True(update, "Failed to update address");
         }
     }
 }
