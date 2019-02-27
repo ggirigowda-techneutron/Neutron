@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using AutoMapper;
 using Classlibrary.Dao.Linq2Db;
+using Classlibrary.Domain.Utility;
 using LinqToDB;
 
 namespace Classlibrary.Domain.Administration
@@ -413,6 +414,61 @@ namespace Classlibrary.Domain.Administration
                         (userAddress, address) => userAddress.AddressId == address.Id, (userAddress, address) => Build(userAddress, address))
                     .ToListAsync();
                 return items;
+            }
+        }
+
+        /// <summary>
+        ///     Create a <see cref="Utility.Address"/>.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="preffered">The preffered.</param>
+        /// <param name="transaction">The transaction.</param>
+        public async Task<Guid> Create(Guid userId, Address address, bool preffered = false, DependentTransaction transaction = null)
+        {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("Invalid user Id", nameof(userId));
+            if (address.Id != Guid.Empty)
+                throw new InvalidOperationException("Id has to be empty guid");
+
+            using (var tx = transaction != null
+                ? new TransactionScope(transaction, TransactionScopeAsyncFlowOption.Enabled)
+                : new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                using (var db = new PRACTISEV1DB())
+                {
+                    var id = Guid.NewGuid();
+                    var userAddressId = Guid.NewGuid();
+                    var result = await db.Utility.Addresses
+                        .Value(c => c.Id, id)
+                        .Value(c => c.Address1, address.Address1)
+                        .Value(c => c.Address2, address.Address2)
+                        .Value(c => c.AddressTypeId, address.AddressTypeId)
+                        .Value(c => c.City, address.City)
+                        .Value(c => c.County, address.County)
+                        .Value(c => c.CountryId, address.CountryId)
+                        .Value(u => u.State, address.State)
+                        .Value(u => u.Zip, address.Zip)
+                        .Value(u => u.CreatedOn, address.CreatedOn)
+                        .Value(u => u.ChangedOn, address.ChangedOn)
+                        .InsertAsync();
+                    if (result == 1)
+                    {
+                        await db.Administration.UserAddresses
+                            .Value(c => c.Id, userAddressId)
+                            .Value(c => c.UserId , userId)
+                            .Value(c => c.AddressId, id)
+                            .Value(c => c.Preffered, preffered)
+                            .InsertAsync();
+                    }
+
+                    tx.Complete();
+
+                    if (transaction != null)
+                        transaction.Complete();
+
+                    return userAddressId;
+                }
             }
         }
 

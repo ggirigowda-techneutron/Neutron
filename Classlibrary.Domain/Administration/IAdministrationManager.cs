@@ -117,5 +117,15 @@ namespace Classlibrary.Domain.Administration
         /// <param name="id">The user Id.</param>
         /// <returns><see cref="IEnumerable{Address}" />.</returns>
         Task<IEnumerable<UserAddress>> Addresses(Guid id);
+
+        /// <summary>
+        ///     Create a <see cref="Utility.Address"/>.
+        /// </summary>
+        /// <param name="userId">The user Id.</param>
+        /// <param name="address">The address.</param>
+        /// <param name="preffered">The preffered.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns></returns>
+        Task<Guid> Create(Guid userId, Utility.Address address, bool preffered = false, DependentTransaction transaction = null);
     }
 }

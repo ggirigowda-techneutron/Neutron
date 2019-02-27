@@ -142,5 +142,47 @@ namespace Classlibrary.Domain.Test
                 Assert.True(items != null, "Failed to find addresses");
             }
         }
+
+        /// <summary>
+        ///     Can create user address.
+        /// </summary>
+        [Fact]
+        public async void CanCreateUserAddress()
+        {
+            var random = DateTime.Now.ToString("MMddyyhhmmssfff");
+            var user = new User(Guid.Empty
+                , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault()?.Item1}-{random}"
+                , $"{DataGenerator.GenerateRandomName(1).FirstOrDefault().Item1}-{random}@testing.com"
+                , true
+                , _passwordStorage.HashPassword(new User(), "testdb99!!")
+                , Guid.NewGuid().ToString()
+                , true
+                , true
+                , false
+                , false
+                , 0
+                , DateTime.UtcNow
+                , DateTime.UtcNow);
+            user.Profile = new UserProfile(user.Id
+                , DataGenerator.GenerateRandomName(1).FirstOrDefault().Item1
+                , DataGenerator.GenerateRandomName(1).FirstOrDefault().Item2
+                , Guid.Parse("5ebf5cca-df92-49c6-ae5f-f3c9670bf9d3")
+                , Guid.Parse("2af6ff6c-8bb8-46f0-b27e-81def1b76b64")
+                , Guid.Parse("8a29a4ab-62a7-4a06-b2fa-46a40f449a84"));
+            user.Claims.Add(new UserClaim(user.Id, "http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "USER"));
+            var id = await _administrationManager.Create(user);
+            Assert.True(id != Guid.Empty, "Failed to create user");
+            var address = new Utility.Address(Guid.Empty
+                , "One Main Street"
+                , "Maintown"
+                , "VA"
+                , "12345"
+                , Guid.Parse("8a29a4ab-62a7-4a06-b2fa-46a40f449a84")
+                , Guid.Parse("e0e08fcd-a1e3-4810-ab49-7f49124b52d3")
+                , DateTime.UtcNow
+                , DateTime.UtcNow);
+            var addressId = await _administrationManager.Create(id, address);
+            Assert.True(addressId != Guid.Empty, "Failed to create user address");
+        }
     }
 }
