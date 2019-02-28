@@ -147,6 +147,8 @@ namespace Middleware.Core.WebApi.V1.Controllers
                 if (found != null)
                 {
                     var item = Mapper.Map<UserUpdateDto, User>(model, found);
+                    // NOTE: Removing claims since validation will complain that there are duplicates.
+                    item.Claims = new HashSet<UserClaim>();
                     var validation = ValidationCatalog.Validate(item);
                     if (validation.IsValid)
                     {
