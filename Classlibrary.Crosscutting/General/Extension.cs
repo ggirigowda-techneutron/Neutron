@@ -5,7 +5,7 @@
 // AUTHOR:			Girish Girigowda
 // COMPANY:			TechNeutron
 // DATE:			2/21/2019
-// PURPOSE:			Common extensions
+// PURPOSE:			Common extensions used in the application
 //
 
 #endregion
