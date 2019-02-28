@@ -251,6 +251,15 @@
                 <see cref="T:Middleware.Core.WebApi.V1.Models.UserAddressDto" />.
             </returns>
         </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.CreateUserAddress(Middleware.Core.WebApi.V1.Models.UserAddressDto)">
+            <summary>
+                Create user address.
+            </summary>
+            <param name="model">The model</param>
+            <returns>
+                <see cref="T:System.Guid" />
+            </returns>
+        </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.BaseController">
             <summary>
                 Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.BaseController" /> class.
@@ -1232,6 +1241,26 @@
         <member name="M:Middleware.Core.WebApi.Validation.ValidationEngine.UserClaimSpecification.#ctor">
             <summary>
                 Creates an instance of <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserClaimSpecification"/> class.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserAddressSpecification">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserAddressSpecification"/> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Validation.ValidationEngine.UserAddressSpecification.#ctor">
+            <summary>
+                Creates an instance of <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.UserAddressSpecification"/> class.
+            </summary>
+        </member>
+        <member name="T:Middleware.Core.WebApi.Validation.ValidationEngine.AddressSpecification">
+            <summary>
+                Represents the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.AddressSpecification"/> class.
+            </summary>
+        </member>
+        <member name="M:Middleware.Core.WebApi.Validation.ValidationEngine.AddressSpecification.#ctor">
+            <summary>
+                Creates an instance of the <see cref="T:Middleware.Core.WebApi.Validation.ValidationEngine.AddressSpecification"/> class.
             </summary>
         </member>
     </members>

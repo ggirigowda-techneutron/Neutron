@@ -143,6 +143,79 @@ namespace Middleware.Core.WebApi.Validation
             }
         }
 
+        /// <summary>
+        ///     Represents the <see cref="UserAddressSpecification"/> class.
+        /// </summary>
+        public class UserAddressSpecification : Validates<UserAddress>
+        {
+            /// <summary>
+            ///     Creates an instance of <see cref="UserAddressSpecification"/> class.
+            /// </summary>
+            public UserAddressSpecification()
+            {
+                Check(i => i.UserId).Required("Invalid User Id");
+                Check(i => i.Preffered).Required("Invalid preffered");
+                Check(i => i.AddressId)
+                    .Optional()
+                    .Expect((obj, c) =>
+                    {
+                        if (obj.Id == Guid.Empty && c != Guid.Empty)
+                            return false;
+                        if (obj.Id != Guid.Empty && c == Guid.Empty)
+                            return false;
+                        return true;
+                    }, "Invalid Address Id [New address? should be empty UUID else valid UUID]");
+                Check(i => i.Address).Required("Invalid Address").Specification();
+                Check(i => i.Address.Id)
+                    .Optional()
+                    .Expect((obj, c) =>
+                    {
+                        if (obj.Id == Guid.Empty && c != Guid.Empty)
+                            return false;
+                        if (obj.Id != Guid.Empty && c == Guid.Empty)
+                            return false;
+                        return true;
+                    }, "Invalid Address.Id [New address? should be empty UUID else valid UUID]");
+            }
+        }
+
         #endregion
+
+        #region Utility
+
+        /// <summary>
+        ///     Represents the <see cref="AddressSpecification"/> class.
+        /// </summary>
+        public class AddressSpecification : Validates<Classlibrary.Domain.Utility.Address>
+        {
+            /// <summary>
+            ///     Creates an instance of the <see cref="AddressSpecification"/> class.
+            /// </summary>
+            public AddressSpecification()
+            {
+                Check(i => i.AddressTypeId).Required("Invalid Address Type")
+                    .IsInSet(new List<Guid>
+                    {
+                        Helper.AddressTypeBilling,
+                        Helper.AddressTypeMailing,
+                        Helper.AddressTypeHome,
+                        Helper.AddressTypeShipping
+                    });
+                Check(i => i.Address1).Required("Invalid Address1").MinLength(3);
+                Check(i => i.City).Required("Invalid City").MinLength(3);
+                Check(i => i.State).Required("Invalid State").MinLength(2);
+                Check(i => i.Zip).Required("Invalid Zip").MinLength(3);
+                Check(i => i.CountryId).Required("Invalid Country")
+                    .IsInSet(new List<Guid>
+                    {
+                        Helper.CountryTypeUnitedStatesofAmerica,
+                        Helper.CountryTypeIndia,
+                        Helper.CountryTypeGhana
+                    });
+            }
+        }
+
+        #endregion
+
     }
 }

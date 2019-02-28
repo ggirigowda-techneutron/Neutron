@@ -40,6 +40,14 @@ namespace Classlibrary.Crosscutting.General
         public static readonly Guid UserTypeCustomer = Guid.Parse("5ebf5cca-df92-49c6-ae5f-f3c9670bf9d3");
 
         /// <summary>
+        ///     Address Types
+        /// </summary>
+        public static readonly Guid AddressTypeMailing = Guid.Parse("e0e08fcd-a1e3-4810-ab49-7f49124b52d3");
+        public static readonly Guid AddressTypeBilling = Guid.Parse("781469bf-8815-478c-b1ef-8baf06149f07");
+        public static readonly Guid AddressTypeShipping = Guid.Parse("89917168-ff35-4619-a500-632410868499");
+        public static readonly Guid AddressTypeHome = Guid.Parse("9f131320-420b-43cc-af22-0d60400fe8dd");
+
+        /// <summary>
         ///     The role claim key.
         /// </summary>
         public const string RoleClaimKey = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";

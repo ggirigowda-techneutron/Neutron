@@ -323,5 +323,41 @@ namespace Middleware.Core.WebApi.V1.Controllers
             var item = await _administrationManager.UserAddress(id);
             return Mapper.Map<UserAddress, UserAddressDto>(item);
         }
+
+        /// <summary>
+        ///     Create user address.
+        /// </summary>
+        /// <param name="model">The model</param>
+        /// <returns>
+        ///     <see cref="Guid" />
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimUser)]
+        [HttpPost("user/address/create")]
+        public async Task<IActionResult> CreateUserAddress(UserAddressDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var item = Mapper.Map<UserAddressDto, UserAddress>(model);
+            var validation = ValidationCatalog.Validate(item);
+            if (validation.IsValid)
+            {
+                var result = await _administrationManager.Create(model.UserId, item);
+                return new JsonResult(result);
+            }
+
+            // Add the errors
+            foreach (var error in validation.Errors)
+            {
+                foreach (var allErrorMessage in error.AllErrorMessages())
+                {
+                    ModelState.AddModelError("Error(s): ", allErrorMessage);
+                }
+            }
+
+            return BadRequest(ModelState);
+        }
     }
 }
