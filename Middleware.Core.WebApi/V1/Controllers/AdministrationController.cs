@@ -146,11 +146,11 @@ namespace Middleware.Core.WebApi.V1.Controllers
                 var found = await _administrationManager.Get(model.Id);
                 if (found != null)
                 {
-                    Mapper.Map<UserUpdateDto, User>(model, found);
-                    var validation = ValidationCatalog.Validate(found);
+                    var item = Mapper.Map<UserUpdateDto, User>(model, found);
+                    var validation = ValidationCatalog.Validate(item);
                     if (validation.IsValid)
                     {
-                        var result = await _administrationManager.Update(found);
+                        var result = await _administrationManager.Update(item);
                         return new JsonResult(result);
                     }
 
@@ -358,6 +358,49 @@ namespace Middleware.Core.WebApi.V1.Controllers
             }
 
             return BadRequest(ModelState);
+        }
+
+        /// <summary>
+        ///     Update user address.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns>
+        ///     <see cref="bool"/>.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimUser)]
+        [HttpPut("user/address/update")]
+        public async Task<IActionResult> UpdateUserAddress(UserAddressDto model)
+        {
+            if (!ModelState.IsValid || model.Id == Guid.Empty)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Find user
+            var found = await _administrationManager.UserAddress(model.Id);
+            if (found != null)
+            {
+                var item = Mapper.Map<UserAddressDto, UserAddress>(model, found);
+                var validation = ValidationCatalog.Validate(item);
+                if (validation.IsValid)
+                {
+                    var result = await _administrationManager.Update(item);
+                    return new JsonResult(result);
+                }
+
+                // Add the errors
+                foreach (var error in validation.Errors)
+                {
+                    foreach (var allErrorMessage in error.AllErrorMessages())
+                    {
+                        ModelState.AddModelError("Error(s): ", allErrorMessage);
+                    }
+                }
+
+                return BadRequest(ModelState);
+            }
+
+            return BadRequest("User address not found");
         }
     }
 }
