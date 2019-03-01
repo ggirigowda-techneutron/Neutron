@@ -69,6 +69,17 @@ namespace Middleware.Core.WebApi.Gateway
                 x.TokenValidationParameters = tokenValidationParameters;
             });
 
+            // Add CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials());
+            });
+
             // Set compatibility
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -99,6 +110,7 @@ namespace Middleware.Core.WebApi.Gateway
                 app.UseHsts();
 
             app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
             app.UseMvc();
 
             // Add swagger
