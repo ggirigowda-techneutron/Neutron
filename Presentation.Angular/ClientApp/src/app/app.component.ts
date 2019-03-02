@@ -1,4 +1,6 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +9,23 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Neutron Angular 7';
-  subtitle = '.NET Core + Angular CLI v7 + Bootstrap & FontAwesome + Swagger Template';
-  datetime = Date.now();
+  jwtHelper = new JwtHelperService();
+  constructor(private router: Router) {
+  }
 
-  incrementValue: number[] = [];
-
-  constructor() {
-    for (let index = 1; index <= 3; index++) {
-      this.incrementValue.push(index);
+  isUserAuthenticated() {
+    let token: string = localStorage.getItem("jwt");
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+      return true;
+    }
+    else {
+      return false;
     }
   }
+
+  logOut() {
+    localStorage.removeItem("jwt");
+    this.router.navigate(["/"]);
+  }
+
 }
