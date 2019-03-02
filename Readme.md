@@ -23,6 +23,8 @@
    ├── Middleware.Core.WebApi.Auth - Sample core web API auth with JWT 
    ├── Middleware.Core.WebApi.Gateway - Sample core web API gateway using Ocelot 
    ├── Middleware.WebApi - Sample .NET standard web API  
+├── Presentation
+   ├── Presentation.Angular - Sample Angular front-end  for the core application 
 └── Solution Items
    ├── Readme.md
 
