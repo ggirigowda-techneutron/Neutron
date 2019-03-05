@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Presentation.Angular
 {
+    /// <summary>
+    ///     Represents the <see cref="Startup"/> class.
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
