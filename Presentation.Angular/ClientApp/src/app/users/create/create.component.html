@@ -1,0 +1,38 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="text-center border border-light p-5">
+  <div class="container-fluid">
+    <h2 class="form-signin-heading">Create User</h2>
+    <div class="col-sm-7 row">
+      <div *ngIf="invalidLogin" class="alert alert-danger">Invalid form values.</div>
+    </div>
+    <div class="col-sm-7 row">
+      &nbsp;
+    </div>
+    <div class="col-sm-7 row">
+      <input type="text" formControlName="firstName" id="defaultRegisterFormFirstName" class="form-control" placeholder="First name">
+    </div>
+    <div class="col-sm-7 row">
+      &nbsp;
+    </div>
+    <div class="col-sm-7 row">
+      <input type="text" formControlName="lastName" id="defaultRegisterFormLastName" class="form-control" placeholder="Last name">
+    </div>
+    <div class="col-sm-7 row">
+      &nbsp;
+    </div>
+    <div class="col-sm-7 row">
+      <input type="email" formControlName="email" id="defaultRegisterFormEmail" class="form-control" placeholder="E-mail">
+    </div>
+    <div class="col-sm-7 row">
+      &nbsp;
+    </div>
+    <div class="col-sm-7 row">
+      <input type="password" formControlName="password" name="defaultRegisterFormPassword" class="form-control" placeholder="Password">
+    </div>
+    <div class="col-sm-7 row">
+      &nbsp;
+    </div>
+    <div class="col-sm-7 row">
+      <button class="btn btn-info btn-block" type="submit">Sign in</button>
+    </div>
+  </div>
+</form>
