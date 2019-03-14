@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
@@ -95,6 +97,14 @@ namespace Middleware.Core.WebApi
                         Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                         $"{GetType().Assembly.GetName().Name}.xml"
                     ));
+
+                    // JWT Filter
+                    options.AddSecurityDefinition("Bearer", new ApiKeyScheme { In = "header", Description = "Please enter JWT with Bearer into field", Name = "Authorization", Type = "apiKey" });
+                    options.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                        { "Bearer", Enumerable.Empty<string>() },
+                    });
+
+                    //options.OperationFilter<SecurityRequirementsOperationFilter>();
                 });
             // Token 
             var tokenDetail = Configuration.GetSection("TokenDetail");
