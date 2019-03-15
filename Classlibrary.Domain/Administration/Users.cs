@@ -43,7 +43,7 @@ namespace Classlibrary.Domain.Administration
         }
 
         /// <summary>
-        ///     Gets or sets the user profile
+        ///     Gets or sets the user profile.
         /// </summary>
         public UserProfile Profile { get; set; }
 

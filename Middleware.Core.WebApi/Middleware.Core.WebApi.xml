@@ -113,6 +113,11 @@
             </summary>
             <param name="env"></param>
         </member>
+        <member name="P:Middleware.Core.WebApi.Startup.Configuration">
+            <summary>
+                Configuration.
+            </summary>
+        </member>
         <member name="M:Middleware.Core.WebApi.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
                 This method gets called by the runtime. Use this method to add services to the container.
@@ -156,12 +161,13 @@
                 The password storage.
             </summary>
         </member>
-        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.#ctor(Classlibrary.Domain.Administration.IAdministrationManager,Microsoft.AspNetCore.Identity.IPasswordHasher{Classlibrary.Domain.Administration.User})">
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.#ctor(Classlibrary.Domain.Administration.IAdministrationManager,Microsoft.AspNetCore.Identity.IPasswordHasher{Classlibrary.Domain.Administration.User},Microsoft.Extensions.Logging.ILogger{Middleware.Core.WebApi.V1.Controllers.AdministrationController})">
             <summary>
                 Initializes a new instance of the <see cref="T:Middleware.Core.WebApi.V1.Controllers.AdministrationController" /> controller.
             </summary>
             <param name="administrationManager"></param>
             <param name="passwordStorage"></param>
+            <param name="logger"></param>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)">
             <summary>
@@ -171,9 +177,25 @@
                 <see cref="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)" />.
             </returns>
         </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.CqrsUser(System.Guid)">
+            <summary>
+                Get a user (CQRS).
+            </summary>
+            <returns>
+                <see cref="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)" />.
+            </returns>
+        </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.Users">
             <summary>
                 Get all the users.
+            </summary>
+            <returns>
+                <see cref="T:System.Collections.Generic.IEnumerable`1" />.
+            </returns>
+        </member>
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.CqrsUsers">
+            <summary>
+                Get all the users (CQRS).
             </summary>
             <returns>
                 <see cref="T:System.Collections.Generic.IEnumerable`1" />.
@@ -272,6 +294,21 @@
         <member name="T:Middleware.Core.WebApi.V1.Controllers.BaseController">
             <summary>
                 Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.BaseController" /> class.
+            </summary>
+        </member>
+        <member name="F:Middleware.Core.WebApi.V1.Controllers.BaseController._mediator">
+            <summary>
+                Mediator.
+            </summary>
+        </member>
+        <member name="P:Middleware.Core.WebApi.V1.Controllers.BaseController.Mediator">
+            <summary>
+                Mediator.
+            </summary>
+        </member>
+        <member name="F:Middleware.Core.WebApi.V1.Controllers.BaseController.Logger">
+            <summary>
+                Logger
             </summary>
         </member>
         <member name="T:Middleware.Core.WebApi.V1.Controllers.ProductsController">

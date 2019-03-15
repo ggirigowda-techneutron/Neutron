@@ -13,6 +13,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Classlibrary.Domain.Administration;
@@ -22,6 +23,9 @@ using Microsoft.AspNetCore.Mvc;
 using Middleware.Core.WebApi.V1.Models;
 using AutoMapper;
 using Classlibrary.Crosscutting.General;
+using Classlibrary.Domain.Administration.Queries;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using SpecExpress;
 
 namespace Middleware.Core.WebApi.V1.Controllers
@@ -49,11 +53,13 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </summary>
         /// <param name="administrationManager"></param>
         /// <param name="passwordStorage"></param>
+        /// <param name="logger"></param>
         public AdministrationController(IAdministrationManager administrationManager,
-            IPasswordHasher<User> passwordStorage)
+            IPasswordHasher<User> passwordStorage, ILogger<AdministrationController> logger)
         {
             _administrationManager = administrationManager;
             _passwordStorage = passwordStorage;
+            Logger = logger;
         }
 
         /// <summary>
@@ -64,9 +70,24 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [HttpGet("user/{id}")]
+        [ProducesResponseType(typeof(User), (int)HttpStatusCode.OK)]
         public async Task<User> User(Guid id)
         {
             return await _administrationManager.Get(id);
+        }
+
+        /// <summary>
+        ///     Get a user (CQRS).
+        /// </summary>
+        /// <returns>
+        ///     <see cref="User" />.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimUser)]
+        [HttpGet("cqrs/user/{id}")]
+        [ProducesResponseType(typeof(User), (int)HttpStatusCode.OK)]
+        public async Task<User> CqrsUser(Guid id)
+        {
+            return await Mediator.Send(new GetUserQuery(id));
         }
 
         /// <summary>
@@ -77,9 +98,24 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpGet("users")]
+        [ProducesResponseType(typeof(IEnumerable<User>), (int)HttpStatusCode.OK)]
         public async Task<IEnumerable<User>> Users()
         {
             return await _administrationManager.All();
+        }
+
+        /// <summary>
+        ///     Get all the users (CQRS).
+        /// </summary>
+        /// <returns>
+        ///     <see cref="IEnumerable{User}" />.
+        /// </returns>
+        [Authorize(Roles = Helper.ClaimAdmin)]
+        [HttpGet("cqrs/users")]
+        [ProducesResponseType(typeof(IEnumerable<User>), (int)HttpStatusCode.OK)]
+        public async Task<IEnumerable<User>> CqrsUsers()
+        {
+            return await Mediator.Send(new GetUsersQuery());
         }
 
         /// <summary>
@@ -91,6 +127,8 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpPost("user/create")]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateUser(UserDto model)
         {
             if (!ModelState.IsValid)
@@ -130,6 +168,9 @@ namespace Middleware.Core.WebApi.V1.Controllers
         [Authorize(Roles = Helper.ClaimUser)]
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpPut("user/update")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> UpdateUser(UserUpdateDto model)
         {
             if (!ModelState.IsValid || model.Id == Guid.Empty)
@@ -182,6 +223,8 @@ namespace Middleware.Core.WebApi.V1.Controllers
         [Authorize(Roles = Helper.ClaimUser)]
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpPut("user/updatepassword")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateUserPassword(UserUpdatePasswordDto model)
         {
             if (!ModelState.IsValid || model.Id == Guid.Empty)
@@ -224,6 +267,9 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpPut("user/updatenationalid")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.Unauthorized)]
         public async Task<IActionResult> UpdateUserNationalId(UserUpdateNationalIdDto model)
         {
             if (!ModelState.IsValid || model.Id == Guid.Empty)
@@ -250,7 +296,9 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpDelete("user/claim/delete")]
-        public async Task<IActionResult> DeleteClaim(UserClaimDto model)
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
+   public async Task<IActionResult> DeleteClaim(UserClaimDto model)
         {
             if (!ModelState.IsValid || model.UserId == Guid.Empty)
             {
@@ -270,6 +318,8 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimAdmin)]
         [HttpPost("user/claim/create")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateClaim(UserClaimDto model)
         {
             if (!ModelState.IsValid || model.UserId == Guid.Empty)
@@ -305,6 +355,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [HttpGet("user/addresses/{id}")]
+        [ProducesResponseType(typeof(IEnumerable<UserAddressDto>), (int)HttpStatusCode.OK)]
         public async Task<IEnumerable<UserAddressDto>> UserAddresses(Guid id)
         {
             var items = await _administrationManager.UserAddresses(id);
@@ -320,6 +371,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [HttpGet("user/address/{id}")]
+        [ProducesResponseType(typeof(UserAddressDto), (int)HttpStatusCode.OK)]
         public async Task<UserAddressDto> UserAddress(Guid id)
         {
             var item = await _administrationManager.UserAddress(id);
@@ -335,6 +387,8 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [HttpPost("user/address/create")]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> CreateUserAddress(UserAddressDto model)
         {
             if (!ModelState.IsValid)
@@ -371,6 +425,8 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// </returns>
         [Authorize(Roles = Helper.ClaimUser)]
         [HttpPut("user/address/update")]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> UpdateUserAddress(UserAddressDto model)
         {
             if (!ModelState.IsValid || model.Id == Guid.Empty)

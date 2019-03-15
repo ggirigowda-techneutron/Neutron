@@ -547,7 +547,7 @@ namespace Classlibrary.Domain.Administration
         /// <param name="user">The user.</param>
         /// <param name="profile">The profile.</param>
         /// <returns></returns>
-        private static User Build(AdministrationSchema.User user, AdministrationSchema.UserProfile profile)
+        internal static User Build(AdministrationSchema.User user, AdministrationSchema.UserProfile profile)
         {
             if (user != null)
                 user.UserProfile = profile;
@@ -561,7 +561,7 @@ namespace Classlibrary.Domain.Administration
         /// <param name="profile">The profile.</param>
         /// <param name="claims">The claim.</param>
         /// <returns></returns>
-        private static User Build(AdministrationSchema.User user, AdministrationSchema.UserProfile profile, IEnumerable<AdministrationSchema.UserClaim> claims)
+        internal static User Build(AdministrationSchema.User user, AdministrationSchema.UserProfile profile, IEnumerable<AdministrationSchema.UserClaim> claims)
         {
             var item = Build(user, profile);
             if (item != null)
@@ -575,7 +575,7 @@ namespace Classlibrary.Domain.Administration
         /// <param name="userAddress">The user address.</param>
         /// <param name="address">The address.</param>
         /// <returns></returns>
-        private static UserAddress Build(AdministrationSchema.UserAddress userAddress, UtilitySchema.Address address)
+        internal static UserAddress Build(AdministrationSchema.UserAddress userAddress, UtilitySchema.Address address)
         {
             if (userAddress != null)
                 userAddress.Address = address;

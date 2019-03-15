@@ -10,7 +10,10 @@
 
 #endregion
 
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Middleware.Core.WebApi.V1.Controllers
 {
@@ -19,5 +22,19 @@ namespace Middleware.Core.WebApi.V1.Controllers
     /// </summary>
     public abstract class BaseController : ControllerBase
     {
+        /// <summary>
+        ///     Mediator.
+        /// </summary>
+        private IMediator _mediator;
+
+        /// <summary>
+        ///     Mediator.
+        /// </summary>
+        protected IMediator Mediator => _mediator ?? (_mediator = HttpContext.RequestServices.GetService<IMediator>());
+
+        /// <summary>
+        ///     Logger
+        /// </summary>
+        protected ILogger Logger;
     }
 }

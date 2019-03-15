@@ -19,12 +19,17 @@ using Swashbuckle.AspNetCore.Swagger;
 using AutoMapper;
 using Classlibrary.Crosscutting.Security;
 using Classlibrary.Domain.Administration;
+using Classlibrary.Domain.Administration.Queries;
+using Classlibrary.Domain.Cqrs;
 using Classlibrary.Domain.Utility;
 using LinqToDB.Data;
+using MediatR;
+using MediatR.Pipeline;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Middleware.Core.WebApi.Validation;
+using Serilog;
 using SpecExpress;
-using SpecExpress.Ioc;
 
 namespace Middleware.Core.WebApi
 {
@@ -39,13 +44,25 @@ namespace Middleware.Core.WebApi
         /// <param name="env"></param>
         public Startup(IHostingEnvironment env)
         {
-            // Setup Ocelot
+            // Setup configuration
             var builder = new ConfigurationBuilder();
             Configuration = builder.SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddEnvironmentVariables().Build();
+                .AddEnvironmentVariables()
+                .Build();
+            // Logger
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.File($"Logs/{ DateTime.UtcNow.ToString("MMddyyyy") }.log"
+                    , fileSizeLimitBytes: 1_000_000
+                    , shared: true
+                    , flushToDiskInterval: TimeSpan.FromSeconds(1))
+                .CreateLogger();
         }
 
+        /// <summary>
+        ///     Configuration.
+        /// </summary>
         public IConfiguration Configuration { get; }
 
         /// <summary>
@@ -146,10 +163,20 @@ namespace Middleware.Core.WebApi
             services.AddSingleton<IUtilityManager>(new UtilityManager());
             services.AddSingleton<IAdministrationManager>(new AdministrationManager());
             services.AddSingleton<Microsoft.AspNetCore.Identity.IPasswordHasher<User>>(new PasswordStorage<User>());
+            // MediatR
+            services.AddTransient(typeof(IRequestPreProcessor<>), typeof(CqrsPreProcessor<>));
+            services.AddTransient(typeof(IRequestPostProcessor<,>), typeof(CqrsPostProcessor<,>));
+            services.AddMediatR(typeof(GetUserQuery).GetTypeInfo().Assembly);
 
             // Add the dependencies that the validation engine needs.
             ValidationEngine.AdministrationManager =
                 services.BuildServiceProvider().GetService<IAdministrationManager>();
+
+            // Logging
+            services.AddLogging(configure => {
+                configure.AddConfiguration(Configuration.GetSection("Logging"));
+                configure.AddSerilog(dispose: true);
+            });
         }
 
 
@@ -168,6 +195,7 @@ namespace Middleware.Core.WebApi
 
             app.UseHttpsRedirection();
 
+            // Swagger
             app.UseSwagger();
             app.UseSwaggerUI(
                 options =>
@@ -178,6 +206,7 @@ namespace Middleware.Core.WebApi
                             description.GroupName.ToUpperInvariant());
                 });
 
+            // Exception handling
             app.UseExceptionHandler(appBuilder =>
             {
                 appBuilder.Use(async (context, next) =>
