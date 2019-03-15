@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Mvc;
 using Middleware.Core.WebApi.V1.Models;
 using AutoMapper;
 using Classlibrary.Crosscutting.General;
+using Classlibrary.Domain.Administration.Notifications;
 using Classlibrary.Domain.Administration.Queries;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
@@ -115,7 +116,9 @@ namespace Middleware.Core.WebApi.V1.Controllers
         [ProducesResponseType(typeof(IEnumerable<User>), (int)HttpStatusCode.OK)]
         public async Task<IEnumerable<User>> CqrsUsers()
         {
-            return await Mediator.Send(new GetUsersQuery());
+            var items = await Mediator.Send(new GetUsersQuery());
+            await Mediator.Publish(new GetUsersNotification());
+            return items;
         }
 
         /// <summary>
@@ -298,7 +301,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         [HttpDelete("user/claim/delete")]
         [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
-   public async Task<IActionResult> DeleteClaim(UserClaimDto model)
+        public async Task<IActionResult> DeleteClaim(UserClaimDto model)
         {
             if (!ModelState.IsValid || model.UserId == Guid.Empty)
             {

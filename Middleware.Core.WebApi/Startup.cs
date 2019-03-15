@@ -159,7 +159,14 @@ namespace Middleware.Core.WebApi
             // Add spec express
             ValidationCatalog.Scan(x => x.AddAssembly(Assembly.GetExecutingAssembly()));
 
-            // Setup DI's
+            // DI setup
+            // Transient services are created every time they are injected or requested. Register your services as transient wherever possible. Because it’s simple to design transient services. You generally don’t care about multi-threading and memory leaks and you know the service has a short life.
+            // Scoped services are created per scope. In a web application, every web request creates a new separated service scope. That means scoped services are generally created per web request. Use scoped service lifetime carefully since it can be tricky if you create child service scopes or use these services from a non-web application.
+            // Singleton services are created per DI container. That generally means that they are created only one time per application and then used for whole the application life time. Use singleton lifetime carefully since then you need to deal with multi-threading and potential memory leak problems.
+            // DI container keeps track of all resolved services. Services are released and disposed when their lifetime ends:
+            // If the service has dependencies, they are also automatically released and disposed.
+            // If the service implements the IDisposable interface, Dispose method is automatically called on service release.
+            // Do not depend on a transient or scoped service from a singleton service.Because the transient service becomes a singleton instance when a singleton service injects it and that may cause problems if the transient service is not designed to support such a scenario.ASP.NET Core’s default DI container already throws exceptions in such cases.
             services.AddSingleton<IUtilityManager>(new UtilityManager());
             services.AddSingleton<IAdministrationManager>(new AdministrationManager());
             services.AddSingleton<Microsoft.AspNetCore.Identity.IPasswordHasher<User>>(new PasswordStorage<User>());
