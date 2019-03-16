@@ -34,7 +34,7 @@ namespace Classlibrary.Domain.Administration.Notifications
         private readonly ILogger _logger;
 
         /// <summary>
-        ///     Email.
+        ///     Emailer.
         /// </summary>
         private readonly Email _email;
 
