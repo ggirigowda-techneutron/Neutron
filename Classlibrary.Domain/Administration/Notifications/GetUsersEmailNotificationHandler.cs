@@ -50,6 +50,7 @@ namespace Classlibrary.Domain.Administration.Notifications
                 {
                     EnableSsl = true,
                     Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential("jbs.smtp@gmail.com", "testdb99!!")
                 }));
