@@ -19,5 +19,25 @@ namespace Classlibrary.Domain.Administration.Notifications
     /// </summary>
     public class GetUsersNotification : INotification
     {
+        /// <summary>
+        ///     FirstName.
+        /// </summary>
+        public string FirstName { get; set; }
+
+        /// <summary>
+        ///     LastName.
+        /// </summary>
+        public string LastName { get; set; }
+
+        /// <summary>
+        ///     Create an instance  of <see cref="GetUsersNotification"/>.
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        public GetUsersNotification(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
     }
 }

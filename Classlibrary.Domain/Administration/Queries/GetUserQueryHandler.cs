@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Classlibrary.Dao.Linq2Db;
+using Classlibrary.Domain.Administration.Notifications;
 using LinqToDB;
 using MediatR;
 
@@ -26,15 +27,19 @@ namespace Classlibrary.Domain.Administration.Queries
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, User>
     {
 
-        ///// <summary>
-        /////     Mediator.
-        ///// </summary>
-        //private IMediator _mediator;
+        /// <summary>
+        ///     Mediator.
+        /// </summary>
+        private readonly IMediator _mediator;
 
-        //public GetUserQueryHandler(IMediator mediator)
-        //{
-        //    _mediator = mediator;
-        //}
+        /// <summary>
+        ///     Creates an instance of <see cref="GetUserQueryHandler"/>.
+        /// </summary>
+        /// <param name="mediator"></param>
+        public GetUserQueryHandler(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
 
         #region Implementation of IRequestHandler<in GetUserQuery,List<User>>
@@ -61,7 +66,7 @@ namespace Classlibrary.Domain.Administration.Queries
                             AdministrationManager.Build(parent.user, parent.userProfile, claims.ToList()))
                     .ToListAsync();
 
-                //await _mediator.Publish(new GetUsersNotification());
+                await _mediator.Publish(new GetUsersNotification(items?.FirstOrDefault()?.Profile?.FirstName, items?.FirstOrDefault()?.Profile?.LastName));
                 return items.FirstOrDefault();
             }
         }

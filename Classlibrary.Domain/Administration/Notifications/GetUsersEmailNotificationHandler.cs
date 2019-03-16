@@ -34,7 +34,7 @@ namespace Classlibrary.Domain.Administration.Notifications
         private readonly ILogger _logger;
 
         /// <summary>
-        ///     Emailer.
+        ///     Email.
         /// </summary>
         private readonly Email _email;
 
@@ -69,12 +69,12 @@ namespace Classlibrary.Domain.Administration.Notifications
             _logger.LogInformation("GetUsersEmail Notification handled");
             var model = new
             {
-                FirstName = "John",
-                Lastname = "Doe",
+                notification.FirstName,
+                notification.LastName,
                 Numbers = new[] {1, 2, 3}
             };
             var template =
-                "Hi @Model.FirstName @Model.Lastname this is a razor template @(5 + 5)! <br /><ul>@foreach(var i in Model.Numbers) { <li>@i</li> }</ul>";
+                "Hi @Model.FirstName @Model.LastName this is a razor template @(5 + 5)! <br /><ul>@foreach(var i in Model.Numbers) { <li>@i</li> }</ul>";
 
             await _email.SetFrom("jbs.smtp@gmail.com")
                 .To("jbs.smtp@gmail.com")

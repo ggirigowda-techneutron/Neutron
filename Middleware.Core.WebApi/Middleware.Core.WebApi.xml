@@ -161,7 +161,7 @@
                 The password storage.
             </summary>
         </member>
-        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.#ctor(Classlibrary.Domain.Administration.IAdministrationManager,Microsoft.AspNetCore.Identity.IPasswordHasher{Classlibrary.Domain.Administration.User},Microsoft.Extensions.Logging.ILogger{Middleware.Core.WebApi.V1.Controllers.AdministrationController})">
+        <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.#ctor(Classlibrary.Domain.Administration.IAdministrationManager,Microsoft.AspNetCore.Identity.IPasswordHasher{Classlibrary.Domain.Administration.User},Microsoft.Extensions.Logging.ILogger{Middleware.Core.WebApi.V1.Controllers.AdministrationController},MediatR.IMediator)">
             <summary>
                 Initializes a new instance of the <see cref="T:Middleware.Core.WebApi.V1.Controllers.AdministrationController" /> controller.
             </summary>
@@ -296,12 +296,7 @@
                 Represents the <see cref="T:Middleware.Core.WebApi.V1.Controllers.BaseController" /> class.
             </summary>
         </member>
-        <member name="F:Middleware.Core.WebApi.V1.Controllers.BaseController._mediator">
-            <summary>
-                Mediator.
-            </summary>
-        </member>
-        <member name="P:Middleware.Core.WebApi.V1.Controllers.BaseController.Mediator">
+        <member name="F:Middleware.Core.WebApi.V1.Controllers.BaseController.Mediator">
             <summary>
                 Mediator.
             </summary>

@@ -25,6 +25,7 @@ using AutoMapper;
 using Classlibrary.Crosscutting.General;
 using Classlibrary.Domain.Administration.Notifications;
 using Classlibrary.Domain.Administration.Queries;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using SpecExpress;
@@ -56,11 +57,12 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// <param name="passwordStorage"></param>
         /// <param name="logger"></param>
         public AdministrationController(IAdministrationManager administrationManager,
-            IPasswordHasher<User> passwordStorage, ILogger<AdministrationController> logger)
+            IPasswordHasher<User> passwordStorage, ILogger<AdministrationController> logger, IMediator mediator)
         {
             _administrationManager = administrationManager;
             _passwordStorage = passwordStorage;
             Logger = logger;
+            Mediator = mediator;
         }
 
         /// <summary>
@@ -117,7 +119,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         public async Task<IEnumerable<User>> CqrsUsers()
         {
             var items = await Mediator.Send(new GetUsersQuery());
-            await Mediator.Publish(new GetUsersNotification());
+            //await Mediator.Publish(new GetUsersNotification());
             return items;
         }
 
