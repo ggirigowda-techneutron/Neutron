@@ -25,6 +25,18 @@ namespace Classlibrary.Domain.Administration.Queries
     /// </summary>
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, User>
     {
+
+        ///// <summary>
+        /////     Mediator.
+        ///// </summary>
+        //private IMediator _mediator;
+
+        //public GetUserQueryHandler(IMediator mediator)
+        //{
+        //    _mediator = mediator;
+        //}
+
+
         #region Implementation of IRequestHandler<in GetUserQuery,List<User>>
 
         /// <summary>
@@ -48,6 +60,8 @@ namespace Classlibrary.Domain.Administration.Queries
                         (parent, claims) =>
                             AdministrationManager.Build(parent.user, parent.userProfile, claims.ToList()))
                     .ToListAsync();
+
+                //await _mediator.Publish(new GetUsersNotification());
                 return items.FirstOrDefault();
             }
         }
