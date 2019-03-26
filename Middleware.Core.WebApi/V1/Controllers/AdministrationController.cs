@@ -56,6 +56,7 @@ namespace Middleware.Core.WebApi.V1.Controllers
         /// <param name="administrationManager"></param>
         /// <param name="passwordStorage"></param>
         /// <param name="logger"></param>
+        /// <param name="mediator"></param>
         public AdministrationController(IAdministrationManager administrationManager,
             IPasswordHasher<User> passwordStorage, ILogger<AdministrationController> logger, IMediator mediator)
         {

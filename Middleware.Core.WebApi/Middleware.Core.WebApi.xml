@@ -168,6 +168,7 @@
             <param name="administrationManager"></param>
             <param name="passwordStorage"></param>
             <param name="logger"></param>
+            <param name="mediator"></param>
         </member>
         <member name="M:Middleware.Core.WebApi.V1.Controllers.AdministrationController.User(System.Guid)">
             <summary>
