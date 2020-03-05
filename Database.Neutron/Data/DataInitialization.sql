@@ -37,8 +37,8 @@ BEGIN TRY
 	-- USER
 	DECLARE @ggUserId UNIQUEIDENTIFIER = '88237092-ed98-4da9-98e6-2de1d10e0fd0';	
 	PRINT @ggUserId;
-	INSERT INTO [Administration].[Users] (Id, UserName, Email, EmailConfirmed, PasswordHash, SecurityStamp, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, CreatedOn, ChangedOn, PhoneNumberConfirmed, TwoFactorEnabled) 
-		   VALUES(@ggUserId, 'girish66', 'girish66@hotmail.com', 1, 'sha1:64000:18:AiAumzF43i+StrW+dOlP7B/KObxXZnmb:3/93IWZSZrLRBoj0TcuABTDY', NEWID(), '1/1/1900', 1, 0, GETUTCDATE(), GETUTCDATE(), 0, 0);
+	INSERT INTO [Administration].[Users] (Id, UserName, Email, EmailConfirmed, PasswordHash, SecurityStamp, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, CreatedOn, ChangedOn, PhoneNumberConfirmed, TwoFactorEnabled, MobileNumberConfirmed) 
+		   VALUES(@ggUserId, 'girish66', 'girish66@hotmail.com', 1, 'sha1:64000:18:AiAumzF43i+StrW+dOlP7B/KObxXZnmb:3/93IWZSZrLRBoj0TcuABTDY', NEWID(), '1/1/1900', 1, 0, GETUTCDATE(), GETUTCDATE(), 0, 0, 0);
 	-- USER PROFILE	   
 	INSERT INTO [Administration].[UserProfile] (UserId, FirstName, LastName, UserTypeId, GenderId, CountryId) VALUES(@ggUserId, 'Girish', 'Girigowda', 'e21dcb05-1f7b-4c95-9c29-0e583b120e44', '8a29a4ab-62a7-4a06-b2fa-46a40f449a84', '2af6ff6c-8bb8-46f0-b27e-81def1b76b64');
 	-- USER CLAIMS
