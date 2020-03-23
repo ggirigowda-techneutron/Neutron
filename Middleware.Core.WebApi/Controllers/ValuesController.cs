@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Middleware.Core.WebApi.Controllers
 {
     /// <summary>
-    ///     Values controller
+    ///     Values controller.
     /// </summary>
     //[ApiVersion("1.0")]
     //[ApiVersion("2.0")]
