@@ -31,7 +31,7 @@
         </member>
         <member name="T:Middleware.Core.WebApi.Controllers.ValuesController">
             <summary>
-                Values controller
+                Values controller.
             </summary>
         </member>
         <member name="M:Middleware.Core.WebApi.Controllers.ValuesController.Get">
