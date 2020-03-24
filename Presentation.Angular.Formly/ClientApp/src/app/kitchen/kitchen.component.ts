@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { of } from "rxjs";
+import { DataService } from './data.service';
 
 @Component({
   selector: "app-kitchen",
@@ -9,6 +10,7 @@ import { of } from "rxjs";
   styleUrls: ["./kitchen.component.css"]
 })
 export class KitchenComponent {
+  constructor(private dataService: DataService) { }
   form = new FormGroup({});
   model = {
     name: "John Doe",
@@ -143,10 +145,7 @@ export class KitchenComponent {
       type: 'select',
       templateOptions: {
         label: 'Sport',
-        options: [
-          { name: "Tennis", id: "1" },
-          { name: "Swimming", value: "2" }
-        ],
+        options: this.dataService.getSports(),
         valueProp: 'id',
         labelProp: 'name',
       },
