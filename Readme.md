@@ -26,6 +26,7 @@
 ├── Presentation
    ├── Presentation.Angular - Sample Angular front-end for the core application 
    |── Presentation.Angular.Survey - Sample Angular front-end for the core application utilizing survey.js plugin
+   |── Presentation.Angular.Formly - Sample Angular front-end for the core application utilizing https://github.com/ngx-formly/ngx-formly plugin
 └── Solution Items
    ├── Readme.md
 
