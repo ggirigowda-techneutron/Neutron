@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\grid\grid.component.ts" />
     <None Remove="ClientApp\src\app\kitchen\data.service.ts" />
     <None Remove="ClientApp\src\app\kitchen\kitchen.component.ts" />
     <None Remove="ClientApp\src\app\login\auth.guard.ts" />
@@ -33,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\grid\grid.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\kitchen\data.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\kitchen\kitchen.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\auth.guard.ts" />

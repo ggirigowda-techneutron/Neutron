@@ -16,6 +16,7 @@ import { FormlyMaterialModule } from "@ngx-formly/material";
 import { HttpModule } from "@angular/http";
 import { MatNativeDateModule } from "@angular/material/core";
 import { FormlyMatDatepickerModule } from "@ngx-formly/material/datepicker";
+import { AgGridModule } from 'ag-grid-angular';
 
 // Guards
 import { AuthGuard } from "./login/auth.guard";
@@ -32,6 +33,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { KitchenComponent } from "./kitchen/kitchen.component";
 import { LoginComponent } from './login/login.component';
+import { GridComponent } from './grid/grid.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   //appearance: "outline"
@@ -45,7 +47,8 @@ const appearance: MatFormFieldDefaultOptions = {
     CounterComponent,
     FetchDataComponent,
     KitchenComponent,
-    LoginComponent
+    LoginComponent,
+    GridComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -63,12 +66,14 @@ const appearance: MatFormFieldDefaultOptions = {
     FormlyMaterialModule,
     MatNativeDateModule,
     FormlyMatDatepickerModule,
+    AgGridModule.withComponents([]),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: "kitchen", component: KitchenComponent, canActivate: [AuthGuard] },
-      { path: "login", component: LoginComponent }
+      { path: "login", component: LoginComponent },
+      { path: "grid", component: GridComponent }
     ])
   ],
   providers: [{
