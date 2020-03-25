@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { ajax } from "rxjs/ajax";
 
 @Component({
   selector: "app-grid",
@@ -6,6 +7,29 @@ import { Component } from "@angular/core";
   styleUrls: ["./grid.component.css"]
 })
 export class GridComponent {
+
+  constructor() {
+    const githubUsers = `https://api.github.com/users?per_page=2`;
+
+    const users = ajax({
+      url: githubUsers,
+      method: "GET",
+      headers: {
+        /*some headers*/
+      
+      },
+      body: {
+        /*in case you need a body*/
+      
+      }
+    });
+
+    const subscribe = users.subscribe(
+      res => console.log(res.response),
+      err => console.error(err)
+    );
+  }
+
   columnDefs = [
     { field: "make" },
     { field: "model" },
