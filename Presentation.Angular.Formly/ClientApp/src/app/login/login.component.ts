@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFormOptions, FormlyFieldConfig } from "@ngx-formly/core";
 import { Router } from "@angular/router";
+import { first } from 'rxjs/operators';
 import { LoginService } from "./login.service";
+import { AuthenticationService } from '../_services';
 
 @Component({
   selector: "app-login",
@@ -16,7 +18,7 @@ export class LoginComponent {
   model;
   fields: FormlyFieldConfig[];
 
-  constructor(private router: Router, private loginService: LoginService) {
+  constructor(private router: Router, private loginService: LoginService, private authenticationService: AuthenticationService) {
     this.loginService.getLoginData().subscribe(([fields]) => {
       this.model = {};
       this.fields = fields;
@@ -26,9 +28,21 @@ export class LoginComponent {
   submit() {
     if (this.form.valid) {
       //alert(JSON.stringify(this.model));
-      const token = "xyzxxyyzzz";
-      localStorage.setItem("jwt", token);
-      this.router.navigate(["/"]);
+      // const token = "xyzxxyyzzz";
+      //  localStorage.setItem("jwt", token);
+      //  this.router.navigate(["/"]);
+      this.authenticationService.login(this.model.userName, this.model.password)
+        .pipe(first())
+        .subscribe(
+          data => {
+            //console.log(data);
+            if (data) {
+              this.router.navigate(["/"]);
+            }
+          },
+          error => {
+            console.log(error);
+          });
     }
   }
 }

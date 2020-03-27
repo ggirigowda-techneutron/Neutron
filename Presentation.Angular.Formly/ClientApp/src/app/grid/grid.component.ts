@@ -1,5 +1,9 @@
 import { Component } from "@angular/core";
-import { ajax } from "rxjs/ajax";
+import { fromEvent, of } from "rxjs";
+import { scan, map, filter, first } from "rxjs/operators";
+
+import { User } from "../_models";
+import { UserService } from "../_services";
 
 @Component({
   selector: "app-grid",
@@ -7,29 +11,19 @@ import { ajax } from "rxjs/ajax";
   styleUrls: ["./grid.component.css"]
 })
 export class GridComponent {
-
-  constructor() {
-    const githubUsers = `https://api.github.com/users?per_page=2`;
-
-    const users = ajax({
-      url: githubUsers,
-      method: "GET",
-      headers: {
-        /*some headers*/
-      
-      },
-      body: {
-        /*in case you need a body*/
-      
-      }
-    });
-
-    const subscribe = users.subscribe(
-      res => console.log(res.response),
-      err => console.error(err)
-    );
+  apiUsers: User[];
+  constructor(private userService: UserService) {
+    userService
+      .getAll()
+      .pipe(first())
+      .subscribe((users: User[]) => {
+        //console.log(users);
+        this.apiUsers = users;
+      });
+    //console.log(this.apiUsers);
   }
 
+  /*
   columnDefs = [
     { field: "make" },
     { field: "model" },
@@ -40,6 +34,12 @@ export class GridComponent {
     { make: "Toyota", model: "Celica", price: 35000 },
     { make: "Ford", model: "Mondeo", price: 32000 },
     { make: "Porsche", model: "Boxter", price: 72000 }
+  ];
+  */
+  columnDefs = [
+    { headerName: 'CI', field: "ci", sortable: false, maxWidth: 100 },
+    { headerName: 'UserName', field: "userName", minWidth: 200 },
+    { headerName: 'Email', field: "email", minWidth: 300 },
   ];
 
   gridOptions = {

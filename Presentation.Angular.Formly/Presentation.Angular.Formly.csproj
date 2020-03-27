@@ -31,6 +31,16 @@
     <None Remove="ClientApp\src\app\login\auth.guard.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\login\login.service.ts" />
+    <None Remove="ClientApp\src\app\_helpers\index.ts" />
+    <None Remove="ClientApp\src\app\_helpers\jwt.interceptor.ts" />
+    <None Remove="ClientApp\src\app\_models\claim.ts" />
+    <None Remove="ClientApp\src\app\_models\index.ts" />
+    <None Remove="ClientApp\src\app\_models\profile.ts" />
+    <None Remove="ClientApp\src\app\_models\token.ts" />
+    <None Remove="ClientApp\src\app\_models\user.ts" />
+    <None Remove="ClientApp\src\app\_services\authentication.service.ts" />
+    <None Remove="ClientApp\src\app\_services\index.ts" />
+    <None Remove="ClientApp\src\app\_services\user.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +50,16 @@
     <TypeScriptCompile Include="ClientApp\src\app\login\auth.guard.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\login.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_helpers\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_helpers\jwt.interceptor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\claim.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\profile.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\token.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_models\user.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\authentication.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\_services\user.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

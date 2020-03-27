@@ -18,6 +18,9 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { FormlyMatDatepickerModule } from "@ngx-formly/material/datepicker";
 import { AgGridModule } from 'ag-grid-angular';
 
+// Helpers
+import { JwtInterceptor } from './_helpers';
+
 // Guards
 import { AuthGuard } from "./login/auth.guard";
 
@@ -80,6 +83,7 @@ const appearance: MatFormFieldDefaultOptions = {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: appearance
   },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     AuthGuard,
     LoginService,
     DataService],
