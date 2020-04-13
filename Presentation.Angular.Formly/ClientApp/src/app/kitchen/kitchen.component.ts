@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFieldConfig } from "@ngx-formly/core";
 import { of } from "rxjs";
-import { DataService } from './data.service';
+import { DataService } from "../_services";
 
 @Component({
   selector: "app-kitchen",

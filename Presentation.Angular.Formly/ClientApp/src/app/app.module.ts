@@ -26,7 +26,7 @@ import { AuthGuard } from "./login/auth.guard";
 
 // Services.
 import { LoginService } from './login/login.service';
-import { DataService } from './kitchen/data.service';
+
 
 // Components.
 import { AppComponent } from './app.component';
@@ -37,6 +37,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { KitchenComponent } from "./kitchen/kitchen.component";
 import { LoginComponent } from './login/login.component';
 import { GridComponent } from './grid/grid.component';
+import { LayoutComponent } from './layout/layout.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   //appearance: "outline"
@@ -51,7 +52,8 @@ const appearance: MatFormFieldDefaultOptions = {
     FetchDataComponent,
     KitchenComponent,
     LoginComponent,
-    GridComponent
+    GridComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -76,7 +78,8 @@ const appearance: MatFormFieldDefaultOptions = {
       { path: 'fetch-data', component: FetchDataComponent },
       { path: "kitchen", component: KitchenComponent, canActivate: [AuthGuard] },
       { path: "login", component: LoginComponent },
-      { path: "grid", component: GridComponent }
+      { path: "grid", component: GridComponent },
+      { path: "layout", component: LayoutComponent }
     ])
   ],
   providers: [{
@@ -85,8 +88,7 @@ const appearance: MatFormFieldDefaultOptions = {
   },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     AuthGuard,
-    LoginService,
-    DataService],
+    LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
