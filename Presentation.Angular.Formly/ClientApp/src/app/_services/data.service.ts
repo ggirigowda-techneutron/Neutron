@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Observable, forkJoin, of } from "rxjs";
+import { FormlyFieldConfig } from "@ngx-formly/core";
 
 @Injectable({ providedIn: "root" })
 export class DataService {
+  constructor(private http: HttpClient) { }
+
   sports = [
     { id: '1', name: 'Soccer' },
     { id: '2', name: 'Basketball' },
@@ -21,5 +25,14 @@ export class DataService {
       { id: "2", name: "Maryland" },
       { id: "3", name: "District of Columbia" }
     ]);
+  }
+
+
+  getUserCreateForm(): Observable<FormlyFieldConfig[]> {
+    return forkJoin([this.getUserCreateFormFields()]);
+  }
+
+  getUserCreateFormFields(): Observable<FormlyFieldConfig[]> {
+    return this.http.get<FormlyFieldConfig[]>("assets/user-create-form.json");
   }
 }

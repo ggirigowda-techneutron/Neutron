@@ -1,0 +1,74 @@
+[
+  {
+    "template": "<strong><div><h3>Name:</h3></div></strong><hr />"
+  },
+  {
+    "fieldGroupClassName": "display-flex",
+    "fieldGroup": [
+      {
+        "className": "flex-1",
+        "type": "input",
+        "key": "firstName",
+        "templateOptions": {
+          "label": "First Name",
+          "required": true,
+          "minLength": 3
+        }
+      },
+      {
+        "className": "flex-1",
+        "type": "input",
+        "key": "lastName",
+        "templateOptions": {
+          "label": "Last Name",
+          "required": true,
+          "minLength": 3
+        },
+        "expressionProperties": {
+        }
+      }
+    ]
+  },
+  {
+    "template": "<strong><div><h3>Credentials:</h3></div></strong><hr />"
+  },
+  {
+    "type": "input",
+    "key": "email",
+    "templateOptions": {
+      "label": "Email",
+      "pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+      "required": true
+    }
+  },
+  {
+    "fieldGroupClassName": "display-flex",
+    "fieldGroup": [
+      {
+        "className": "flex-1",
+        "type": "input",
+        "key": "userName",
+        "templateOptions": {
+          "label": "User Name",
+          "required": true,
+          "minLength": 3
+        }
+      },
+      {
+        "className": "flex-1",
+        "type": "input",
+        "key": "password",
+        "templateOptions": {
+          "type": "password",
+          "pattern": "",
+          "label": "Password",
+          "required": true,
+          "minLength": 3
+        }
+      }
+    ]
+  },
+  {
+    "template": "<div><br /></div>"
+  }
+]

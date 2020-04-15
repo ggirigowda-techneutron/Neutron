@@ -32,6 +32,7 @@
     <None Remove="ClientApp\src\app\login\auth.guard.ts" />
     <None Remove="ClientApp\src\app\login\login.component.ts" />
     <None Remove="ClientApp\src\app\login\login.service.ts" />
+    <None Remove="ClientApp\src\app\user-create\user-create.component.ts" />
     <None Remove="ClientApp\src\app\_helpers\index.ts" />
     <None Remove="ClientApp\src\app\_helpers\jwt.interceptor.ts" />
     <None Remove="ClientApp\src\app\_models\claim.ts" />
@@ -47,6 +48,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\grid\grid.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\layout\layout.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\user-create\user-create.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\_services\data.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\kitchen\kitchen.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\login\auth.guard.ts" />

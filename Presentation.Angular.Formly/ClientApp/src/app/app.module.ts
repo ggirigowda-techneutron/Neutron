@@ -38,6 +38,7 @@ import { KitchenComponent } from "./kitchen/kitchen.component";
 import { LoginComponent } from './login/login.component';
 import { GridComponent } from './grid/grid.component';
 import { LayoutComponent } from './layout/layout.component';
+import { UserCreateComponent } from './user-create/user-create.component';
 
 const appearance: MatFormFieldDefaultOptions = {
   //appearance: "outline"
@@ -53,7 +54,8 @@ const appearance: MatFormFieldDefaultOptions = {
     KitchenComponent,
     LoginComponent,
     GridComponent,
-    LayoutComponent
+    LayoutComponent,
+    UserCreateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -79,7 +81,8 @@ const appearance: MatFormFieldDefaultOptions = {
       { path: "kitchen", component: KitchenComponent, canActivate: [AuthGuard] },
       { path: "login", component: LoginComponent },
       { path: "grid", component: GridComponent },
-      { path: "layout", component: LayoutComponent }
+      { path: "layout", component: LayoutComponent },
+      { path: "user-create", component: UserCreateComponent }
     ])
   ],
   providers: [{

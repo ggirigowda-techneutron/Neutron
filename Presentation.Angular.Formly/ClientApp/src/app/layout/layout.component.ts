@@ -13,11 +13,12 @@ import { DataService } from "../_services";
   encapsulation: ViewEncapsulation.None
 })
 export class LayoutComponent {
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService) {
+  }
+
   form = new FormGroup({});
   model: any = {};
   options: FormlyFormOptions = {};
-
   fields: FormlyFieldConfig[] = [
     {
       template: "<strong><div><h3>Name:</h3></div></strong><hr />"
