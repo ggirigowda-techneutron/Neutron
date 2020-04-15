@@ -28,7 +28,7 @@ export class DataService {
   }
 
 
-  getUserCreateForm(): Observable<FormlyFieldConfig[]> {
+  getUserCreateForm(): Observable<any> {
     return forkJoin([this.getUserCreateFormFields()]);
   }
 
