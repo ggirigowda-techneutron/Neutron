@@ -23,7 +23,8 @@ export class DataService {
     return of([
       { id: "1", name: "Virginia" },
       { id: "2", name: "Maryland" },
-      { id: "3", name: "District of Columbia" }
+      { id: "3", name: "District of Columbia" },
+      { id: "4", name: "Delaware" }
     ]);
   }
 

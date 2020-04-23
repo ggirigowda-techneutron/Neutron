@@ -19,12 +19,14 @@
         "className": "flex-1",
         "type": "input",
         "key": "lastName",
+        "hideExpression": "!model.firstName",
         "templateOptions": {
           "label": "Last Name",
           "required": true,
           "minLength": 3
         },
         "expressionProperties": {
+          "templateOptions.disabled": "!model.firstName"
         }
       }
     ]

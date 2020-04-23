@@ -5,8 +5,7 @@ import { Router } from "@angular/router";
 import { Component, ViewEncapsulation } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormlyFormOptions, FormlyFieldConfig } from "@ngx-formly/core";
-import { DataService } from "../_services";
-import { UserService } from "../_services";
+import { DataService, UserService } from "../_services";
 
 @Component({
   selector: "app-user-create",
@@ -16,7 +15,7 @@ import { UserService } from "../_services";
 })
 export class UserCreateComponent {
   form = new FormGroup({});
-  model: any = {};
+  model;
   options: FormlyFormOptions = {};
   fields: FormlyFieldConfig[];
   constructor(private router: Router,
@@ -24,6 +23,7 @@ export class UserCreateComponent {
     private userService: UserService) {
     this.dataService.getUserCreateForm().subscribe(([fields]) => {
       this.fields = fields;
+      this.model = {};
     });
   }
 
