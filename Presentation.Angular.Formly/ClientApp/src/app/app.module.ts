@@ -80,9 +80,9 @@ const appearance: MatFormFieldDefaultOptions = {
       { path: 'fetch-data', component: FetchDataComponent },
       { path: "kitchen", component: KitchenComponent, canActivate: [AuthGuard] },
       { path: "login", component: LoginComponent },
-      { path: "grid", component: GridComponent },
+      { path: "grid", component: GridComponent, canActivate: [AuthGuard]},
       { path: "layout", component: LayoutComponent },
-      { path: "user-create", component: UserCreateComponent }
+      { path: "user-create", component: UserCreateComponent, canActivate: [AuthGuard]}
     ])
   ],
   providers: [{

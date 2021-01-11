@@ -3,8 +3,11 @@
     <div class="container">
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]="{ show: isExpanded }">
         <ul class='navbar-nav flex-grow'>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li *ngIf="this.isLoggedIn() == false" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
+          </li>
+          <li *ngIf="this.isLoggedIn() == true" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" href="" (click)="logout()">Logout</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']"
               [routerLinkActiveOptions]="{ exact: true }">

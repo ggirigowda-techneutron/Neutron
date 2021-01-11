@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Token } from '../_models';
 
+
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<Token>;
@@ -39,5 +40,12 @@ export class AuthenticationService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+
+  isLoggedIn() {
+    if (localStorage.getItem('currentUser') != null && JSON.parse(localStorage.getItem('currentUser')).access_token != null) {
+      return true;
+    }
+    return false;
   }
 }
